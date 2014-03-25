@@ -23,7 +23,9 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LanguageHelper.AntlrException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(LanguageHelper.FileParseException ex) {
+        } catch (InterruptedException e) {
+            
+        } catch (LanguageHelper.FileParseException e) {
             
         }
     }
