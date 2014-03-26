@@ -6,6 +6,8 @@
 
 package main;
 
+import generation.ClassGeneration;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,13 +21,7 @@ public class Main {
         try {
             LanguageHelper helper = new LanguageHelper();
             helper.initLanguages();
-        } catch (LanguageHelper.FileException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LanguageHelper.AntlrException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException e) {
-            
-        } catch (LanguageHelper.FileParseException e) {
+        } catch(Exception e) {
             
         }
     }
