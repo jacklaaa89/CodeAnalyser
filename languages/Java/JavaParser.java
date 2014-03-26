@@ -1,5 +1,5 @@
 package Java;
- // C:\Users\Jack\Documents\NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
+//m C:\Users\Jack\Documents\NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;

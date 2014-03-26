@@ -1,5 +1,5 @@
 package Java;
- // C:\Users\Jack\Documents\NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
+//m C:\Users\Jack\Documents\NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
