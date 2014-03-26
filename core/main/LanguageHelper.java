@@ -38,7 +38,7 @@ public class LanguageHelper {
      *
      * @throws main.LanguageHelper.FileException if the grammar directory could
      * not be found.
-     * @throws main.LanguageHelper.AntlrException if antlr is not installed.
+     * @throws main.AntlrException if antlr is not installed.
      * @throws java.lang.InterruptedException
      */
     public LanguageHelper() throws FileException, AntlrException,
@@ -106,7 +106,7 @@ public class LanguageHelper {
      *
      * @throws main.LanguageHelper.FileException
      * @throws main.LanguageHelper.FileParseException
-     * @throws main.LanguageHelper.AntlrException
+     * @throws main.AntlrException
      * @throws java.lang.InterruptedException
      */
     public void initLanguages() throws FileException, FileParseException,
@@ -223,6 +223,7 @@ public class LanguageHelper {
 
     /**
      * Thrown when any errors occurs to do with opening or manipulating files.
+     * @author Jack Timblin - U1051575
      */
     public class FileException extends Exception {
 
@@ -234,21 +235,11 @@ public class LanguageHelper {
 
     /**
      * Thrown when a file cannot be parsed correctly.
+     * @author Jack Timblin - U1051575
      */
     public class FileParseException extends Exception {
 
         public FileParseException(String message) {
-            super(message);
-        }
-
-    }
-
-    /**
-     * thrown when an Antlr error occurs.
-     */
-    public class AntlrException extends Exception {
-
-        public AntlrException(String message) {
             super(message);
         }
 

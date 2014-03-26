@@ -18,12 +18,12 @@ import java.util.logging.Logger;
 public class Main {
     
     public static void main(String[] args) {
-        try {
-            LanguageHelper helper = new LanguageHelper();
-            helper.initLanguages();
-        } catch(Exception e) {
-            
-        }
+       for(String metricClassName : Application.getMetricsList()) {
+           System.out.println(metricClassName);
+       }
+       for(String lang : Application.getSupportedLanguages()) {
+           System.out.println(lang);
+       }
     }
     
 }

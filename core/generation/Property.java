@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package generation;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author Jack
+ * This class is an object representation of the properties needed for a single class
+ * this class is used in Java source code generation.
+ * @author Jack Timblin - U1051575
  */
 public class Property {
     
@@ -19,6 +14,12 @@ public class Property {
     private ArrayList<String> imports;
     private String listenerName;
     
+    /**
+     * Constructor - used constructor overloading to quickly populate variables.
+     * @param packageName the name of package.
+     * @param imports a list of import statements this class needs.
+     * @param listenerName the name of the listener this class extends.
+     */
     public Property(String packageName, ArrayList<String> imports, 
             String listenerName) {
         this.imports = imports;
@@ -27,18 +28,35 @@ public class Property {
         this.source = packageName;
     }
     
+    /**
+     * get the package name.
+     * @return the string package name
+     */
     public String getPackageName() {
         return this.packageName;
     }
     
+    /**
+     * get the list of import statements.
+     * @return the list of import statements.
+     */
     public ArrayList<String> getImportStatements() {
         return this.imports;
     }
     
+    /**
+     * get the name this class should extend.
+     * @return the string name of the listener this class should extend.
+     */
     public String getListenerName() {
         return this.listenerName;
     }
     
+    /**
+     * gets the source language of the file being processed.
+     * this is conveniently the same name as the package name
+     * @return the language that this listener supports.
+     */
     public String getSourceLanguage() {
         return this.source;
     }
