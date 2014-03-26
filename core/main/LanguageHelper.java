@@ -1,5 +1,6 @@
 package main;
 
+import generation.ClassGeneration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -175,6 +176,14 @@ public class LanguageHelper {
                         throw new FileException("The requested Java file could not be found.");
                     } catch (IOException e) {
                         throw new FileException("Could not write to java file.");
+                    }
+                    
+                    //generate BaseListener class so that metrics can be invoked.
+                    try {
+                        System.out.println("Generating BaseListener for the grammar: " + grammarName);
+                        ClassGeneration.generateBaseListener(grammarName);
+                    } catch (IOException e) {
+                        throw new FileException("Could not generate BaseListener for Grammar: "+grammarName);
                     }
 
                     //compile the grammar.
