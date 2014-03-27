@@ -1,4 +1,4 @@
-package generation;
+package org.codeanalyser.core.generation;
 
 /**
  * This is an encapsulation of the properties needed for a single

@@ -1,6 +1,7 @@
-package main;
+package org.codeanalyser.metric;
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.codeanalyser.language.EventState;
 
 /**
  * this is the interface that all metrics should implement.
@@ -19,9 +20,8 @@ public interface MetricInterface<T extends ParserRuleContext> {
     /**
      * starts this metrics evaluation of a 
      * single class.
-     * @param context the context that this metric
-     * needs in order to make its evaluation.
+     * @param state the state of the event.
      */
-    public void start(T context, String sourceLanguage);
+    public void start(EventState state);
     
 }

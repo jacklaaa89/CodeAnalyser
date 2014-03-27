@@ -1,8 +1,5 @@
-package main;
+package org.codeanalyser.core;
 
-import Java.JavaBaseListener;
-import Java.JavaLexer;
-import Java.JavaParser;
 import java.io.File;
 import java.io.IOException;
 import org.antlr.v4.runtime.ANTLRFileStream;
@@ -11,6 +8,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java.util.ArrayList;
+import org.codeanalyser.language.java.*;
 
 /**
  * This class will be initialised on startup and contain
@@ -66,7 +64,7 @@ public class Application {
      * @throws AntlrException when the file could not be opened or parsed into a parse tree.
      */
     private static ArrayList<String> initMetricsList() throws AntlrException {
-        File metricsLocation = new File("CodeAnalyser/metrics/metrics");
+        File metricsLocation = new File("src/org/codeanalyser/metric");
         if(!metricsLocation.exists()) {
             return new ArrayList<String>(); //could not find metrics location.
         }

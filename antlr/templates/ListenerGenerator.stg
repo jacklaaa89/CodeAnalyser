@@ -4,9 +4,14 @@ group ListenerGenerator;
  * Main template for this class.
  */
 main(property, methodProperties, variables) ::= <<
-package <property.packageName>;
+package org.codeanalyser.language.<property.packageName>;
 
-<property.importStatements:importStatement()>
+import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.core.Application;
+import java.util.ArrayList;
+import org.codeanalyser.language.MetricException;
+import org.codeanalyser.language.EventState;
+
 /**
  * This class is auto generated when the parser is generated so that 
  * metrics have a single class for each language that listens of all
@@ -24,14 +29,14 @@ public class BaseListener extends <property.listenerName> {
     <variables:declareVariable()>
     /**
      * Initialises all of the metrics that will be used with this listener.
-     * @throws core.MetricException
+     * @throws org.codeanalyser.language.MetricException
      */
     public BaseListener() throws MetricException {
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.
         try {
-            for(String metric : Application.getMetricList()) {
-                metrics.add((MetricInterface) Class.forName("metrics."+metric).newInstance());
+            for(String metric : Application.getMetricsList()) {
+                metrics.add((MetricInterface) Class.forName(metric).newInstance());
             }
          } catch (Exception e) {
              throw new MetricException("An error occured initialising all of the metrics.");
@@ -51,18 +56,15 @@ methodBuilder(methodProperty) ::= <<
  */
  @Override
  public void <methodProperty.name>(<methodProperty.context> context) {
-    //start the metrics.
+    //build state object.
+    EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+    EventState state = builder.setContext(context).setSourceLanguage("<property.sourceLanguage>").build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
-        metric.start(context, "<property.sourceLanguage>");
+        metric.start(state);
     }
  }
  
->>
-
-importStatement(i) ::= <<
-import <i>;
-
 >>
 
 declareVariable(var) ::= <<

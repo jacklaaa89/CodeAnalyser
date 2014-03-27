@@ -1,4 +1,4 @@
-package generation;
+package org.codeanalyser.core.generation;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,6 @@ public class Property {
     
     private String source;
     private String packageName;
-    private ArrayList<String> imports;
     private String listenerName;
     
     /**
@@ -20,9 +19,7 @@ public class Property {
      * @param imports a list of import statements this class needs.
      * @param listenerName the name of the listener this class extends.
      */
-    public Property(String packageName, ArrayList<String> imports, 
-            String listenerName) {
-        this.imports = imports;
+    public Property(String packageName, String listenerName) {
         this.listenerName = listenerName;
         this.packageName = packageName;
         this.source = packageName;
@@ -34,14 +31,6 @@ public class Property {
      */
     public String getPackageName() {
         return this.packageName;
-    }
-    
-    /**
-     * get the list of import statements.
-     * @return the list of import statements.
-     */
-    public ArrayList<String> getImportStatements() {
-        return this.imports;
     }
     
     /**
