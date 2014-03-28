@@ -1,6 +1,5 @@
 package org.codeanalyser.core;
 
-import org.codeanalyser.core.generation.ClassGeneration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import org.codeanalyser.core.generation.ClassGeneration;
 
 /**
  * This class is used to check the grammar folder and determine whether their is
@@ -49,14 +50,13 @@ public class LanguageHelper {
         
         //this is the only class that has to be tailored to be used on different
         //platforms.
-        String pathStart = System.getProperty("user.dir") + "/CodeAnalyser/antlr/";
-        System.out.println(pathStart);
+        String pathStart = System.getProperty("user.dir") + "/antlr/";
         arguments = (System.getProperty("os.name").startsWith("Windows"))
                 //command | arguments | error term 
                 ? new String[]{"cmd", "/c",
                     //antlr location
                     pathStart + "antlr4.bat", "'antlr4' is not recognized", 
-                    //javac command
+                    //ant command
                     "javac"
                 }
                 : new String[]{"bash", "-c",
@@ -104,11 +104,11 @@ public class LanguageHelper {
      * them through Antlr if the parser and lexer files are not present.
      * this method also compiles any newly created java files at runtime so that
      * they can be used immediately.
-     *
-     * @throws main.LanguageHelper.FileException
-     * @throws main.LanguageHelper.FileParseException
-     * @throws main.AntlrException
-     * @throws java.lang.InterruptedException
+     * 
+     * @throws org.codeanalyser.core.LanguageHelper.FileException
+     * @throws org.codeanalyser.core.LanguageHelper.FileParseException
+     * @throws AntlrException
+     * @throws InterruptedException 
      */
     public void initLanguages() throws FileException, FileParseException,
             AntlrException, InterruptedException {
@@ -187,37 +187,33 @@ public class LanguageHelper {
                     } catch (IOException e) {
                         throw new FileException("Could not generate BaseListener for Grammar: "+grammarName);
                     }
-
-                    //compile the grammar.
-                    System.out.println("Compiling newly generated grammar: " + grammarName);
                     
-                    ProcessBuilder builder = new ProcessBuilder(
-                            arguments[0], arguments[1], arguments[4] + " " + grammarPackage.getAbsolutePath() + "/*.java"
-                    );
-
-                    builder.redirectErrorStream(true);
-
-                    try {
-                        Process pr = builder.start();
-                        pr.waitFor();
-                        StringBuilder b = new StringBuilder();
-                        //get the output from console to check for errors.
-                        try (BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()))) {
-                            for (String line; (line = br.readLine()) != null;) {
-                                //see if this line contains the grammar name.
-                                b.append(line);
-                            }
-                        } catch (IOException e) {
-                            throw new FileException("Could not read grammar file: " + grammarFile.getName());
+                    System.out.println("Compiling new Grammar/Lexer Files for Grammar: " + grammarName);
+                    
+                    //compile new classes and put them in build/classes.
+                    File bGrammarFile = new File("build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
+                    if(!bGrammarFile.exists()) {
+                        if(!bGrammarFile.mkdirs()) {
+                            throw new FileException("Could not make build directories.");
                         }
+                        ProcessBuilder compile = new ProcessBuilder(
+                                arguments[0], arguments[1], arguments[4] +
+                                        " -sourcepath src/ -classpath antlr/antlr-4.2-complete.jar " +
+                                        "-d " + bGrammarFile.getAbsolutePath() + " " + grammarPackage.getAbsolutePath()+"/*.java"
+                        );
                         
-                        if(b.toString().length() != 0) {
-                            //an error occured.
-                            throw new AntlrException(b.toString());
+                        compile.redirectErrorStream(true);
+                        
+                        try {
+                            Process p = compile.start();
+                            p.waitFor();
+                        } catch (IOException e) {
+                            throw new AntlrException("Could not compile new Antlr files.");
                         }
-                    } catch (IOException e) {
-                        throw new AntlrException("Could not compile new generated parser/lexer");
                     }
+                    
+                    System.out.println("Completed Building Parser/Lexer for grammar: " + grammarName);
+                    
                 }
             }
         }
@@ -246,5 +242,4 @@ public class LanguageHelper {
         }
 
     }
-
 }
