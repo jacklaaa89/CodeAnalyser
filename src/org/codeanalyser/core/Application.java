@@ -2,13 +2,15 @@ package org.codeanalyser.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import java.util.ArrayList;
-import org.codeanalyser.language.java.*;
+import org.codeanalyser.language.java.JavaBaseListener;
+import org.codeanalyser.language.java.JavaLexer;
+import org.codeanalyser.language.java.JavaParser;
 
 /**
  * This class will be initialised on startup and contain
@@ -40,7 +42,7 @@ public class Application {
         ArrayList<String> support = new ArrayList<String>();
         
         //open the languages directory and iterate over the packages in there.
-        File languageDir = new File("CodeAnalyser/languages");
+        File languageDir = new File("src/org/codeanalyser/language");
         if(!languageDir.exists() || !languageDir.isDirectory()) {
             return support;
         }
@@ -49,7 +51,7 @@ public class Application {
         //use the package name as a supported language
         //as that is how they are integrated into the system.
         for(File packageName : languageDir.listFiles()) {
-            if(packageName.isDirectory() && !packageName.getName().equalsIgnoreCase("core")) {
+            if(packageName.isDirectory()) {
                 support.add(packageName.getName());
             }
         }
@@ -75,6 +77,7 @@ public class Application {
         Application.ApplicationListener listener = new Application.ApplicationListener();
         for(File metricPackage : metricsLocation.listFiles()) {
             if(metricPackage.isDirectory()) {
+                listener.setPackagePath(metricPackage.getName());
                 //parse the file using the generated Java Parser.
                 for(File javaFile : metricPackage.listFiles()) {
                     if(javaFile.getName().endsWith(".java") || javaFile.getName().endsWith(".JAVA")) {
@@ -133,12 +136,14 @@ public class Application {
     private static class ApplicationListener extends JavaBaseListener {
         
         private ArrayList<String> metrics;
+        private String packagePath;
         
         /**
          * Constructor - initialises a new list. 
          */
         public ApplicationListener() {
             this.metrics = new ArrayList<String>();
+            packagePath = null;
         }
         
         /**
@@ -150,7 +155,10 @@ public class Application {
         public void enterClassDeclaration(JavaParser.ClassDeclarationContext ctx) {
             //check to see if this class implements MetricInterface.
             if(ctx.typeList().getText().equalsIgnoreCase("MetricInterface")) {
-                this.metrics.add(ctx.Identifier().getText());
+                if(this.packagePath != null) {
+                    String className = "org.codeanalyser.metric."+packagePath.toLowerCase()+"."+ctx.Identifier().getText();
+                    this.metrics.add(className);
+                }
             }
         }
         
@@ -161,6 +169,10 @@ public class Application {
          */
         public ArrayList<String> getClassNames() {
             return this.metrics;
+        }
+        
+        public void setPackagePath(String path) {
+            this.packagePath = path;
         }
         
     } 
