@@ -8,9 +8,7 @@ public class Main {
     
     public static void main(String[] args) {
        try {
-           for(String metric : Application.getMetricsList()) {
-               System.out.println(metric);
-           }
+           System.out.println(Application.getMetricsList().toString());
        } catch (Exception e) {}
     }
     
