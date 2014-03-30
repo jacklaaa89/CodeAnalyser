@@ -1,4 +1,5 @@
 package org.codeanalyser.language.java;
+import org.codeanalyser.language.ParserInterface;
 //NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -10,7 +11,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class JavaParser extends Parser {
+public class JavaParser extends Parser implements ParserInterface {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
