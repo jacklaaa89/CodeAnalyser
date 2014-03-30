@@ -16,7 +16,6 @@ public class Property {
     /**
      * Constructor - used constructor overloading to quickly populate variables.
      * @param packageName the name of package.
-     * @param imports a list of import statements this class needs.
      * @param listenerName the name of the listener this class extends.
      */
     public Property(String packageName, String listenerName) {

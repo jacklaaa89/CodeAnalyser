@@ -38,9 +38,9 @@ public class ClassGeneration {
         ArrayList<MethodProperty> methodNames = new ArrayList<MethodProperty>();
         String m1 = "enterMethodBody"; String m2 = "enterMethodDeclaration";
         String m3 = "enterClassDeclaration";
-        methodNames.add(new MethodProperty(m1, grammarName+"Parser."+m1.substring(5)+"Context"));
-        methodNames.add(new MethodProperty(m2, grammarName+"Parser."+m2.substring(5)+"Context"));
-        methodNames.add(new MethodProperty(m3, grammarName+"Parser."+m3.substring(5)+"Context"));
+        methodNames.add(new MethodProperty(m1, grammarName+"Parser."+m1.substring(5)+"Context", MethodProperty.splitCamelCase(m1)));
+        methodNames.add(new MethodProperty(m2, grammarName+"Parser."+m2.substring(5)+"Context", MethodProperty.splitCamelCase(m2)));
+        methodNames.add(new MethodProperty(m3, grammarName+"Parser."+m3.substring(5)+"Context", MethodProperty.splitCamelCase(m3)));
         
         main.add("methodProperties", methodNames);
         

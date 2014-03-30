@@ -9,15 +9,18 @@ public class MethodProperty {
     
     private String name;
     private String context;
+    private String eventType;
     
     /**
      * Constructor - used constructor overloading to quickly populate variables.
      * @param name the name of method
      * @param context the object type of the context that is used as a parameter
+     * @param type the type of event that occured.
      */
-    public MethodProperty(String name, String context) {
+    public MethodProperty(String name, String context, String type) {
         this.context = context;
         this.name = name;
+        this.eventType = type;
     }
     
     /**
@@ -26,6 +29,16 @@ public class MethodProperty {
      */
     public String getName() {
         return this.name;
+    }
+    
+    public String getEventType() {
+        return this.eventType;
+    }
+    
+    public static String splitCamelCase(String str)
+    {
+         String string = str.replaceAll("((^[a-z]+)|([A-Z]{1}[a-z]+)|([A-Z]+(?=([A-Z][a-z])|($))))", "$1_").toUpperCase().trim();
+         return string.substring(0, string.length()-1);
     }
     
     /**
