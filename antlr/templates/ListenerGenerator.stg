@@ -11,6 +11,8 @@ import org.codeanalyser.core.Application;
 import java.util.ArrayList;
 import org.codeanalyser.language.MetricException;
 import org.codeanalyser.language.EventState;
+import org.codeanalyser.language.EventType;
+import org.codeanalyser.language.ListenerInterface;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -24,7 +26,7 @@ import org.codeanalyser.language.EventState;
  * {@link MetricInterface.start() }
  * @author Jack Timblin - U1051575 (via StringTemplate4)
  */
-public class BaseListener extends <property.listenerName> {
+public class BaseListener extends <property.listenerName> implements ListenerInterface {
     
     <variables:declareVariable()>
     /**
@@ -43,6 +45,19 @@ public class BaseListener extends <property.listenerName> {
          }
     }
     
+    /**
+     * gathers the results from the metrics in this listener.
+     * @return an ArrayList\<String> of string results from each of the metrics.
+     */
+    @Override
+    public ArrayList\<String> getResults() {
+        ArrayList\<String> results = new ArrayList\<String>();
+        for(MetricInterface metric : metrics) {
+            results.add(metric.getResults());
+        }
+        return results;
+    }
+    
     <methodProperties:methodBuilder()>
     
 }
@@ -58,7 +73,10 @@ methodBuilder(methodProperty) ::= <<
  public void <methodProperty.name>(<methodProperty.context> context) {
     //build state object.
     EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-    EventState state = builder.setContext(context).setSourceLanguage("<property.sourceLanguage>").build();
+    EventState state = builder.setContext(context)
+    			      .setSourceLanguage("<property.sourceLanguage>")
+    			      .setEventType(EventType.<methodProperty.eventType>)
+    			      .build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
         metric.start(state);
