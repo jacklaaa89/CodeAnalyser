@@ -11,6 +11,7 @@ public class EventState {
     
     private String sourceLanguage;
     private ParserRuleContext context;
+    private EventType eventType;
 
     public String getSourceLanguage() {
         return sourceLanguage;
@@ -18,6 +19,10 @@ public class EventState {
 
     private void setSourceLanguage(String sourceLanguage) {
         this.sourceLanguage = sourceLanguage;
+    }
+    
+    private void setEventType(EventType type) {
+        this.eventType = type;
     }
 
     public ParserRuleContext getContext() {
@@ -27,8 +32,18 @@ public class EventState {
     private void setContext(ParserRuleContext context) {
         this.context = context;
     }
-
-    //TODO - add more variables metrics will need.
+    
+    public EventType getEventType() {
+        return this.eventType;
+    }
+    
+    @Override
+    public String toString() {
+        return "Source Language: "
+                + this.getSourceLanguage() 
+                + "\nContext Tree:\n" + this.getContext().toStringTree()
+                + "\nEvent: " + this.getEventType().name();
+    }
     
     private EventState() {}
     
@@ -42,6 +57,12 @@ public class EventState {
         
         public EventStateBuilder setContext(ParserRuleContext ctx) {
             state.setContext(ctx);
+            return this;
+        }
+        
+        
+        public EventStateBuilder setEventType(EventType type) {
+            state.setEventType(type);
             return this;
         }
         
