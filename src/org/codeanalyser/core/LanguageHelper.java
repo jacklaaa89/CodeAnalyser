@@ -1,11 +1,14 @@
 package org.codeanalyser.core;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import org.codeanalyser.core.generation.ClassGeneration;
@@ -172,6 +175,10 @@ public class LanguageHelper {
                                 String packageName = "package org.codeanalyser.language." + grammarName.toLowerCase() + ";\n//";
                                 f.write(packageName.getBytes());
                                 f.close();
+                                //if this file is the generated parser file, make it implement ParserInterface.
+                                if(javaFile.getName().startsWith(grammarName+"Parser")) {
+                                    this.updateParserClass(javaFile, grammarName);
+                                }
                             }
                         }
                     } catch (FileNotFoundException e) {
@@ -198,7 +205,7 @@ public class LanguageHelper {
                         }
                         ProcessBuilder compile = new ProcessBuilder(
                                 arguments[0], arguments[1], arguments[4] +
-                                        " -sourcepath src/ -classpath antlr/antlr-4.2-complete.jar " +
+                                        " -sourcepath src/ -classpath antlr/*.jar " +
                                         "-d " + bGrammarFile.getAbsolutePath() + " " + grammarPackage.getAbsolutePath()+"/*.java"
                         );
                         
@@ -216,6 +223,42 @@ public class LanguageHelper {
                     
                 }
             }
+        }
+    }
+    
+    /**
+     * updates a generated Parser class to make it implement ParserInterface
+     * so that it can be used generically in the analyser regardless of language.
+     * @param parserClass the file object of the parser class.
+     * @param grammarName the name of the grammar.
+     * @throws org.codeanalyser.core.LanguageHelper.FileException 
+     */
+    private void updateParserClass(File parserClass, String grammarName)
+        throws FileException
+    {
+        try {
+            String fileName = parserClass.getAbsolutePath();
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName+".temp")));
+            BufferedReader r = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = r.readLine()) != null) {
+                if (line.startsWith("public class")) {
+                    //either antlr or java is not installed.
+                    line = "public class " + grammarName + "Parser extends Parser implements ParserInterface {";
+                    
+                } else if(line.startsWith("package")) {
+                    line = line + "\nimport org.codeanalyser.language.ParserInterface;";
+                }
+                writer.println(line);
+            }
+            r.close();
+            writer.close();
+            
+            File real = new File(fileName);
+            real.delete();
+            new File(fileName+".temp").renameTo(real);
+        } catch (IOException e) {
+            throw new FileException("Could not modify Parser Class");
         }
     }
 
