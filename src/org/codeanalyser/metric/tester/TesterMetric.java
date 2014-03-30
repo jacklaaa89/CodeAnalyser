@@ -1,6 +1,5 @@
 package org.codeanalyser.metric.tester;
 
-import org.antlr.v4.runtime.RuleContext;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.MetricInterface;
 
@@ -14,14 +13,12 @@ public class TesterMetric implements MetricInterface {
     
     @Override
     public String getResults() {
-        return "";
+        return "This is a Tester Result.";
     }
     
-    /**
-     * 
-     * @param state
-     */
     @Override
-    public void start(EventState state) {}
+    public void start(EventState state) {
+        System.out.println(state.toString());
+    }
     
 }
