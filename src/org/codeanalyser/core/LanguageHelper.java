@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import org.codeanalyser.core.generation.ClassGeneration;
 
 /**
@@ -40,10 +39,9 @@ public class LanguageHelper {
      * Initialises the LanguageHelper Object. checks to see if the grammar directory
      * exists and that antlr is installed.
      *
-     * @throws main.LanguageHelper.FileException if the grammar directory could
-     * not be found.
-     * @throws main.AntlrException if antlr is not installed.
-     * @throws java.lang.InterruptedException
+     * @throws org.codeanalyser.core.LanguageHelper.FileException
+     * @throws AntlrException
+     * @throws InterruptedException 
      */
     public LanguageHelper() throws FileException, AntlrException,
             InterruptedException {
