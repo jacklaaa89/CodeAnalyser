@@ -1,6 +1,8 @@
 package org.codeanalyser.language;
 
 import java.util.ArrayList;
+import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.metric.Result;
 
 /**
  * This interface provides access to generic methods that should be
@@ -14,8 +16,16 @@ public interface ListenerInterface {
     
     /**
      * get the results from all of the attached metrics.
-     * @return ArrayList<String> the results.
+     * @return ArrayList<Result> the results.
      */
-    public ArrayList<String> getResults();
+    public ArrayList<Result> getResults();
+    
+    /**
+     * gives the listener initial values about the file it is processing.
+     * @param file the file it is analysing.
+     * @throws org.codeanalyser.language.MetricException if any of the metrics could
+     * not be initialised.
+     */
+    public void init(FileAnalyser file) throws MetricException;
     
 }
