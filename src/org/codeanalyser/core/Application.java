@@ -171,6 +171,11 @@ public class Application {
             return this.metrics;
         }
         
+        /**
+         * sets the package path for the particular class being evaluated.
+         * this makes it easy to provide the fully qualified name of a class.
+         * @param path the path to the class being parsed.
+         */
         public void setPackagePath(String path) {
             this.packagePath = path;
         }
