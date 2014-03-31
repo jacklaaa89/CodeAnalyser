@@ -12,6 +12,15 @@ public class EventState {
     private String sourceLanguage;
     private ParserRuleContext context;
     private EventType eventType;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getSourceLanguage() {
         return sourceLanguage;
@@ -42,7 +51,8 @@ public class EventState {
         return "Source Language: "
                 + this.getSourceLanguage() 
                 + "\nContext Tree:\n" + this.getContext().toStringTree()
-                + "\nEvent: " + this.getEventType().name();
+                + "\nEvent: " + this.getEventType().name()
+                + "\nFile Name: " + this.getFileName();
     }
     
     private EventState() {}
@@ -68,6 +78,11 @@ public class EventState {
         
         public EventStateBuilder setSourceLanguage(String sourceLanguage) {
             state.setSourceLanguage(sourceLanguage);
+            return this;
+        }
+        
+        public EventStateBuilder setFileName(String fileName) {
+            state.setFileName(fileName);
             return this;
         }
         
