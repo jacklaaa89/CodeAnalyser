@@ -13,6 +13,8 @@ import org.codeanalyser.language.MetricException;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
+import org.codeanalyser.metric.Result;
+import org.codeanalyser.core.analyser.FileAnalyser;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -29,29 +31,30 @@ import org.codeanalyser.language.ListenerInterface;
 public class BaseListener extends <property.listenerName> implements ListenerInterface {
     
     <variables:declareVariable()>
-    /**
-     * Initialises all of the metrics that will be used with this listener.
-     * @throws org.codeanalyser.language.MetricException
-     */
-    public BaseListener() throws MetricException {
+    
+    @Override
+    public void init(FileAnalyser file) throws MetricException {
+        this.file = file;
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.
         try {
-            for(String metric : Application.getMetricsList()) {
-                metrics.add((MetricInterface) Class.forName(metric).newInstance());
+            for (String metric : Application.getMetricsList()) {
+                MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
+                m.init(file.getAbsolutePath(), file.getFileExtension());
+                metrics.add(m);
             }
-         } catch (Exception e) {
-             throw new MetricException("An error occured initialising all of the metrics.");
-         }
+        } catch (Exception e) {
+            throw new MetricException("An error occured initialising all of the metrics.");
+        }
     }
     
     /**
      * gathers the results from the metrics in this listener.
-     * @return an ArrayList\<String> of string results from each of the metrics.
+     * @return an ArrayList\<Result> of string results from each of the metrics.
      */
     @Override
-    public ArrayList\<String> getResults() {
-        ArrayList\<String> results = new ArrayList\<String>();
+    public ArrayList\<Result> getResults() {
+        ArrayList\<Result> results = new ArrayList\<Result>();
         for(MetricInterface metric : metrics) {
             results.add(metric.getResults());
         }
@@ -76,6 +79,7 @@ methodBuilder(methodProperty) ::= <<
     EventState state = builder.setContext(context)
     			      .setSourceLanguage("<property.sourceLanguage>")
     			      .setEventType(EventType.<methodProperty.eventType>)
+                              .setFileName(file.getAbsolutePath())
     			      .build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
