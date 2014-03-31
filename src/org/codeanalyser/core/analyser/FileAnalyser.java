@@ -56,6 +56,15 @@ public class FileAnalyser extends File {
         
     }
     
+    /**
+     * returns the Parser instance that is supported by the language of this file.
+     * This is done by checking the file extension type of the file and matching it against
+     * supported the supported languages.
+     * @param stream The stream of tokens provided after lexical analysis has been done.
+     * @return a Parser instance in the generic form of a ParserInterface.
+     * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
+     * supported, the Parser could not be instantiated properly or did not implement ParserInterface. 
+     */
     public ParserInterface getSupportedParser(TokenStream stream) throws UnsupportedLanguageException {
         
         if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
@@ -73,7 +82,15 @@ public class FileAnalyser extends File {
         
     }
     
-    
+    /**
+     * returns the Lexer instance that is supported by the language of this file.
+     * This is done by checking the file extension type of the file and matching it against
+     * supported the supported languages.
+     * @return An instance of a lexer supported by this language cast to its superclass which can be
+     * used generically.
+     * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
+     * supported or the Lexer could not be instantiated properly. 
+     */
     public Lexer getSupportedLexer() throws UnsupportedLanguageException {
         
         if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
@@ -94,33 +111,30 @@ public class FileAnalyser extends File {
     /**
      * returns the parseTreeListener instance that supports this file. This is calculated by 
      * if the file extension matches a package.
-     * @return a ParseTreeListener that supports this language or null if one was not not found.
-     * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException 
+     * @return a ParseTreeListener that supports this language
+     * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
+     * supported or the Listener could not be instantiated properly.
      */
-    public ParseTreeListener getSupportedListener() throws UnsupportedLanguageException 
+    public ParseTreeListener getSupportedListener() throws UnsupportedLanguageException
     {
         //check the file extension matches a supported language.
         if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
             throw new UnsupportedLanguageException(this.getFileExtension()+" is not supported");
         }
-        
-        //initialise the listener
-        ParseTreeListener listener;
         try {
-            listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+this.getFileExtension().toLowerCase()+".BaseListener").newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new UnsupportedLanguageException("BaseListener was not found.");
-        } catch (ClassCastException e) {
-            throw new UnsupportedLanguageException("Found class could not be Cast to class ParseTreeListener");
-        } catch(InstantiationException e) {
-            throw new UnsupportedLanguageException("Could not initialise BaseListener");
-        } catch (IllegalAccessException e) {
+            return (ParseTreeListener) Class.forName("org.codeanalyser.language."+this.getFileExtension().toLowerCase()+".BaseListener").newInstance();
+        } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());
         }
-        
-        return listener;
     }
     
+    /**
+     * Exception class used when any of the language dependant Objects 
+     * are attempted to be accessed but the language is not supported by the
+     * system, i.e it does not have a generated Parser/Lexer from a grammar.
+     * 
+     * @author Jack Timblin - U1051575
+     */
     public class UnsupportedLanguageException extends Exception {
         public UnsupportedLanguageException(String message) {
             super(message);
