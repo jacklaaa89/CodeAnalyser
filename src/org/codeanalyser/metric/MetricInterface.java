@@ -17,7 +17,7 @@ public interface MetricInterface {
     
     /**
      * starts this metrics evaluation of a 
-     * single class.
+     * single class when an event is triggered.
      * @param state the state of the event.
      */
     public void start(EventState state);
