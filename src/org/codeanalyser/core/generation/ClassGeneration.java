@@ -31,6 +31,7 @@ public class ClassGeneration {
         //sort class variables.
         ArrayList<VariableProperty> vars = new ArrayList<VariableProperty>();
         vars.add(new VariableProperty("metrics", "ArrayList<MetricInterface>"));
+        vars.add(new VariableProperty("file", "FileAnalyser"));
         
         main.add("variables", vars);
         
