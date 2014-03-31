@@ -2,6 +2,7 @@ package org.codeanalyser.metric.tester;
 
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.Result;
 
 /**
  * This class is a tester metric used to test that the generic autoloading of metrics
@@ -11,14 +12,22 @@ import org.codeanalyser.metric.MetricInterface;
  */
 public class TesterMetric implements MetricInterface {
     
+    private String fileLocation, sourceLanguage;
+    
     @Override
-    public String getResults() {
-        return "This is a Tester Result.";
+    public Result getResults() {
+        return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.");
     }
     
     @Override
     public void start(EventState state) {
         System.out.println(state.toString());
+    }
+
+    @Override
+    public void init(String fileLocation, String sourceLanguage) {
+        this.fileLocation = fileLocation;
+        this.sourceLanguage = sourceLanguage;
     }
     
 }
