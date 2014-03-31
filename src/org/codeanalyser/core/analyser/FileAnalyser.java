@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.apache.commons.io.FilenameUtils;
 import org.codeanalyser.core.Application;
+import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.ParserInterface;
 
 /**
@@ -115,7 +116,9 @@ public class FileAnalyser extends File {
             throw new UnsupportedLanguageException(this.getFileExtension()+" is not supported");
         }
         try {
-            return (ParseTreeListener) Class.forName("org.codeanalyser.language."+this.getFileExtension().toLowerCase()+".BaseListener").newInstance();
+            ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+this.getFileExtension().toLowerCase()+".BaseListener").newInstance();
+            ((ListenerInterface)listener).init(this);
+            return listener;
         } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());
         }

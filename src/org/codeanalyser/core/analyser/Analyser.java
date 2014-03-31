@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.metric.Result;
 
 /**
  * This class is the one that analyses the file/directory that is the input.
@@ -17,7 +18,7 @@ import org.codeanalyser.language.ParserInterface;
 public class Analyser {
     
     private String sourceCodeLocation;
-    private ArrayList<ArrayList<String>> results; 
+    private ArrayList<ArrayList<Result>> results; 
     
     /**
      * initialises the analyser object with a file/directory location.
@@ -25,7 +26,7 @@ public class Analyser {
      */
     public Analyser(String sourceCodeLocation) {
         this.sourceCodeLocation = sourceCodeLocation;
-        this.results = new ArrayList<ArrayList<String>>();
+        this.results = new ArrayList<ArrayList<Result>>();
     }
     
     /**
@@ -52,7 +53,7 @@ public class Analyser {
         System.out.println(this.results.toString());
     }
     
-    public ArrayList<ArrayList<String>> collectResults() {
+    public ArrayList<ArrayList<Result>> collectResults() {
         return this.results;
     }
     
