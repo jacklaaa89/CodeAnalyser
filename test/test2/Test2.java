@@ -3,7 +3,7 @@
  * a random class that can be used to test metric evaluation.
  * @author Jack Timblin - U1051575
  */
-public class Test {
+public class Test2 {
     
     /**
      * A random tester method.
@@ -18,7 +18,7 @@ public class Test {
         }
     }
     
-    public Test() {
+    public Test2() {
         //tester constructor.
     }
     
