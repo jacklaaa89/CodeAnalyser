@@ -26,6 +26,6 @@ public interface ListenerInterface {
      * @throws org.codeanalyser.language.MetricException if any of the metrics could
      * not be initialised.
      */
-    public void init(FileAnalyser file) throws MetricException;
+    public void init(FileAnalyser file, String[] tokens) throws MetricException;
     
 }
