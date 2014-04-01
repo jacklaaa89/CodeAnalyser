@@ -38,10 +38,11 @@ public class ClassGeneration {
         //sort the methods.
         ArrayList<MethodProperty> methodNames = new ArrayList<MethodProperty>();
         String m1 = "enterMethodBody"; String m2 = "enterMethodDeclaration";
-        String m3 = "enterClassDeclaration";
+        String m3 = "enterClassDeclaration"; String m4 = "enterConstructorDeclaration";
         methodNames.add(new MethodProperty(m1, grammarName+"Parser."+m1.substring(5)+"Context", MethodProperty.splitCamelCase(m1)));
         methodNames.add(new MethodProperty(m2, grammarName+"Parser."+m2.substring(5)+"Context", MethodProperty.splitCamelCase(m2)));
         methodNames.add(new MethodProperty(m3, grammarName+"Parser."+m3.substring(5)+"Context", MethodProperty.splitCamelCase(m3)));
+        methodNames.add(new MethodProperty(m4, grammarName+"Parser."+m4.substring(5)+"Context", MethodProperty.splitCamelCase(m4)));
         
         main.add("methodProperties", methodNames);
         
