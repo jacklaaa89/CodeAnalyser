@@ -17,5 +17,9 @@ public enum EventType {
     /**
      * when the parser enters a method body.
      */
-    ENTER_METHOD_BODY
+    ENTER_METHOD_BODY,
+    /**
+     * when the parser find a constructor declaration.
+     */
+    ENTER_CONSTRUCTOR_DECLARATION
 }
