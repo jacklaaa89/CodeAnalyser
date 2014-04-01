@@ -12,7 +12,7 @@ public class Main {
        try {
            //LanguageHelper helper = new LanguageHelper();
            //helper.initLanguages();
-           Analyser analyser = new Analyser("test/Test.java");
+           Analyser analyser = new Analyser("test");
            analyser.analyse();
        } catch (Exception e) {}
     }
