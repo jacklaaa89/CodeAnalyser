@@ -16,5 +16,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public interface ParserInterface {
     
     public ParserRuleContext compilationUnit();
+    public String[] getTokenNames();
     
 }
