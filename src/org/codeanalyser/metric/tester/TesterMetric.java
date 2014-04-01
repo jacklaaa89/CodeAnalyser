@@ -20,12 +20,10 @@ public class TesterMetric implements MetricInterface {
     }
     
     @Override
-    public void start(EventState state) {
-        System.out.println(state.toString());
-    }
+    public void start(EventState state) {}
 
     @Override
-    public void init(String fileLocation, String sourceLanguage) {
+    public void init(String fileLocation, String sourceLanguage, String[] tokens) {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
     }
