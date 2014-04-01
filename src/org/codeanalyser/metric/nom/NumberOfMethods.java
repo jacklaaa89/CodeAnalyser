@@ -1,5 +1,6 @@
 package org.codeanalyser.metric.nom;
 
+import java.util.Arrays;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
 import org.codeanalyser.metric.MetricInterface;
@@ -28,7 +29,7 @@ public class NumberOfMethods implements MetricInterface {
     }
 
     @Override
-    public void init(String fileLocation, String sourceLanguage) {
+    public void init(String fileLocation, String sourceLanguage, String[] tokens) {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
         this.noOfMethods = 0;
