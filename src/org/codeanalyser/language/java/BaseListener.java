@@ -29,18 +29,18 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
 
 
     @Override
-    public void init(FileAnalyser file) throws MetricException {
+    public void init(FileAnalyser file, String[] tokens) throws MetricException {
         this.file = file;
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.
         try {
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
-                m.init(file.getAbsolutePath(), file.getFileExtension());
+                m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
                 metrics.add(m);
             }
         } catch (Exception e) {
-            throw new MetricException("An error occured initialising all of the metrics.");
+            throw new MetricException(e.getMessage());
         }
     }
 
@@ -65,15 +65,12 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterMethodBody(JavaParser.MethodBodyContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context)
-        			      .setSourceLanguage("java")
-        			      .setEventType(EventType.ENTER_METHOD_BODY)
-                                  .setFileName(file.getAbsolutePath())
-        			      .build();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_METHOD_BODY).build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
         }
+        
      }
      
     /**
@@ -84,11 +81,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterMethodDeclaration(JavaParser.MethodDeclarationContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context)
-        			      .setSourceLanguage("java")
-        			      .setEventType(EventType.ENTER_METHOD_DECLARATION)
-                                  .setFileName(file.getAbsolutePath())
-        			      .build();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_METHOD_DECLARATION).build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -103,11 +96,22 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterClassDeclaration(JavaParser.ClassDeclarationContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context)
-        			      .setSourceLanguage("java")
-        			      .setEventType(EventType.ENTER_CLASS_DECLARATION)
-                                  .setFileName(file.getAbsolutePath())
-        			      .build();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_CLASS_DECLARATION).build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.start(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterConstructorDeclaration while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterConstructorDeclaration(JavaParser.ConstructorDeclarationContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_CONSTRUCTOR_DECLARATION).build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
