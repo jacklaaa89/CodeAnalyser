@@ -33,14 +33,14 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
     <variables:declareVariable()>
     
     @Override
-    public void init(FileAnalyser file) throws MetricException {
+    public void init(FileAnalyser file, String[] tokens) throws MetricException {
         this.file = file;
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.
         try {
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
-                m.init(file.getAbsolutePath(), file.getFileExtension());
+                m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
                 metrics.add(m);
             }
         } catch (Exception e) {
@@ -76,11 +76,7 @@ methodBuilder(methodProperty) ::= <<
  public void <methodProperty.name>(<methodProperty.context> context) {
     //build state object.
     EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-    EventState state = builder.setContext(context)
-    			      .setSourceLanguage("<property.sourceLanguage>")
-    			      .setEventType(EventType.<methodProperty.eventType>)
-                              .setFileName(file.getAbsolutePath())
-    			      .build();
+    EventState state = builder.setContext(context).setEventType(EventType.<methodProperty.eventType>).build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
         metric.start(state);
