@@ -9,26 +9,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
  */
 public class EventState {
     
-    private String sourceLanguage;
     private ParserRuleContext context;
     private EventType eventType;
-    private String fileName;
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getSourceLanguage() {
-        return sourceLanguage;
-    }
-
-    private void setSourceLanguage(String sourceLanguage) {
-        this.sourceLanguage = sourceLanguage;
-    }
     
     private void setEventType(EventType type) {
         this.eventType = type;
@@ -48,11 +30,8 @@ public class EventState {
     
     @Override
     public String toString() {
-        return "Source Language: "
-                + this.getSourceLanguage() 
-                + "\nContext Tree:\n" + this.getContext().toStringTree()
-                + "\nEvent: " + this.getEventType().name()
-                + "\nFile Name: " + this.getFileName();
+        return "Context Tree:\n" + this.getContext().toStringTree()
+                + "\nEvent: " + this.getEventType().name();
     }
     
     private EventState() {}
@@ -73,16 +52,6 @@ public class EventState {
         
         public EventStateBuilder setEventType(EventType type) {
             state.setEventType(type);
-            return this;
-        }
-        
-        public EventStateBuilder setSourceLanguage(String sourceLanguage) {
-            state.setSourceLanguage(sourceLanguage);
-            return this;
-        }
-        
-        public EventStateBuilder setFileName(String fileName) {
-            state.setFileName(fileName);
             return this;
         }
         
