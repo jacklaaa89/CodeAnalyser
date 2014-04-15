@@ -11,9 +11,14 @@ public class Result {
     private String sourceLanguage;
     private String metricName;
     private String result;
+    private boolean passedMetric;
 
     public String getFileName() {
         return fileName;
+    }
+    
+    public boolean isSuccessful() {
+        return this.passedMetric;
     }
 
     public String getSourceLanguage() {
@@ -30,6 +35,11 @@ public class Result {
     
     public Result setFileName(String fileName) {
         this.fileName = fileName;
+        return this;
+    }
+    
+    public Result setIsSuccessful(boolean isSuccessful) {
+        this.passedMetric = isSuccessful;
         return this;
     }
 
@@ -55,13 +65,14 @@ public class Result {
     }
     
     public static Result newInstance(String fileName, String sourceLanguage, 
-            String metricName, String result) {
+            String metricName, String result, boolean wasSuccessful) {
         
         return new Result()
         .setFileName(fileName)
         .setMetricName(metricName)
         .setResult(result)
-        .setSourceLanguage(sourceLanguage);
+        .setSourceLanguage(sourceLanguage)
+        .setIsSuccessful(wasSuccessful);
         
     }
     

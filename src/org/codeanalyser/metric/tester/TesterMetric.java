@@ -16,7 +16,7 @@ public class TesterMetric implements MetricInterface {
     
     @Override
     public Result getResults() {
-        return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.");
+        return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.", true);
     }
     
     @Override

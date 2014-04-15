@@ -1,12 +1,17 @@
 package org.codeanalyser.core.analyser;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.codeanalyser.core.output.HtmlParserException;
+import org.codeanalyser.core.output.NoResultsDefinedException;
+import org.codeanalyser.core.output.OutputGenerator;
+import org.codeanalyser.core.output.TemplateNotFoundException;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.Result;
@@ -22,20 +27,23 @@ public class Analyser {
     private File sourceCodeLocation;
     private ArrayList<ArrayList<Result>> results;
     private ArrayList<FileAnalyser> filesToAnalyse;
+    private OutputGenerator output;
+    private ArrayList<String> unsupportedFiles;
     
     /**
      * initialises the analyser object with a file/directory location.
      * @param sourceCodeLocation the file or directory to analyse.
      */
-    public Analyser(String sourceCodeLocation) throws AnalyserException {
+    public Analyser(String sourceCodeLocation, String outputLocation) throws AnalyserException {
         this.sourceCodeLocation = new File(sourceCodeLocation);
         this.results = new ArrayList<ArrayList<Result>>();
         this.filesToAnalyse = new ArrayList<FileAnalyser>();
+        this.unsupportedFiles = new ArrayList<String>();
         if(!this.sourceCodeLocation.exists()) {
             throw new AnalyserException("file/directory provided does not exist.");
         }
+        this.output = new OutputGenerator(outputLocation);
         determineFiles(this.sourceCodeLocation);
-        System.out.println(this.filesToAnalyse.toString());
     }
     
     /**
@@ -74,18 +82,20 @@ public class Analyser {
                 this.results.add(((ListenerInterface) listener).getResults());
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
+                this.unsupportedFiles.add(file.getAbsolutePath());
                 System.out.println(e.getMessage());
             }
         }
-        System.out.println(this.results.toString());
-    }
-    
-    /**
-     * returns the results from metric evaluation.
-     * @return 
-     */
-    public ArrayList<ArrayList<Result>> collectResults() {
-        return this.results;
+        try {
+            //render the output for this analysis.
+            this.output.generateOutput(this.results, this.unsupportedFiles);
+        } catch (NoResultsDefinedException ex) {
+            System.out.println("No Results were generated when performing the metrics.");
+        } catch (TemplateNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (HtmlParserException ex) {
+            System.out.println("Could not parse Result String into HTML");
+        }
     }
     
 }
