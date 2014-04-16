@@ -21,6 +21,17 @@ import org.codeanalyser.language.ParserInterface;
 public class FileAnalyser extends File {
     
     private LanguageDetect detect;
+    private String forcedLanguage;
+    
+    /**
+     * Constructor - initialises this object.
+     * @param fileLocation - the location of the file to analyse.
+     * @param forcedLanguage - the source language to force to use.
+     */
+    public FileAnalyser(String fileLocation, String forcedLanguage) {
+        this(fileLocation);
+        this.forcedLanguage = forcedLanguage;
+    }
     
     /**
      * Constructor - initialises this object.
@@ -29,7 +40,10 @@ public class FileAnalyser extends File {
     public FileAnalyser(String fileLocation) {
         super(fileLocation);
         detect = new LanguageDetect();
-        
+    }
+    
+    public void setForcedLanguage(String forcedLang) {
+        this.forcedLanguage = forcedLang;
     }
     
     /**
@@ -84,24 +98,49 @@ public class FileAnalyser extends File {
      */
     public ParserInterface getSupportedParser(TokenStream stream) throws UnsupportedLanguageException {
         
-        Language supported = detect.getSupportedLanguage(this.getFileExtension());
-        
-        if(supported == null) {
-            throw new UnsupportedLanguageException("Unknown Language");
-        }
-        
-        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
-            throw new UnsupportedLanguageException("Unsupported Language");
-        }
+        String[] names = this.getClassNames();
         
         try {
-            String g = supported.getName().toLowerCase();
-            String ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
-            Constructor c = Class.forName("org.codeanalyser.language."+g+"."+ug+"Parser").getConstructor(TokenStream.class);
+            Constructor c = Class.forName("org.codeanalyser.language."+names[0]+"."+names[1]+"Parser").getConstructor(TokenStream.class);
             return (ParserInterface) c.newInstance(stream);
         } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());
         }
+        
+    }
+    
+    /**
+     * gets the class names of the package and start of the Class signiture for the supported language.
+     * @return an array with the classnames prefix.
+     * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language unknown or unsupported.
+     */
+    public String[] getClassNames() throws UnsupportedLanguageException {
+        
+        String g, ug;
+        
+        if(forcedLanguage == null) {
+        
+            Language supported = detect.getSupportedLanguage(this.getFileExtension());
+
+            if(supported == null) {
+                throw new UnsupportedLanguageException("Unknown Language");
+            }
+
+            if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
+                throw new UnsupportedLanguageException("Unsupported Language");
+            }
+            
+            g = supported.getName().toLowerCase();
+            ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
+            
+        } else {
+            
+            g = forcedLanguage.toLowerCase();
+            ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
+            
+        }
+        
+        return new String[] {g, ug};
         
     }
     
@@ -116,20 +155,11 @@ public class FileAnalyser extends File {
      */
     public Lexer getSupportedLexer() throws UnsupportedLanguageException {
         
-        Language supported = detect.getSupportedLanguage(this.getFileExtension());
-        
-        if(supported == null) {
-            throw new UnsupportedLanguageException("Unknown Language");
-        }
-        
-        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
-            throw new UnsupportedLanguageException("Unsupported Language");
-        }
+        String[] names = this.getClassNames();
         
         try {
-            String g = supported.getName().toLowerCase();
-            String ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
-            Constructor c = Class.forName("org.codeanalyser.language."+g+"."+ug+"Lexer").getConstructor(CharStream.class);
+            
+            Constructor c = Class.forName("org.codeanalyser.language."+names[0]+"."+names[1]+"Lexer").getConstructor(CharStream.class);
             return (Lexer) c.newInstance(new ANTLRFileStream(this.getAbsolutePath()));
         } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());
@@ -147,18 +177,10 @@ public class FileAnalyser extends File {
      */
     public ParseTreeListener getSupportedListener(String[] tokens) throws UnsupportedLanguageException
     {
-        Language supported = detect.getSupportedLanguage(this.getFileExtension());
+        String[] names = this.getClassNames();
         
-        if(supported == null) {
-            throw new UnsupportedLanguageException("Unknown Language");
-        }
-        
-        //check the file extension matches a supported language.
-        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
-            throw new UnsupportedLanguageException(this.getFileExtension()+" is not supported");
-        }
         try {
-            ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+supported.getName().toLowerCase()+".BaseListener").newInstance();
+            ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+names[0]+".BaseListener").newInstance();
             ((ListenerInterface)listener).init(this, tokens);
             return listener;
         } catch (Exception e) {
