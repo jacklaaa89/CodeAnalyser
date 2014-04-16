@@ -26,6 +26,7 @@ public class Analyser {
     private ArrayList<FileAnalyser> filesToAnalyse;
     private OutputGenerator output;
     private ArrayList<String> unsupportedFiles;
+    private String forcedLanguage;
     
     /**
      * initialises the analyser object with a file/directory location.
@@ -64,10 +65,13 @@ public class Analyser {
     }
     
     /**
-     * 
-     * @param forcedLanguage 
+     * analyses the files using a strict source language.
+     * @param forcedLanguage the language to force files to be.
      */
     public void analyse(String forcedLanguage) {
+        for(FileAnalyser file : this.filesToAnalyse) {
+            file.setForcedLanguage(forcedLanguage);
+        }
         this.analyse();
     }
     
