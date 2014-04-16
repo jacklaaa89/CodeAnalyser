@@ -12,14 +12,21 @@ import org.codeanalyser.metric.Result;
 public class NumberOfMethods implements MetricInterface {
 
     private String fileLocation, sourceLanguage;
-    private int noOfMethods;
+    private int noOfMethods = 0;
     private int methodThreshold = 10;
-    private String[] languageTokens;
     
     @Override
     public Result getResults() {
+        
+       StringBuilder builder = new StringBuilder();
+       builder.append("<table><tr><td>Number of Methods In Class: ");
+       builder.append(this.noOfMethods);
+       builder.append("</td></tr><tr><td>Method Threshold: ");
+       builder.append(this.methodThreshold);
+       builder.append("</td></tr></table>");
+        
        return Result.newInstance(fileLocation, sourceLanguage, this.getClass().getSimpleName(),
-               "No of Methods in class: " + noOfMethods, (noOfMethods <= methodThreshold));
+               builder.toString(), (noOfMethods <= methodThreshold));
     }
 
     @Override
@@ -33,8 +40,6 @@ public class NumberOfMethods implements MetricInterface {
     public void init(String fileLocation, String sourceLanguage, String[] tokens) {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
-        this.noOfMethods = 0;
-        this.languageTokens = tokens;
     }
     
 }
