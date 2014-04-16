@@ -74,8 +74,16 @@ public class OverallResult {
      */
     public void generateSubPage(File outputDestination)
             throws TemplateNotFoundException {
-
-        File f = new File(outputDestination.getAbsolutePath() + "/output-" + this.file.getBaseName().toLowerCase() + ".html");
+        String fileName = outputDestination.getAbsolutePath()+ "/" + this.file.getAbsolutePath() + ".html";
+        String regex = "";
+        if(File.separator.equals("\\")) {
+            regex = "\\";
+        } else {
+            regex = File.separator;
+        }
+        fileName = fileName.replace(regex, "-");
+        fileName = fileName.replaceAll("[^a-zA-Z0-9\\s-.]", "");
+        File f = new File(outputDestination.getAbsolutePath()+"/"+fileName.toLowerCase());
 
         if (f.exists()) {
             f.delete();
