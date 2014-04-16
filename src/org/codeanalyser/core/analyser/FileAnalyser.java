@@ -29,6 +29,25 @@ public class FileAnalyser extends File {
     }
     
     /**
+     * gets the basename without the file extension of path.
+     * @return the base name or null if an error occured.
+     */
+    public String getBaseName() {
+        //if this file does not exist or is a directory
+        if(!this.exists() || this.isDirectory()) {
+            return null;
+        }
+        
+        //if this file has no name.
+        if(this.getName().equals("")) {
+            return null;
+        }
+        
+        //return the basename
+        return FilenameUtils.getBaseName(this.getName());
+    }
+    
+    /**
      * returns the extension of this file.
      * @return the file extension or null if this file
      * is a directory or doesn't exist.
