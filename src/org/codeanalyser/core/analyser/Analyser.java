@@ -42,6 +42,7 @@ public class Analyser {
         }
         this.output = new OutputGenerator(outputLocation);
         determineFiles(this.sourceCodeLocation);
+        System.out.println("Found " + this.filesToAnalyse.size() + " Files To Analyse in: " + this.sourceCodeLocation.getAbsolutePath());
     }
     
     /**
@@ -69,7 +70,7 @@ public class Analyser {
     public void analyse() {
         for(FileAnalyser file : this.filesToAnalyse) {
             try {
-                
+                System.out.println("Started Analysing File: " + file.getAbsolutePath());
                 //generate parse tree from source file.
                 Lexer lexer = file.getSupportedLexer();
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -98,6 +99,7 @@ public class Analyser {
             }
         }
         try {
+            System.out.println("Generating Output");
             //render the output for this analysis.
             this.output.generateOutput(this.results, this.unsupportedFiles);
         } catch (Exception e) {
