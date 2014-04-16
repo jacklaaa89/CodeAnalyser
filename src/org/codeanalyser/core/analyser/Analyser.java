@@ -63,6 +63,14 @@ public class Analyser {
         }
     }
     
+    /**
+     * 
+     * @param forcedLanguage 
+     */
+    public void analyse(String forcedLanguage) {
+        this.analyse();
+    }
+    
     
     /**
      * Analyses the source location provided in the constructor.
