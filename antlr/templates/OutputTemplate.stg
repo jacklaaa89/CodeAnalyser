@@ -74,7 +74,7 @@ renderResult(result) ::= <<
                     \<td>\<span style='font-weight:bold;'>Overall Result: \</span>\<span style='color:<result.colorCode>;'><result.successMessage>\</span>\</td>
                 \</tr>
                 \<tr>
-                    \<td>\<a href='<result.resultHTML>'>Metric Results \</a>\</td>
+                    \<td>\<a href='<result.link>'>Metric Results \</a>\</td>
                 \</tr>
             \</thead>
             \<tr>
@@ -86,5 +86,44 @@ renderResult(result) ::= <<
 >>
 
 sub(fileName, sourceLanguage, html) ::= <<
-    <html>  <fileName>  <sourceLanguage>
+\<!DocType HTML>
+\<html>
+    \<head>
+        \<title>Code Analyser Results - <fileName>\</title>
+    \</head>
+    \<body>
+        \<div>
+            \<h1>Code Quality Analyser Results - <fileName>\</h1>
+        \</div>
+        \<div>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td>Metric Results\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <html>
+                \</tbody>
+            \</table>
+        \</div>
+    \</body>
+    \<style>
+        thead td, tbody td > span {
+            font-weight:bold;
+        }
+        tbody tr td:first-of-type {
+            width:386px;
+        }
+        table {
+            border-spacing: 0px;
+        }
+        
+        tbody tr:first-of-type td, tbody tr:nth-of-type(4n) td
+        {border-bottom:1px solid black; border-top:1px solid black;}
+        tbody tr:nth-of-type(3n) td, thead td {padding-bottom:10px;}
+        /* reset any table css in comments. */
+        tbody tr:nth-of-type(3n) td > div td {padding:0px;border:none;font-weight:normal;}
+    \</style>
+\</html>
 >>
