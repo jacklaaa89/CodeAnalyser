@@ -16,8 +16,11 @@ import org.codeanalyser.language.ParserInterface;
  * Adds extensions to the file class which are used to determine
  * additional information on source code files.
  * @author Jack Timblin - U1051575
+ * @version 1.1 uses LanguageDetect to determine the source language from the file extension.
  */
 public class FileAnalyser extends File {
+    
+    private LanguageDetect detect;
     
     /**
      * Constructor - initialises this object.
@@ -25,6 +28,7 @@ public class FileAnalyser extends File {
      */
     public FileAnalyser(String fileLocation) {
         super(fileLocation);
+        detect = new LanguageDetect();
         
     }
     
@@ -80,12 +84,18 @@ public class FileAnalyser extends File {
      */
     public ParserInterface getSupportedParser(TokenStream stream) throws UnsupportedLanguageException {
         
-        if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
+        Language supported = detect.getSupportedLanguage(this.getFileExtension());
+        
+        if(supported == null) {
+            throw new UnsupportedLanguageException("Unknown Language");
+        }
+        
+        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
             throw new UnsupportedLanguageException("Unsupported Language");
         }
         
         try {
-            String g = this.getFileExtension().toLowerCase();
+            String g = supported.getName().toLowerCase();
             String ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
             Constructor c = Class.forName("org.codeanalyser.language."+g+"."+ug+"Parser").getConstructor(TokenStream.class);
             return (ParserInterface) c.newInstance(stream);
@@ -106,12 +116,18 @@ public class FileAnalyser extends File {
      */
     public Lexer getSupportedLexer() throws UnsupportedLanguageException {
         
-        if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
+        Language supported = detect.getSupportedLanguage(this.getFileExtension());
+        
+        if(supported == null) {
+            throw new UnsupportedLanguageException("Unknown Language");
+        }
+        
+        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
             throw new UnsupportedLanguageException("Unsupported Language");
         }
         
         try {
-            String g = this.getFileExtension().toLowerCase();
+            String g = supported.getName().toLowerCase();
             String ug = Character.toUpperCase(g.charAt(0)) + g.substring(1);
             Constructor c = Class.forName("org.codeanalyser.language."+g+"."+ug+"Lexer").getConstructor(CharStream.class);
             return (Lexer) c.newInstance(new ANTLRFileStream(this.getAbsolutePath()));
@@ -131,12 +147,18 @@ public class FileAnalyser extends File {
      */
     public ParseTreeListener getSupportedListener(String[] tokens) throws UnsupportedLanguageException
     {
+        Language supported = detect.getSupportedLanguage(this.getFileExtension());
+        
+        if(supported == null) {
+            throw new UnsupportedLanguageException("Unknown Language");
+        }
+        
         //check the file extension matches a supported language.
-        if(!Application.getSupportedLanguages().contains(this.getFileExtension())) {
+        if(!Application.getSupportedLanguages().contains(supported.getName().toLowerCase())) {
             throw new UnsupportedLanguageException(this.getFileExtension()+" is not supported");
         }
         try {
-            ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+this.getFileExtension().toLowerCase()+".BaseListener").newInstance();
+            ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+supported.getName().toLowerCase()+".BaseListener").newInstance();
             ((ListenerInterface)listener).init(this, tokens);
             return listener;
         } catch (Exception e) {
