@@ -19,18 +19,18 @@ public class LanguageDetect {
             DetectorFactory.loadProfile("antlr/profiles");
             detector = DetectorFactory.create();
         } catch(LangDetectException e) {
-            throw new LanguageDetectionException("Could not load detector profiles");
+            throw new LanguageDetectionException(e.getMessage());
         }
     }
     
-    public ArrayList<Language> detectLanguage(String text) throws LanguageDetectionException {
+    public String detectLanguage(String text) throws LanguageDetectionException {
         
         if(detector == null) {
             throw new LanguageDetectionException("Could not initialise detector");
         }
         try {
             detector.append(text);
-            return detector.getProbabilities();
+            return detector.detect();
         } catch (LangDetectException e) {
             throw new LanguageDetectionException(e.getMessage());
         }
