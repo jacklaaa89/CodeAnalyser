@@ -2,6 +2,7 @@ package org.codeanalyser.metric.wmc;
 
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
@@ -19,7 +20,7 @@ public class WeightedMethodCount implements MetricInterface {
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
     @Override
-    public Result getResults() {
+    public Result getResults() throws InvalidResultException {
         
         String result = "<table><tr><td>WeightedMethodCount Result: </td></tr>"
                 + "<tr><td>Total Amount of Complexity Keywords Found: "+this.totalClassComplexity+"</td></tr>"
@@ -46,6 +47,10 @@ public class WeightedMethodCount implements MetricInterface {
         this.fileName = fileLocation;
         this.sourceLang = sourceLanguage;
         this.tokens = tokens;
+    }
+
+    @Override
+    public void destroy() {
     }
     
 }
