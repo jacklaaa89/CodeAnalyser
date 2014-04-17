@@ -95,9 +95,9 @@ public class OverallResult {
         //build the HTML for each of the metric results.
         StringBuilder builder = new StringBuilder();
         for (Result r : results) {
-            builder.append("<tr><td><span>Metric Name: </span>");
+            builder.append("<tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>");
             builder.append(r.getMetricName());
-            builder.append("</td><td><span>Was Successful: </span>");
+            builder.append("</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span>");
             builder.append("<span style='color:");
             builder.append(r.isSuccessful() ? "green" : "red");
             builder.append(";'>");

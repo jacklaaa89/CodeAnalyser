@@ -35,9 +35,9 @@ public class MethodProperty {
         return this.eventType;
     }
     
-    public static String splitCamelCase(String str)
+    public static String splitCamelCase(String str, String replacement)
     {
-         String string = str.replaceAll("((^[a-z]+)|([A-Z]{1}[a-z]+)|([A-Z]+(?=([A-Z][a-z])|($))))", "$1_").toUpperCase().trim();
+         String string = str.replaceAll("((^[a-z]+)|([A-Z]{1}[a-z]+)|([A-Z]+(?=([A-Z][a-z])|($))))", "$1"+replacement).toUpperCase().trim();
          return string.substring(0, string.length()-1);
     }
     

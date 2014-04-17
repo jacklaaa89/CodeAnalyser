@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -11,6 +12,8 @@ import org.codeanalyser.core.output.OutputGenerator;
 import org.codeanalyser.core.output.OverallResult;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.Result;
 
 /**
  * This class is the one that analyses the file/directory that is the input.
@@ -21,16 +24,16 @@ import org.codeanalyser.language.ParserInterface;
  */
 public class Analyser {
     
-    private File sourceCodeLocation;
-    private ArrayList<OverallResult> results;
-    private ArrayList<FileAnalyser> filesToAnalyse;
+    private final File sourceCodeLocation;
+    private final ArrayList<OverallResult> results;
+    private final ArrayList<FileAnalyser> filesToAnalyse;
     private OutputGenerator output;
-    private ArrayList<String> unsupportedFiles;
-    private String forcedLanguage;
+    private final ArrayList<String> unsupportedFiles;
     
     /**
      * initialises the analyser object with a file/directory location.
      * @param sourceCodeLocation the file or directory to analyse.
+     * @param outputLocation the location to save output files to.
      * @throws AnalyserException if the given source code location does not exist.
      */
     public Analyser(String sourceCodeLocation, String outputLocation) throws AnalyserException {
@@ -94,14 +97,25 @@ public class Analyser {
                 //walk the parse tree calling methods in the metrics.
                 walker.walk(listener, tree);
                 
-                //gather the results from the analysis.
-                OverallResult result = new OverallResult(
-                        ((ListenerInterface) listener).getResults(),
-                        file.getAbsolutePath()
-                );
+                OverallResult result = null;
+                
+                try {
+                    ArrayList<Result> results = ((ListenerInterface) listener).getResults();
+                    //gather the results from the analysis.
+                    result = new OverallResult(
+                            results,
+                            file.getAbsolutePath()
+                    );
+                } catch (InvalidResultException e) {
+                    System.out.println(e.getMessage());
+                }
+                
+                
                 
                 //add this to result array.
-                this.results.add(result);
+                if(result != null) {
+                    this.results.add(result);
+                }
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
                 this.unsupportedFiles.add(file.getAbsolutePath());

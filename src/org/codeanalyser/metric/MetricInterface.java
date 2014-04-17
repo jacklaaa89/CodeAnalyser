@@ -28,7 +28,8 @@ public interface MetricInterface {
      * @param fileLocation the absolute file location for the file being evaluated.
      * @param sourceLanguage the source language of the file.
      * @param tokens the tokens for this language.
+     * @throws MetricInitialisationException when a fatal error occurs initialising the metric.
      */
-    public void init(String fileLocation, String sourceLanguage, String[] tokens);
+    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException;
     
 }

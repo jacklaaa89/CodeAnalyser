@@ -1,6 +1,7 @@
 package org.codeanalyser.metric.tester;
 
 import org.codeanalyser.language.EventState;
+import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
 
@@ -23,7 +24,7 @@ public class TesterMetric implements MetricInterface {
     public void start(EventState state) {}
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) {
+    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
     }

@@ -21,5 +21,9 @@ public enum EventType {
     /**
      * when the parser find a constructor declaration.
      */
-    ENTER_CONSTRUCTOR_DECLARATION
+    ENTER_CONSTRUCTOR_DECLARATION,
+    /**
+     * when the parser finds a variable name.
+     */
+    ENTER_VARIABLE_DECLARATOR_ID
 }

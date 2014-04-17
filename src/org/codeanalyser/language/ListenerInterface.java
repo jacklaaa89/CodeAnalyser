@@ -2,6 +2,7 @@ package org.codeanalyser.language;
 
 import java.util.ArrayList;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -17,8 +18,10 @@ public interface ListenerInterface {
     /**
      * get the results from all of the attached metrics.
      * @return ArrayList<Result> the results.
+     * @throws org.codeanalyser.metric.InvalidResultException if a supplied result from a metric is 
+     * not valid.
      */
-    public ArrayList<Result> getResults();
+    public ArrayList<Result> getResults() throws InvalidResultException;
     
     /**
      * gives the listener initial values about the file it is processing.

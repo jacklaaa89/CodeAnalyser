@@ -154,10 +154,12 @@ public class Application {
         @Override
         public void enterClassDeclaration(JavaParser.ClassDeclarationContext ctx) {
             //check to see if this class implements MetricInterface.
-            if(ctx.typeList().getText().equalsIgnoreCase("MetricInterface")) {
-                if(this.packagePath != null) {
-                    String className = "org.codeanalyser.metric."+packagePath.toLowerCase()+"."+ctx.Identifier().getText();
-                    this.metrics.add(className);
+            if(ctx.typeList() != null) {
+                if(ctx.typeList().getText().equalsIgnoreCase("MetricInterface")) {
+                    if(this.packagePath != null) {
+                        String className = "org.codeanalyser.metric."+packagePath.toLowerCase()+"."+ctx.Identifier().getText();
+                        this.metrics.add(className);
+                    }
                 }
             }
         }

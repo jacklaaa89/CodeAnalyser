@@ -2,6 +2,7 @@ package org.codeanalyser.metric.nom;
 
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
 
@@ -37,7 +38,7 @@ public class NumberOfMethods implements MetricInterface {
     }
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) {
+    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
     }

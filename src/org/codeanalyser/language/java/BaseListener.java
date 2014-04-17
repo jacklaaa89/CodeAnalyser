@@ -1,14 +1,16 @@
 package org.codeanalyser.language.java;
 
-import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.core.Application;
 import java.util.ArrayList;
-import org.codeanalyser.language.MetricException;
+import org.codeanalyser.core.Application;
+import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
+import org.codeanalyser.language.MetricException;
+import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricInitialisationException;
+import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
-import org.codeanalyser.core.analyser.FileAnalyser;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -36,7 +38,12 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         try {
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
-                m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                try {
+                    m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                } catch (MetricInitialisationException e) {
+                    System.out.println("Failed to Initialise Metric: \"" + metric + "\"");
+                    continue;
+                }
                 metrics.add(m);
             }
         } catch (Exception e) {
@@ -46,13 +53,21 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
 
     /**
      * gathers the results from the metrics in this listener.
-     * @return an ArrayList<Result> of string results from each of the metrics.
+     * @return an ArrayList\<Result> of string results from each of the metrics.
      */
     @Override
-    public ArrayList<Result> getResults() {
+    public ArrayList<Result> getResults() throws InvalidResultException {
         ArrayList<Result> results = new ArrayList<Result>();
-        for(MetricInterface metric : metrics) {
-            results.add(metric.getResults());
+        for(MetricInterface mi : metrics) {
+            try {
+                Result r = mi.getResults();
+                if(r == null) {
+                    throw new InvalidResultException("Result from Metric was not valid.");
+                }
+                results.add(r);
+            } catch (Exception e) {
+                throw new InvalidResultException("Result from Metric was not valid.");
+            }
         }
         return results;
     }
@@ -71,6 +86,17 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             metric.start(state);
         }
         
+     }
+     
+     @Override
+     public void enterVariableDeclaratorId(JavaParser.VariableDeclaratorIdContext context) {
+         //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_VARIABLE_DECLARATOR_ID).build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.start(state);
+        }
      }
      
     /**
