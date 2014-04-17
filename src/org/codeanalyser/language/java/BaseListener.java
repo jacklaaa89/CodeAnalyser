@@ -41,7 +41,8 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
                 try {
                     m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
                 } catch (MetricInitialisationException e) {
-                    System.out.println("Failed to Initialise Metric: \"" + metric + "\"");
+                    System.out.println("Failed to Initialise Metric: \"" + metric + "\", "
+                            + "Error: " + e.getMessage());
                     continue;
                 }
                 metrics.add(m);
@@ -56,17 +57,16 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      * @return an ArrayList\<Result> of string results from each of the metrics.
      */
     @Override
-    public ArrayList<Result> getResults() throws InvalidResultException {
+    public ArrayList<Result> getResults() {
         ArrayList<Result> results = new ArrayList<Result>();
         for(MetricInterface mi : metrics) {
             try {
                 Result r = mi.getResults();
-                if(r == null) {
-                    throw new InvalidResultException("Result from Metric was not valid.");
+                if(r != null) {
+                    results.add(r);
                 }
-                results.add(r);
-            } catch (Exception e) {
-                throw new InvalidResultException("Result from Metric was not valid.");
+            } catch (InvalidResultException e) {
+                System.out.println(e.getMessage());
             }
         }
         return results;
@@ -143,6 +143,14 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             metric.start(state);
         }
      }
+
+    @Override
+    public void destroy() {
+        //do any more work before destruction.
+        for(MetricInterface metric : metrics) {
+            metric.destroy();
+        }
+    }
      
 
 }
