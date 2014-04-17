@@ -31,4 +31,10 @@ public interface ListenerInterface {
      */
     public void init(FileAnalyser file, String[] tokens) throws MetricException;
     
+    /**
+     * called after this listener has finished analysing a single file, 
+     * used so metrics can be reset.
+     */
+    public void destroy();
+    
 }
