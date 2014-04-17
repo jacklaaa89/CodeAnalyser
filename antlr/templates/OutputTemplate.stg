@@ -118,9 +118,6 @@ sub(fileName, sourceLanguage, html) ::= <<
         table {
             border-spacing: 0px;
         }
-        
-        tbody tr:first-of-type td, tbody tr:nth-of-type(4n) td
-        {border-bottom:1px solid black; border-top:1px solid black;}
         tbody tr:nth-of-type(3n) td, thead td {padding-bottom:10px;}
         /* reset any table css in comments. */
         tbody tr:nth-of-type(3n) td > div td {padding:0px;border:none;font-weight:normal;}

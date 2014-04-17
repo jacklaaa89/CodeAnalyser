@@ -15,6 +15,8 @@ import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.metric.Result;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricInitialisationException;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -40,7 +42,12 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
         try {
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
-                m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                try {
+                    m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                } catch (MetricInitialisationException e) {
+                    System.out.println("Failed to Initialise Metric: \"" + metric + "\"");
+                    continue;
+                }
                 metrics.add(m);
             }
         } catch (Exception e) {
@@ -53,10 +60,19 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
      * @return an ArrayList\<Result> of string results from each of the metrics.
      */
     @Override
-    public ArrayList\<Result> getResults() {
+    public ArrayList\<Result> getResults() throws InvalidResultException {
         ArrayList\<Result> results = new ArrayList\<Result>();
-        for(MetricInterface metric : metrics) {
-            results.add(metric.getResults());
+        for(int i = 0; i \< metrics.size(); i++) {
+            MetricInterface mi = metrics.get(i);
+            try {
+                Result r = mi.getResults();
+                if(r == null) {
+                    throw new InvalidResultException("Result from Metric was not valid.");
+                }
+                results.add(r);
+            } catch (Exception e) {
+                throw new InvalidResultException("Result from Metric was not valid.");
+            }
         }
         return results;
     }
