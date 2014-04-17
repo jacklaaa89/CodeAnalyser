@@ -12,8 +12,9 @@ public interface MetricInterface {
      * returns the results from this metric, this will
      * be the results when this metric is run on a single class.
      * @return the results from running the metric.
+     * @throws InvalidResultException if the returned result is invalid.
      */
-    public Result getResults();
+    public Result getResults() throws InvalidResultException;
     
     /**
      * starts this metrics evaluation of a 
@@ -31,5 +32,11 @@ public interface MetricInterface {
      * @throws MetricInitialisationException when a fatal error occurs initialising the metric.
      */
     public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException;
+    
+    /**
+     * called after the analysis is completed on a single file, can be used
+     * to reset variables etc.
+     */
+    public void destroy();
     
 }

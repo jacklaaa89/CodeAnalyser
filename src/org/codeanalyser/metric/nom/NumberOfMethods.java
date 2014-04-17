@@ -2,6 +2,7 @@ package org.codeanalyser.metric.nom;
 
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
@@ -17,7 +18,7 @@ public class NumberOfMethods implements MetricInterface {
     private int methodThreshold = 10;
     
     @Override
-    public Result getResults() {
+    public Result getResults() throws InvalidResultException {
         
        StringBuilder builder = new StringBuilder();
        builder.append("<table><tr><td>Number of Methods In Class: ");
@@ -41,6 +42,10 @@ public class NumberOfMethods implements MetricInterface {
     public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
+    }
+
+    @Override
+    public void destroy() {
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
@@ -23,7 +24,7 @@ public class CyclomaticComplexity implements MetricInterface {
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
     @Override
-    public Result getResults() {
+    public Result getResults() throws InvalidResultException {
         
         //determine which method had the most complexity and whether it went over the
         //threshold.
@@ -75,6 +76,11 @@ public class CyclomaticComplexity implements MetricInterface {
         this.sourceLang = sourceLanguage;
         this.tokens = tokens;
         this.entries = new ArrayList<Entry>();
+    }
+
+    @Override
+    public void destroy() {
+        
     }
     
 }

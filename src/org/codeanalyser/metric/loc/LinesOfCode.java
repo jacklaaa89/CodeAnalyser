@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import org.codeanalyser.language.EventState;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
@@ -22,7 +23,7 @@ public class LinesOfCode implements MetricInterface {
     private final int locThreashold = 100;
 
     @Override
-    public Result getResults() {
+    public Result getResults() throws InvalidResultException {
         
         String result = "<table><tr><td>LinesOfCode Result: </td></tr>"
                 + "<tr><td>Lines Of Code: "+this.loc+"</td></tr>"
@@ -64,6 +65,10 @@ public class LinesOfCode implements MetricInterface {
         } catch (IOException e) {
             throw new MetricInitialisationException(e.getMessage());
         }
+    }
+
+    @Override
+    public void destroy() {
     }
 
     

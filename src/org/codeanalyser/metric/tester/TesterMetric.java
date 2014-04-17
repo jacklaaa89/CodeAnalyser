@@ -1,6 +1,7 @@
 package org.codeanalyser.metric.tester;
 
 import org.codeanalyser.language.EventState;
+import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.Result;
@@ -16,8 +17,9 @@ public class TesterMetric implements MetricInterface {
     private String fileLocation, sourceLanguage;
     
     @Override
-    public Result getResults() {
-        return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.", true);
+    public Result getResults() throws InvalidResultException {
+        return null;
+        //return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.", true);
     }
     
     @Override
@@ -27,6 +29,10 @@ public class TesterMetric implements MetricInterface {
     public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
         this.fileLocation = fileLocation;
         this.sourceLanguage = sourceLanguage;
+    }
+
+    @Override
+    public void destroy() {
     }
     
 }
