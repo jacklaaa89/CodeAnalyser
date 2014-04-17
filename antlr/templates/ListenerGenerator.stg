@@ -55,23 +55,29 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
         }
     }
     
+    @Override
+    public void destroy() {
+        for(MetricInterface metric : metrics) {
+            metric.destroy();
+        }
+    }
+    
     /**
      * gathers the results from the metrics in this listener.
      * @return an ArrayList\<Result> of string results from each of the metrics.
      */
     @Override
-    public ArrayList\<Result> getResults() throws InvalidResultException {
+    public ArrayList\<Result> getResults() {
         ArrayList\<Result> results = new ArrayList\<Result>();
         for(int i = 0; i \< metrics.size(); i++) {
             MetricInterface mi = metrics.get(i);
             try {
                 Result r = mi.getResults();
-                if(r == null) {
-                    throw new InvalidResultException("Result from Metric was not valid.");
+                if(r != null) {
+                    results.add(r);
                 }
-                results.add(r);
-            } catch (Exception e) {
-                throw new InvalidResultException("Result from Metric was not valid.");
+            } catch (InvalidResultException e) {
+                System.out.println(e.getMessage());
             }
         }
         return results;
