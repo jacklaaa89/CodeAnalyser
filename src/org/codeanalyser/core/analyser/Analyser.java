@@ -3,7 +3,6 @@ import java.io.File;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -116,6 +115,9 @@ public class Analyser {
                 if(result != null) {
                     this.results.add(result);
                 }
+                
+                //call destroy on metrics.
+                ((ListenerInterface)listener).destroy();
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
                 this.unsupportedFiles.add(file.getAbsolutePath());
