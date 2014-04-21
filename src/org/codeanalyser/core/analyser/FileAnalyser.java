@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.apache.commons.io.FilenameUtils;
@@ -42,6 +43,13 @@ public class FileAnalyser extends File {
         detect = new LanguageDetect();
     }
     
+    /**
+     * sets the language to force this analysis to use, 
+     * i.e we can force all files to attempt to be parsed by
+     * a specific parser, this is obviously faster because
+     * auto-detecting a files source code doesn't need to take place.
+     * @param forcedLang the source language to force this file to use.
+     */
     public void setForcedLanguage(String forcedLang) {
         this.forcedLanguage = forcedLang;
     }
@@ -170,18 +178,17 @@ public class FileAnalyser extends File {
     /**
      * returns the parseTreeListener instance that supports this file. This is calculated by 
      * if the file extension matches a package.
-     * @param tokens the tokens that are defined in the grammar for this language.
      * @return a ParseTreeListener that supports this language
      * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
      * supported or the Listener could not be instantiated properly.
      */
-    public ParseTreeListener getSupportedListener(String[] tokens) throws UnsupportedLanguageException
+    public ParseTreeListener getSupportedListener(ParserInterface parser) throws UnsupportedLanguageException
     {
         String[] names = this.getClassNames();
         
         try {
             ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+names[0]+".BaseListener").newInstance();
-            ((ListenerInterface)listener).init(this, tokens);
+            ((ListenerInterface)listener).init(this, parser);
             return listener;
         } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());
