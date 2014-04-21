@@ -6,12 +6,12 @@ import org.codeanalyser.language.ParserInterface;
  *
  * @author jack
  */
-public class ParserInformation {
+public class ParserInfo {
     
     private String fileName, sourceLanguage;
     private ParserInterface parser;
     
-    public ParserInformation(ParserInterface parser, String fileName,
+    public ParserInfo(ParserInterface parser, String fileName,
             String sourceLanguage) {
         this.fileName = fileName;
         this.parser = parser;

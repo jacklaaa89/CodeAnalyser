@@ -1,18 +1,16 @@
 package org.codeanalyser.language.java;
 
 import java.util.ArrayList;
-import org.antlr.v4.runtime.Parser;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
 import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -39,8 +37,8 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.
         try {
-            ParserInformation info = new ParserInformation(parser, file.getAbsolutePath(), 
-                                            file.getFileExtension());
+            ParserInfo info = new ParserInfo(parser, file.getAbsolutePath(), 
+                                            file.getSourceLanguage());
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {
@@ -85,7 +83,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterSwitchBlockStatementGroup(JavaParser.SwitchBlockStatementGroupContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_BLOCK_STATEMENT_GROUP").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -101,7 +99,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterMethodBody(JavaParser.MethodBodyContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_METHOD_BODY).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_METHOD_BODY").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -113,7 +111,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterVariableDeclaratorId(JavaParser.VariableDeclaratorIdContext context) {
          //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_VARIABLE_DECLARATOR_ID).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_VARIABLE_DECLARATOR_ID").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -128,7 +126,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterStatement(JavaParser.StatementContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_STATEMENT).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_STATEMENT").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -143,7 +141,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterMethodDeclaration(JavaParser.MethodDeclarationContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_METHOD_DECLARATION).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_METHOD_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -158,7 +156,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterClassDeclaration(JavaParser.ClassDeclarationContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_CLASS_DECLARATION).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_CLASS_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
@@ -173,7 +171,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
      public void enterConstructorDeclaration(JavaParser.ConstructorDeclarationContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType(EventType.ENTER_CONSTRUCTOR_DECLARATION).build();
+        EventState state = builder.setContext(context).setEventType("ENTER_CONSTRUCTOR_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);

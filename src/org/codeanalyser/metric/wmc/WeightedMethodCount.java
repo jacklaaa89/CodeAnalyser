@@ -2,12 +2,11 @@ package org.codeanalyser.metric.wmc;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -37,8 +36,8 @@ public class WeightedMethodCount implements MetricInterface {
 
     @Override
     public void start(EventState state) {
-        if (state.getEventType().equals(EventType.ENTER_STATEMENT)
-                || state.getEventType().equals(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP)) {
+        if (state.getEventType().equals("ENTER_STATEMENT")
+                || state.getEventType().equals("ENTER_SWITCH_BLOCK_STATEMENT_GROUP")) {
 
             this.determineComplexity(state.getContext());
 
@@ -46,7 +45,7 @@ public class WeightedMethodCount implements MetricInterface {
     }
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         this.fileName = initialInformation.getFileName();
         this.sourceLang = initialInformation.getSourceLanguage();
         this.parser = initialInformation.getParser();

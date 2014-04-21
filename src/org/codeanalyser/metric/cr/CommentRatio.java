@@ -8,7 +8,7 @@ import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.yaml.snakeyaml.Yaml;
 
@@ -45,7 +45,7 @@ public class CommentRatio implements MetricInterface {
     public void start(EventState state) {}
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         
         //determine command line args dependant on OS.
         File clocStart = new File("antlr/cloc");

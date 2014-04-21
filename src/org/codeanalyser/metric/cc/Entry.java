@@ -1,7 +1,6 @@
 package org.codeanalyser.metric.cc;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.codeanalyser.language.EventType;
 
 /**
  *
@@ -9,7 +8,7 @@ import org.codeanalyser.language.EventType;
  */
 public class Entry {
     
-    private EventType type;
+    private String type;
     private int amountOfComplexKeywords = -1;
     private ParserRuleContext context;
     private String methodName;
@@ -23,11 +22,11 @@ public class Entry {
         this.complexityThreshold = complexityThreshold;
     }
 
-    public EventType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(EventType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

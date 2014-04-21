@@ -9,7 +9,7 @@ import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -41,7 +41,7 @@ public class LinesOfCode implements MetricInterface {
     }
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         try {
             InputStream stream = new BufferedInputStream(new FileInputStream(initialInformation.getFileName()));
             try {

@@ -10,9 +10,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public class EventState {
     
     private ParserRuleContext context;
-    private EventType eventType;
+    private String eventType;
     
-    private void setEventType(EventType type) {
+    private void setEventType(String type) {
         this.eventType = type;
     }
 
@@ -24,14 +24,14 @@ public class EventState {
         this.context = context;
     }
     
-    public EventType getEventType() {
+    public String getEventType() {
         return this.eventType;
     }
     
     @Override
     public String toString() {
         return "Context Tree:\n" + this.getContext().toStringTree()
-                + "\nEvent: " + this.getEventType().name();
+                + "\nEvent: " + this.getEventType();
     }
     
     private EventState() {}
@@ -50,7 +50,7 @@ public class EventState {
         }
         
         
-        public EventStateBuilder setEventType(EventType type) {
+        public EventStateBuilder setEventType(String type) {
             state.setEventType(type);
             return this;
         }

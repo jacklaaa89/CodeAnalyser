@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import org.codeanalyser.core.generation.MethodProperty;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -58,7 +57,7 @@ public class VariableNamingConventions implements MetricInterface {
 
     @Override
     public void start(EventState state) {
-        if(state.getEventType().equals(EventType.ENTER_VARIABLE_DECLARATOR_ID)) {
+        if(state.getEventType().equals("ENTER_VARIABLE_DECLARATOR_ID")) {
             if(state.getContext() != null) {
                 variableNames.add(state.getContext().getText());
             }
@@ -66,7 +65,7 @@ public class VariableNamingConventions implements MetricInterface {
     }
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         this.fileName = initialInformation.getFileName();
         this.sourceLang = initialInformation.getSourceLanguage();
         this.variableNames = new ArrayList<String>();

@@ -1,11 +1,10 @@
 package org.codeanalyser.metric.nom;
 
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -34,13 +33,13 @@ public class NumberOfMethods implements MetricInterface {
 
     @Override
     public void start(EventState state) {
-        if(state.getEventType() == EventType.ENTER_METHOD_DECLARATION) {
+        if(state.getEventType().equals("ENTER_METHOD_DECLARATION")) {
             noOfMethods++;
         }
     }
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         this.fileLocation = initialInformation.getFileName();
         this.sourceLanguage = initialInformation.getSourceLanguage();
     }

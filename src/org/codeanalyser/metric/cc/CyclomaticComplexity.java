@@ -5,12 +5,11 @@ import java.util.Collections;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
-import org.codeanalyser.metric.ParserInformation;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -57,8 +56,8 @@ public class CyclomaticComplexity implements MetricInterface {
 
     @Override
     public void start(EventState state) {
-        if(state.getEventType().equals(EventType.ENTER_CONSTRUCTOR_DECLARATION) ||
-                state.getEventType().equals(EventType.ENTER_METHOD_DECLARATION)) {
+        if(state.getEventType().equals("ENTER_CONSTRUCTOR_DECLARATION") ||
+                state.getEventType().equals("ENTER_METHOD_DECLARATION")) {
             //if were in a constructor or a method, count the amount of complexity keywords in that
             //method or constructor, store these in a ArrayList.
             Entry currentEntry = new Entry();
@@ -69,8 +68,8 @@ public class CyclomaticComplexity implements MetricInterface {
             currentEntry.setComplexityThreshold(complexityThreshold);
             this.entries.add(currentEntry);
             
-        } else if (state.getEventType().equals(EventType.ENTER_STATEMENT) ||
-                state.getEventType().equals(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP)) {
+        } else if (state.getEventType().equals("ENTER_STATEMENT") ||
+                state.getEventType().equals("ENTER_SWITCH_BLOCK_STATEMENT_GROUP")) {
             //statements only appear inside constructors or methods
             //so we can safety assume the last entry in our entries is the
             //current method/constructor.
@@ -94,7 +93,7 @@ public class CyclomaticComplexity implements MetricInterface {
     }
 
     @Override
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         this.fileName = initialInformation.getFileName();
         this.sourceLang = initialInformation.getSourceLanguage();
         this.entries = new ArrayList<Entry>();

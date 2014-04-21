@@ -29,7 +29,7 @@ public interface MetricInterface {
      * @param initialInformation all the initial information a metric needs.
      * @throws MetricInitialisationException when a fatal error occurs initialising the metric.
      */
-    public void init(ParserInformation initialInformation) throws MetricInitialisationException;
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException;
     
     /**
      * called after the analysis is completed on a single file, can be used

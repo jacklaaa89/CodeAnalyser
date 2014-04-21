@@ -11,14 +11,12 @@ import org.codeanalyser.core.Application;
 import java.util.ArrayList;
 import org.codeanalyser.language.MetricException;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.metric.Result;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.ParserInformation;
-import org.antlr.v4.runtime.Parser;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.language.ParserInterface;
 
 /**
@@ -44,7 +42,7 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
         //initialise the metrics.
         try {
             ParserInformation info = new ParserInformation(parser, file.getAbsolutePath(),
-                                            file.getFileExtension());
+                                            file.getSourceLanguage());
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {
@@ -103,7 +101,7 @@ methodBuilder(methodProperty) ::= <<
  public void <methodProperty.name>(<methodProperty.context> context) {
     //build state object.
     EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-    EventState state = builder.setContext(context).setEventType(EventType.<methodProperty.eventType>).build();
+    EventState state = builder.setContext(context).setEventType("<methodProperty.eventType>").build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
         metric.start(state);
