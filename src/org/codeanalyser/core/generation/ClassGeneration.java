@@ -39,7 +39,10 @@ public class ClassGeneration {
         ArrayList<MethodProperty> methodNames = new ArrayList<MethodProperty>();
         
         for(String m : ruleNames) {
-            methodNames.add(new MethodProperty(m, grammarName+"Parser."+m.substring(5)+"Context", MethodProperty.splitCamelCase(m, "_")));
+            String ms = (m.startsWith("enter")) ? m.substring(5) : m;
+            ms = ms.substring(0, 1).toUpperCase()+ms.substring(1);
+            m = "enter"+m.substring(0, 1).toUpperCase()+m.substring(1);
+            methodNames.add(new MethodProperty(m, grammarName+"Parser."+ms+"Context", MethodProperty.splitCamelCase(m, "_")));
         }
         
         main.add("methodProperties", methodNames);
@@ -49,6 +52,10 @@ public class ClassGeneration {
         writer.append(main.render());
         writer.flush();
         writer.close();
+        
+    }
+    
+    public static void updateEventTypes(String[] ruleNames) {
         
     }
     
