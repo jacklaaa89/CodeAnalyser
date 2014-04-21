@@ -62,4 +62,9 @@ public class Entry {
                 + "<tr><td>Complexity Threshold: "+this.getComplexityThreshold()+"</td></tr></table>";
     }
     
+    @Override
+    public String toString() {
+        return "methodName: " + this.getMethodName() + ", amount of complexity keywords: " + this.getAmountOfComplexKeywords();
+    }
+    
 }

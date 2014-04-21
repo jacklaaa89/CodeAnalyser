@@ -2,11 +2,15 @@ package org.codeanalyser.metric.cc;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.ParserInformation;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -19,7 +23,9 @@ public class CyclomaticComplexity implements MetricInterface {
     
     private String fileName, sourceLang;
     private String[] tokens;
+    private ParserInterface parser;
     private ArrayList<Entry> entries;
+    private boolean isInMethod = false;
     private final int complexityThreshold = 10;
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
@@ -55,32 +61,47 @@ public class CyclomaticComplexity implements MetricInterface {
                 state.getEventType().equals(EventType.ENTER_METHOD_DECLARATION)) {
             //if were in a constructor or a method, count the amount of complexity keywords in that
             //method or constructor, store these in a ArrayList.
-            Entry e = new Entry();
-            e.setContext(state.getContext());
-            e.setMethodName(state.getContext().getText());
-            e.setType(state.getEventType());
-            e.setComplexityThreshold(complexityThreshold);
+            Entry currentEntry = new Entry();
+            currentEntry.setContext(state.getContext());
+            currentEntry.setMethodName(state.getContext().getChild(1).getText());
+            currentEntry.setType(state.getEventType());
+            currentEntry.setAmountOfComplexKeywords(0);
+            currentEntry.setComplexityThreshold(complexityThreshold);
+            this.entries.add(currentEntry);
             
-            //determine the number of complex keywords.
-            //TODO - determine complexity.
-            e.setAmountOfComplexKeywords(0);
-            
-            //add it to entries.
-            entries.add(e);
+        } else if (state.getEventType().equals(EventType.ENTER_STATEMENT) ||
+                state.getEventType().equals(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP)) {
+            //statements only appear inside constructors or methods
+            //so we can safety assume the last entry in our entries is the
+            //current method/constructor.
+            Entry e = this.entries.get(this.entries.size()-1);
+            this.determineComplexity(state.getContext(), e);
+        }
+    }
+    
+    /**
+     * determines the complexity of the class as a whole.
+     * @param context the statement context.
+     */
+    private void determineComplexity(ParserRuleContext context, Entry entry) {
+        for(String s : this.complexityTokens) {
+            if(s.equalsIgnoreCase(context.getStart().getText().toUpperCase())) {
+                int c = entry.getAmountOfComplexKeywords();
+                entry.setAmountOfComplexKeywords(c+1);
+                break;
+            }
         }
     }
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
-        this.fileName = fileLocation;
-        this.sourceLang = sourceLanguage;
-        this.tokens = tokens;
+    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+        this.fileName = initialInformation.getFileName();
+        this.sourceLang = initialInformation.getSourceLanguage();
         this.entries = new ArrayList<Entry>();
+        this.parser = initialInformation.getParser();
     }
 
     @Override
-    public void destroy() {
-        
-    }
+    public void destroy() {}
     
 }
