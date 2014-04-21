@@ -13,7 +13,7 @@ import org.stringtemplate.v4.STGroupFile;
  */
 public class ClassGeneration {
    
-    public static void generateBaseListener(String grammarName) throws IOException {
+    public static void generateBaseListener(String grammarName, String[] ruleNames) throws IOException {
         
         //check that a listener has not already been generated.
         File listenerName = new File("src/org/codeanalyser/language/"+grammarName+"/BaseListener.java");
@@ -37,10 +37,8 @@ public class ClassGeneration {
         
         //sort the methods.
         ArrayList<MethodProperty> methodNames = new ArrayList<MethodProperty>();
-        String[] methods = {"enterMethodBody","enterMethodDeclaration",
-            "enterClassDeclaration","enterConstructorDeclaration","enterVariableDeclaratorId"};
         
-        for(String m : methods) {
+        for(String m : ruleNames) {
             methodNames.add(new MethodProperty(m, grammarName+"Parser."+m.substring(5)+"Context", MethodProperty.splitCamelCase(m, "_")));
         }
         
