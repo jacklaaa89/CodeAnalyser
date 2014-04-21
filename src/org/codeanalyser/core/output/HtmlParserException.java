@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.codeanalyser.core.output;
 
 /**
- *
- * @author jack
+ * Exception for when the HTML code passed from metrics which is to be injected
+ * into the output template cannot be parsed correctly, or has invalid or illegal
+ * HTML tags in.
+ * @author Jack Timblin - U1051575
  */
 public class HtmlParserException extends Exception {
     

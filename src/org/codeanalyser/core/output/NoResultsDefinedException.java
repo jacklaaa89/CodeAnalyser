@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.codeanalyser.core.output;
 
 /**
- *
- * @author jack
+ * Exception class for when a Template gets given metric results for
+ * a single file with no Result Objects.
+ * @author Jack Timblin - U1051575
  */
 public class NoResultsDefinedException extends Exception {
     
