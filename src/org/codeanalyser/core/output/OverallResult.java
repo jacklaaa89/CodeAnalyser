@@ -2,12 +2,10 @@ package org.codeanalyser.core.output;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.Result;
 import org.jsoup.Jsoup;
@@ -22,8 +20,8 @@ import org.stringtemplate.v4.STGroupFile;
  */
 public class OverallResult {
 
-    private ArrayList<Result> results;
-    private FileAnalyser file;
+    private final ArrayList<Result> results;
+    private final FileAnalyser file;
     private String link;
     
     /**
@@ -48,21 +46,13 @@ public class OverallResult {
         HashMap<Boolean, Integer> map = new HashMap<Boolean, Integer>();
         for (Result r : this.results) {
             Integer i = map.get(r.isSuccessful());
-            map.put(r.isSuccessful(), (i != null) ? (int) i++ : 0);
+            map.put(r.isSuccessful(), (i != null) ? (int) i + 1: 1);
         }
 
         boolean isOverallSuccessful = false;
         if (map.size() > 0) {
             isOverallSuccessful = Collections.max(map.entrySet(),
-                    new Comparator<Map.Entry<Boolean, Integer>>() {
-
-                        @Override
-                        public int compare(Entry<Boolean, Integer> o1, Entry<Boolean, Integer> o2) {
-                            return o1.getValue().compareTo(o2.getValue());
-                        }
-
-                    }
-            ).getKey();
+                    new ResultComparator()).getKey();
         }
         return isOverallSuccessful;
     }
@@ -75,7 +65,7 @@ public class OverallResult {
     public void generateSubPage(File outputDestination)
             throws TemplateNotFoundException {
         String fileName = outputDestination.getAbsolutePath()+ "/" + this.file.getAbsolutePath() + ".html";
-        String regex = "";
+        String regex;
         if(File.separator.equals("\\")) {
             regex = "\\";
         } else {
@@ -120,12 +110,10 @@ public class OverallResult {
         main.add("sourceLanguage", this.file.getFileExtension());
         
         //save the output file to disc.
-        try {
-            FileWriter writer = new FileWriter(f);
+        try (FileWriter writer = new FileWriter(f)) {
             writer.append(main.render());
             writer.flush();
-            writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new TemplateNotFoundException("Could not read, or write to template file.");
         }
         
