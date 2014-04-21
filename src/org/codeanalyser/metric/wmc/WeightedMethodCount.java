@@ -1,56 +1,72 @@
 package org.codeanalyser.metric.wmc;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
+import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.ParserInformation;
 import org.codeanalyser.metric.Result;
 
 /**
- * This metric is used to determine the total
- * @author Jack
+ * This metric is used to determine the total complexity keywords that are used
+ * in a class.
+ *
+ * @author Jack Timblin - U1051575
  */
 public class WeightedMethodCount implements MetricInterface {
-    
+
     private int totalClassComplexity = 0;
     private final int complexityThreshold = 50;
     private String fileName, sourceLang;
     private String[] tokens;
+    private ParserInterface parser;
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
     @Override
     public Result getResults() throws InvalidResultException {
-        
         String result = "<table><tr><td>WeightedMethodCount Result: </td></tr>"
-                + "<tr><td>Total Amount of Complexity Keywords Found: "+this.totalClassComplexity+"</td></tr>"
-                + "<tr><td>Complexity Threshold: "+this.complexityThreshold+"</td></tr></table>";
-        
+                + "<tr><td>Total Amount of Complexity Keywords Found: " + this.totalClassComplexity + "</td></tr>"
+                + "<tr><td>Complexity Threshold: " + this.complexityThreshold + "</td></tr></table>";
+
         return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(),
                 result, totalClassComplexity <= complexityThreshold);
     }
 
     @Override
     public void start(EventState state) {
-        if(state.getEventType().equals(EventType.ENTER_CONSTRUCTOR_DECLARATION) ||
-                state.getEventType().equals(EventType.ENTER_METHOD_DECLARATION)) {
-            
-            //TODO - determine complexity.
-            int complexity = 0;
-            totalClassComplexity += complexity;
-            
+        if (state.getEventType().equals(EventType.ENTER_STATEMENT)
+                || state.getEventType().equals(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP)) {
+
+            this.determineComplexity(state.getContext());
+
         }
     }
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
-        this.fileName = fileLocation;
-        this.sourceLang = sourceLanguage;
-        this.tokens = tokens;
+    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+        this.fileName = initialInformation.getFileName();
+        this.sourceLang = initialInformation.getSourceLanguage();
+        this.parser = initialInformation.getParser();
     }
 
     @Override
     public void destroy() {
     }
     
+    /**
+     * determines the complexity of the class as a whole.
+     * @param context the statement context.
+     */
+    private void determineComplexity(ParserRuleContext context) {
+        for(String s : this.complexityTokens) {
+            if(s.equalsIgnoreCase(context.getStart().getText().toUpperCase())) {
+                this.totalClassComplexity++;
+                break;
+            }
+        }
+    }
+
 }
