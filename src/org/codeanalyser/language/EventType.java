@@ -25,5 +25,13 @@ public enum EventType {
     /**
      * when the parser finds a variable name.
      */
-    ENTER_VARIABLE_DECLARATOR_ID
+    ENTER_VARIABLE_DECLARATOR_ID,
+    /**
+     * when the parser enters a statement.
+     */
+    ENTER_STATEMENT,
+    /**
+     * when the parser enters a switch block statement.
+     */
+    ENTER_SWITCH_BLOCK_STATEMENT_GROUP
 }
