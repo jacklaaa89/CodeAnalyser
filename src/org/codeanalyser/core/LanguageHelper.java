@@ -10,7 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Constructor;
+import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.TokenStream;
 import org.codeanalyser.core.generation.ClassGeneration;
+import org.codeanalyser.language.ParserInterface;
 
 /**
  * This class is used to check the grammar folder and determine whether their is
@@ -146,6 +153,7 @@ public class LanguageHelper {
                     }
                     //run Antlr using the grammar making the
                     //output location this new directory.
+                    
                     ProcessBuilder process = new ProcessBuilder(
                             arguments[0], arguments[1], arguments[2] + " " + grammarFile.getAbsolutePath() + " -o \"" + grammarPackage.getAbsolutePath() + "\" -visitor"
                     );
@@ -154,6 +162,11 @@ public class LanguageHelper {
                     try {
                         Process p = process.start();
                         p.waitFor();
+                        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                        String line;
+                        while ((line = r.readLine()) != null) {
+                            System.out.println(line);
+                        }
                     } catch (IOException e) {
                         throw new AntlrException("Could not execute Antlr Command");
                     }
@@ -188,8 +201,13 @@ public class LanguageHelper {
                     //generate BaseListener class so that metrics can be invoked.
                     try {
                         System.out.println("Generating BaseListener for the grammar: " + grammarName);
-                        ClassGeneration.generateBaseListener(grammarName);
-                    } catch (IOException e) {
+                        Constructor c = Class.forName("org.codeanalyser.language."+grammarName.toLowerCase()+"."+grammarName+"Lexer").getConstructor(CharStream.class);
+                        Lexer lexer = (Lexer) c.newInstance(new ANTLRFileStream("test/Test2.java"));
+                        CommonTokenStream stream = new CommonTokenStream(lexer);
+                        Constructor co = Class.forName("org.codeanalyser.language."+grammarName.toLowerCase()+"."+grammarName+"Parser").getConstructor(TokenStream.class);
+                        ParserInterface parser = (ParserInterface) co.newInstance(stream);
+                        ClassGeneration.generateBaseListener(grammarName, parser.getRuleNames());
+                    } catch (Exception e) {
                         throw new FileException("Could not generate BaseListener for Grammar: "+grammarName);
                     }
                     
