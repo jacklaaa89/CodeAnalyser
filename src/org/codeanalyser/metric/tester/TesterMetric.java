@@ -4,6 +4,7 @@ import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.ParserInformation;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -14,25 +15,18 @@ import org.codeanalyser.metric.Result;
  */
 public class TesterMetric implements MetricInterface {
     
-    private String fileLocation, sourceLanguage;
-    
     @Override
     public Result getResults() throws InvalidResultException {
         return null;
-        //return Result.newInstance(this.fileLocation, this.sourceLanguage, "TesterMetric", "This is a tester result.", true);
     }
     
     @Override
     public void start(EventState state) {}
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
-        this.fileLocation = fileLocation;
-        this.sourceLanguage = sourceLanguage;
-    }
+    public void init(ParserInformation initialInformation) throws MetricInitialisationException {}
 
     @Override
-    public void destroy() {
-    }
+    public void destroy() {}
     
 }
