@@ -20,7 +20,7 @@ import org.codeanalyser.language.java.JavaParser;
 public class Application {
     
     private static ArrayList<String> metrics;
-    private static ArrayList<String> supported;
+    private static final ArrayList<String> supported;
     
     //declare static variables, i.e initialise system properties.
     static {
@@ -107,7 +107,7 @@ public class Application {
      * System Property - gets the metrics that are currently 
      * 'attached' to the application. This is the class names of
      * the class that implement MetricInterface.
-     * @return an ArrayList<String> containing the class names of
+     * @return an ArrayList containing the class names of
      * the metrics in the system.
      */
     public static ArrayList<String> getMetricsList() {
@@ -117,7 +117,7 @@ public class Application {
     /**
      * System Property - gets the languages that the application
      * currently supports.
-     * @return an ArrayList<String> containing the supported languages.
+     * @return an ArrayList containing the supported languages.
      */
     public static ArrayList<String> getSupportedLanguages() {
         return Application.supported;
@@ -135,7 +135,7 @@ public class Application {
      */
     private static class ApplicationListener extends JavaBaseListener {
         
-        private ArrayList<String> metrics;
+        private final ArrayList<String> metrics;
         private String packagePath;
         
         /**
