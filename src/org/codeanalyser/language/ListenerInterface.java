@@ -1,6 +1,7 @@
 package org.codeanalyser.language;
 
 import java.util.ArrayList;
+import org.antlr.v4.runtime.Parser;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
@@ -26,10 +27,11 @@ public interface ListenerInterface {
     /**
      * gives the listener initial values about the file it is processing.
      * @param file the file it is analysing.
+     * @param parser an instance of the parser used to generate the parse tree.
      * @throws org.codeanalyser.language.MetricException if any of the metrics could
      * not be initialised.
      */
-    public void init(FileAnalyser file, String[] tokens) throws MetricException;
+    public void init(FileAnalyser file, ParserInterface parser) throws MetricException;
     
     /**
      * called after this listener has finished analysing a single file, 
