@@ -44,6 +44,25 @@ public class FileAnalyser extends File {
     }
     
     /**
+     * returns the detected source language of this File instance.
+     * WARNING - this returns the forced language if it has been set, which
+     * may NOT be the actual source language, but this class has to respect
+     * arguments passed to the main method.
+     * essentially this method gets the source language the analyser will be treating it as.
+     * @return the source language of this file or null if not found.
+     */
+    public String getSourceLanguage() {
+        
+        if(this.forcedLanguage != null) {
+            return this.forcedLanguage;
+        }
+        
+        Language l = this.detect.getSupportedLanguage(this.getFileExtension());
+        return (l != null) ? l.getName() : null;
+        
+    }
+    
+    /**
      * sets the language to force this analysis to use, 
      * i.e we can force all files to attempt to be parsed by
      * a specific parser, this is obviously faster because
