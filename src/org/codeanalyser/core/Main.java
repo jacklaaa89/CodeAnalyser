@@ -1,8 +1,6 @@
 package org.codeanalyser.core;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -68,7 +66,6 @@ public class Main {
                     //use the language helper to update grammar location.
                     LanguageHelper helper = new LanguageHelper();
                     helper.initLanguages();
-                    return;
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
