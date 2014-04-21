@@ -17,6 +17,9 @@ import org.codeanalyser.metric.Result;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
+import org.codeanalyser.metric.ParserInformation;
+import org.antlr.v4.runtime.Parser;
+import org.codeanalyser.language.ParserInterface;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -35,15 +38,17 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
     <variables:declareVariable()>
     
     @Override
-    public void init(FileAnalyser file, String[] tokens) throws MetricException {
+    public void init(FileAnalyser file, ParserInterface parser) throws MetricException {
         this.file = file;
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.
         try {
+            ParserInformation info = new ParserInformation(parser, file.getAbsolutePath(),
+                                            file.getFileExtension());
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {
-                    m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                    m.init(info);
                 } catch (MetricInitialisationException e) {
                     System.out.println("Failed to Initialise Metric: \"" + metric + "\"");
                     continue;
