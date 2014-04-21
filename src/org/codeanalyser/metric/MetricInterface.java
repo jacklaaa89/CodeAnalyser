@@ -4,7 +4,7 @@ import org.codeanalyser.language.EventState;
 
 /**
  * this is the interface that all metrics should implement.
- * @author Jack
+ * @author Jack Timblin - U1051575
  */
 public interface MetricInterface {
     
@@ -26,12 +26,10 @@ public interface MetricInterface {
     /**
      * give the metric initial information regarding the file
      * it is evaluating.
-     * @param fileLocation the absolute file location for the file being evaluated.
-     * @param sourceLanguage the source language of the file.
-     * @param tokens the tokens for this language.
+     * @param initialInformation all the initial information a metric needs.
      * @throws MetricInitialisationException when a fatal error occurs initialising the metric.
      */
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException;
+    public void init(ParserInformation initialInformation) throws MetricInitialisationException;
     
     /**
      * called after the analysis is completed on a single file, can be used
