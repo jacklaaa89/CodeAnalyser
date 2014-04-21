@@ -1,6 +1,7 @@
 package org.codeanalyser.language;
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.pattern.ParseTreePattern;
 
 /**
  * This interface is essentially a dummy interface to spoof the system in
@@ -17,5 +18,6 @@ public interface ParserInterface {
     
     public ParserRuleContext compilationUnit();
     public String[] getTokenNames();
+    public String[] getRuleNames();
     
 }
