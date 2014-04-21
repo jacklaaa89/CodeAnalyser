@@ -10,10 +10,13 @@ public class Test2 {
      * @param tester1 a random parameter.
      * @param tester2 another random parameter.
      */
-    public void testerMethod(String tester1, String tester2) {
-        if(tester1.equals(tester2)) {
-            System.out.println(tester1);
+    public void testerMethod(String glkfmklfmhnkdmfkghymt, String tester2) {
+        if(glkfmklfmhnkdmfkghymt.equals(tester2)) {
+            System.out.println(glkfmklfmhnkdmfkghymt);
         } else {
+            System.out.println(tester2);
+        }
+        while(true) {
             System.out.println(tester2);
         }
     }
@@ -29,6 +32,13 @@ public class Test2 {
         } else {
             System.out.println(tester2);
         }
+        switch(1) {
+            case 1 :
+                System.out.println("Hello");
+                break;
+            default : 
+                System.out.println(tester1);
+        } 
     }
     
     public Test2() {
