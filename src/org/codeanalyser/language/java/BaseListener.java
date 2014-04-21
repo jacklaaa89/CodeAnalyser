@@ -1,15 +1,18 @@
 package org.codeanalyser.language.java;
 
 import java.util.ArrayList;
+import org.antlr.v4.runtime.Parser;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.EventType;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
+import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.ParserInformation;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -31,15 +34,17 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
 
 
     @Override
-    public void init(FileAnalyser file, String[] tokens) throws MetricException {
+    public void init(FileAnalyser file, ParserInterface parser) throws MetricException {
         this.file = file;
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.
         try {
+            ParserInformation info = new ParserInformation(parser, file.getAbsolutePath(), 
+                                            file.getFileExtension());
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {
-                    m.init(file.getAbsolutePath(), file.getFileExtension(), tokens);
+                    m.init(info);
                 } catch (MetricInitialisationException e) {
                     System.out.println("Failed to Initialise Metric: \"" + metric + "\", "
                             + "Error: " + e.getMessage());
@@ -71,6 +76,22 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         }
         return results;
     }
+    
+    /**
+     * generated method to call enterSwitchBlockStatementGroup while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterSwitchBlockStatementGroup(JavaParser.SwitchBlockStatementGroupContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_SWITCH_BLOCK_STATEMENT_GROUP).build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.start(state);
+        }
+        
+     }
 
     /**
      * generated method to call enterMethodBody while walking the parse tree.
@@ -93,6 +114,21 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
          //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType(EventType.ENTER_VARIABLE_DECLARATOR_ID).build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.start(state);
+        }
+     }
+     
+     /**
+     * generated method to call enterStatment while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterStatement(JavaParser.StatementContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType(EventType.ENTER_STATEMENT).build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.start(state);
