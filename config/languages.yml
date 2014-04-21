@@ -782,6 +782,10 @@ Haxe:
   extensions:
   - .hxsl
 
+hello:
+    type: programming
+    primary_extension: .hello
+
 Hy:
   type: programming
   lexer: Clojure
