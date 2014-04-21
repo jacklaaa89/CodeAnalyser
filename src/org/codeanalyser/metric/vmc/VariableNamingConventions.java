@@ -10,11 +10,13 @@ import org.codeanalyser.language.EventType;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.ParserInformation;
 import org.codeanalyser.metric.Result;
 
 /**
- *
- * @author Jack
+ * This metric determines if the variables used in a file are acceptable, i.e
+ * are CamelCased concatenations of English words.
+ * @author Jack Timblin - U1051575
  */
 public class VariableNamingConventions implements MetricInterface {
     
@@ -64,9 +66,9 @@ public class VariableNamingConventions implements MetricInterface {
     }
 
     @Override
-    public void init(String fileLocation, String sourceLanguage, String[] tokens) throws MetricInitialisationException {
-        this.fileName = fileLocation;
-        this.sourceLang = sourceLanguage;
+    public void init(ParserInformation initialInformation) throws MetricInitialisationException {
+        this.fileName = initialInformation.getFileName();
+        this.sourceLang = initialInformation.getSourceLanguage();
         this.variableNames = new ArrayList<String>();
         try {
             this.detector = new LanguageDetect();
