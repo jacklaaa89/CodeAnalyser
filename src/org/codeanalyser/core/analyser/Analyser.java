@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -90,7 +91,7 @@ public class Analyser {
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 ParserInterface parser = file.getSupportedParser(tokens);
                 ParserRuleContext tree = parser.compilationUnit();
-                ParseTreeListener listener = file.getSupportedListener(parser.getTokenNames());
+                ParseTreeListener listener = file.getSupportedListener(parser);
                 ParseTreeWalker walker = new ParseTreeWalker();
                 
                 //walk the parse tree calling methods in the metrics.
@@ -99,10 +100,10 @@ public class Analyser {
                 OverallResult result = null;
                 
                 try {
-                    ArrayList<Result> results = ((ListenerInterface) listener).getResults();
+                    ArrayList<Result> re = ((ListenerInterface) listener).getResults();
                     //gather the results from the analysis.
                     result = new OverallResult(
-                            results,
+                            re,
                             file.getAbsolutePath()
                     );
                 } catch (InvalidResultException e) {
