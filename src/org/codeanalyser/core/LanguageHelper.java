@@ -201,12 +201,29 @@ public class LanguageHelper {
                     //generate BaseListener class so that metrics can be invoked.
                     try {
                         System.out.println("Generating BaseListener for the grammar: " + grammarName);
+                        
+                        //compile the new classes and initialise.
+                        File a = new File("antlr");
+                        File b = new File("src");
+                        File o = new File("build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
+                        if(!o.exists()) {
+                            o.mkdir();
+                        }
+                        
+                        ProcessBuilder p = new ProcessBuilder(
+                            arguments[0], arguments[1], "javac -cp " + a.getAbsolutePath()+"/antlr-4.2-complete.jar -d "+o.getAbsolutePath()+" -sourcepath " + b.getAbsolutePath()
+                                    + " \"" + grammarFile.getAbsolutePath()+"/*.java\""
+                        );
+                        Process cp = p.start();
+                        cp.waitFor();
+                        
                         Constructor c = Class.forName("org.codeanalyser.language."+grammarName.toLowerCase()+"."+grammarName+"Lexer").getConstructor(CharStream.class);
                         Lexer lexer = (Lexer) c.newInstance(new ANTLRFileStream("test/Test2.java"));
                         CommonTokenStream stream = new CommonTokenStream(lexer);
                         Constructor co = Class.forName("org.codeanalyser.language."+grammarName.toLowerCase()+"."+grammarName+"Parser").getConstructor(TokenStream.class);
                         ParserInterface parser = (ParserInterface) co.newInstance(stream);
                         ClassGeneration.generateBaseListener(grammarName, parser.getRuleNames());
+                        
                     } catch (Exception e) {
                         throw new FileException("Could not generate BaseListener for Grammar: "+grammarName);
                     }
