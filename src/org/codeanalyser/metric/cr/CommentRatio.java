@@ -80,6 +80,12 @@ public class CommentRatio implements MetricInterface {
             //load the generated YAML file.
             Yaml y = new Yaml();
             File fi = new File("antlr/output.txt");
+            
+            if(!fi.exists()) {
+                //i.e cloc couldnt generate output.
+                throw new MetricInitialisationException("CLOC couldnt evaluate file: " + this.fileLocation);
+            }
+            
             InputStream input = new FileInputStream(fi);
             
             //grab SUM element from file.
