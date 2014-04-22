@@ -104,7 +104,7 @@ methodBuilder(methodProperty) ::= <<
     EventState state = builder.setContext(context).setEventType("<methodProperty.eventType>").build();
     for(MetricInterface metric : metrics) {
         //start the metrics evaluation at this event.
-        metric.start(state);
+        metric.onParserEvent(state);
     }
  }
  
