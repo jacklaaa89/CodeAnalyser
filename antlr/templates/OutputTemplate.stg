@@ -1,6 +1,6 @@
 group OutputTemplate;
 
-main(unsupportedFiles, hasUnsupported, results) ::= <<
+main(unsupportedFiles, hasUnsupported, results, hasSyntax, syntaxErrors) ::= <<
 \<!DocType HTML>
 \<html>
     \<head>
@@ -36,6 +36,22 @@ main(unsupportedFiles, hasUnsupported, results) ::= <<
                     <else>
                     \<tr>
                         \<td>No Files Were Unsupported.\</td>
+                    \</tr>
+                    <endif>
+                \</tbody>
+            \</table>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td> Syntax Errors\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <if(hasSyntax)>
+                    <syntaxErrors:renderUnsupported()>
+                    <else>
+                    \<tr>
+                        \<td>No Files Contained Syntax Errors.\</td>
                     \</tr>
                     <endif>
                 \</tbody>
