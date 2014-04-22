@@ -56,7 +56,7 @@ public class VariableNamingConventions implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {
+    public void onParserEvent(EventState state) {
         if(state.getEventType().equals("ENTER_VARIABLE_DECLARATOR_ID")) {
             if(state.getContext() != null) {
                 variableNames.add(state.getContext().getText());

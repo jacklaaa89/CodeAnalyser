@@ -42,7 +42,7 @@ public class CommentRatio implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {}
+    public void onParserEvent(EventState state) {}
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {

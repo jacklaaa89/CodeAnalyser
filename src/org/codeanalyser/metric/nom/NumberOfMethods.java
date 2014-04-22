@@ -32,7 +32,7 @@ public class NumberOfMethods implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {
+    public void onParserEvent(EventState state) {
         if(state.getEventType().equals("ENTER_METHOD_DECLARATION")) {
             noOfMethods++;
         }

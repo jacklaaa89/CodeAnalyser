@@ -86,7 +86,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_BLOCK_STATEMENT_GROUP").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
         
      }
@@ -102,7 +102,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_BODY").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
         
      }
@@ -114,7 +114,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_VARIABLE_DECLARATOR_ID").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
      
@@ -129,7 +129,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_STATEMENT").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
      
@@ -144,7 +144,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
      
@@ -159,7 +159,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_CLASS_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
      
@@ -174,7 +174,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         EventState state = builder.setContext(context).setEventType("ENTER_CONSTRUCTOR_DECLARATION").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
 

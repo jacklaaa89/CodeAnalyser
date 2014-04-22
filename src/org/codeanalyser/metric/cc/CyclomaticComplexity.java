@@ -2,7 +2,6 @@ package org.codeanalyser.metric.cc;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ParserInterface;
@@ -55,7 +54,7 @@ public class CyclomaticComplexity implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {
+    public void onParserEvent(EventState state) {
         if(state.getEventType().equals("ENTER_CONSTRUCTOR_DECLARATION") ||
                 state.getEventType().equals("ENTER_METHOD_DECLARATION")) {
             //if were in a constructor or a method, count the amount of complexity keywords in that

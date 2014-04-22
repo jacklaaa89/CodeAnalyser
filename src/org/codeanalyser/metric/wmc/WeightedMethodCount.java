@@ -35,7 +35,7 @@ public class WeightedMethodCount implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {
+    public void onParserEvent(EventState state) {
         if (state.getEventType().equals("ENTER_STATEMENT")
                 || state.getEventType().equals("ENTER_SWITCH_BLOCK_STATEMENT_GROUP")) {
 

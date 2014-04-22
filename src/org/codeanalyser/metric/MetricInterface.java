@@ -17,11 +17,10 @@ public interface MetricInterface {
     public Result getResults() throws InvalidResultException;
     
     /**
-     * starts this metrics evaluation of a 
-     * single class when an event is triggered.
+     * Called when an event is triggered while walking the parse tree.
      * @param state the state of the event.
      */
-    public void start(EventState state);
+    public void onParserEvent(EventState state);
     
     /**
      * give the metric initial information regarding the file

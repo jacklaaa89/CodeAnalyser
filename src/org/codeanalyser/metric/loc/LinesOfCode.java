@@ -34,7 +34,7 @@ public class LinesOfCode implements MetricInterface {
     }
 
     @Override
-    public void start(EventState state) {
+    public void onParserEvent(EventState state) {
         //this metric just needs the file overall and 
         //does not need to be notified when events occurs while
         //walking the parse tree.
