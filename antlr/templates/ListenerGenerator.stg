@@ -41,7 +41,7 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.
         try {
-            ParserInformation info = new ParserInformation(parser, file.getAbsolutePath(),
+            ParserInfo info = new ParserInfo(parser, file.getAbsolutePath(),
                                             file.getSourceLanguage());
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
