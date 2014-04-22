@@ -97,5 +97,320 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         }
      }
      
+    /**
+     * generated method to call enterClassDeclaration while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterClassDeclaration(HelloParser.ClassDeclarationContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_CLASS_DECLARATION").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterClassBody while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterClassBody(HelloParser.ClassBodyContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_CLASS_BODY").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterMethodDeclaration while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterMethodDeclaration(HelloParser.MethodDeclarationContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_METHOD_DECLARATION").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterMethodBody while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterMethodBody(HelloParser.MethodBodyContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_METHOD_BODY").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterStatement while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterStatement(HelloParser.StatementContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_STATEMENT").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterMethodCall while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterMethodCall(HelloParser.MethodCallContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_METHOD_CALL").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterInformalParameterList while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterInformalParameterList(HelloParser.InformalParameterListContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_INFORMAL_PARAMETER_LIST").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterInformalParameters while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterInformalParameters(HelloParser.InformalParametersContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_INFORMAL_PARAMETERS").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterExpression while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterExpression(HelloParser.ExpressionContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_EXPRESSION").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterSwitchBlockStatementGroup while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterSwitchBlockStatementGroup(HelloParser.SwitchBlockStatementGroupContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_BLOCK_STATEMENT_GROUP").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterSwitchLabel while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterSwitchLabel(HelloParser.SwitchLabelContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_LABEL").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterStringLiteral while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterStringLiteral(HelloParser.StringLiteralContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_STRING_LITERAL").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterClassIdentifier while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterClassIdentifier(HelloParser.ClassIdentifierContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_CLASS_IDENTIFIER").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterParExpression while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterParExpression(HelloParser.ParExpressionContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_PAR_EXPRESSION").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterOperator while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterOperator(HelloParser.OperatorContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_OPERATOR").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterInnerBlock while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterInnerBlock(HelloParser.InnerBlockContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_INNER_BLOCK").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterFormalParameterList while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterFormalParameterList(HelloParser.FormalParameterListContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_FORMAL_PARAMETER_LIST").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterFormalParameters while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterFormalParameters(HelloParser.FormalParametersContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_FORMAL_PARAMETERS").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterVariableDeclaratorId while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterVariableDeclaratorId(HelloParser.VariableDeclaratorIdContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_VARIABLE_DECLARATOR_ID").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterIdentifier while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterIdentifier(HelloParser.IdentifierContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_IDENTIFIER").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+    /**
+     * generated method to call enterNumber while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterNumber(HelloParser.NumberContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_NUMBER").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
 
 }
