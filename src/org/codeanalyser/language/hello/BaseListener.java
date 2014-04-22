@@ -44,7 +44,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
-                    System.out.println("Failed to Initialise Metric: \"" + metric + "\"");
+                    System.out.println("Failed to Initialise Metric: \"" + metric + "\", Error: " + e.getMessage());
                     continue;
                 }
                 metrics.add(m);
