@@ -1,10 +1,13 @@
 package org.codeanalyser.core.analyser;
 import java.io.File;
 import java.util.ArrayList;
+import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.codeanalyser.core.output.NoResultsDefinedException;
@@ -12,6 +15,8 @@ import org.codeanalyser.core.output.OutputGenerator;
 import org.codeanalyser.core.output.OverallResult;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.language.SyntaxErrorAdapter;
+import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
 
@@ -83,14 +88,29 @@ public class Analyser {
      * Analyses the source location provided in the constructor.
      */
     public void analyse() {
+        //an arraylist to store all syntax errors in.
+        ArrayList<String> errors = new ArrayList<String>();
         for(FileAnalyser file : this.filesToAnalyse) {
             try {
                 System.out.println("Started Analysing File: " + file.getAbsolutePath());
                 //generate parse tree from source file.
+                SyntaxErrorAdapter ea = new SyntaxErrorAdapter(file);
+                
                 Lexer lexer = file.getSupportedLexer();
+                lexer.addErrorListener(ea);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 ParserInterface parser = file.getSupportedParser(tokens);
+                parser.addErrorListener(ea);
                 ParserRuleContext tree = parser.compilationUnit();
+                
+                //check to see if any syntaxical errors occured.
+                if(!ea.getSyntaxErrors().isEmpty()) {
+                    for(String er : ea.getSyntaxErrors()) {
+                        errors.add(er);
+                    }
+                    throw new SyntaxErrorException("A Syntax Error Occured Parsing File: " + file.getAbsolutePath());
+                }
+                
                 ParseTreeListener listener = file.getSupportedListener(parser);
                 ParseTreeWalker walker = new ParseTreeWalker();
                 
@@ -125,12 +145,14 @@ public class Analyser {
                 System.out.println(e.getMessage());
             } catch (NoResultsDefinedException e) {
                 System.out.println(e.getMessage());
+            } catch (SyntaxErrorException e) {
+                System.out.println(e.getMessage());
             }
         }
         try {
             System.out.println("Generating Output");
             //render the output for this analysis.
-            this.output.generateOutput(this.results, this.unsupportedFiles);
+            this.output.generateOutput(this.results, this.unsupportedFiles, errors);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
