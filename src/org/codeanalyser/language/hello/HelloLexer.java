@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from ../grammars/hello.g4 by ANTLR 4.2
+// Generated from grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class helloLexer extends Lexer {
+public class HelloLexer extends Lexer {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -30,13 +30,13 @@ public class helloLexer extends Lexer {
 	};
 
 
-	public helloLexer(CharStream input) {
+	public HelloLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "hello.g4"; }
+	public String getGrammarFileName() { return "Hello.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }

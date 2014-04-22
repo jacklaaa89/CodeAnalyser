@@ -25,7 +25,7 @@ import org.codeanalyser.language.ParserInterface;
  * {@link MetricInterface.start() }
  * @author Jack Timblin - U1051575 (via StringTemplate4)
  */
-public class BaseListener extends helloBaseListener implements ListenerInterface {
+public class BaseListener extends HelloBaseListener implements ListenerInterface {
 
     private ArrayList<MetricInterface> metrics;
     private FileAnalyser file;
@@ -87,13 +87,13 @@ public class BaseListener extends helloBaseListener implements ListenerInterface
      * @param context <p>The context/area of the parse tree that this rule applies to.</p>
      */
      @Override
-     public void enterCompilationUnit(helloParser.CompilationUnitContext context) {
+     public void enterCompilationUnit(HelloParser.CompilationUnitContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_COMPILATION_UNIT").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
-            metric.start(state);
+            metric.onParserEvent(state);
         }
      }
      

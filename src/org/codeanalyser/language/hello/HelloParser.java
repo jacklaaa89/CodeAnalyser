@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from ../grammars/hello.g4 by ANTLR 4.2
+// Generated from grammars/Hello.g4 by ANTLR 4.2
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.tree.*;
 import org.codeanalyser.language.ParserInterface;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class helloParser extends Parser implements ParserInterface {
+public class HelloParser extends Parser implements ParserInterface {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -28,7 +28,7 @@ public class helloParser extends Parser implements ParserInterface {
 	};
 
 	@Override
-	public String getGrammarFileName() { return "hello.g4"; }
+	public String getGrammarFileName() { return "Hello.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }
@@ -42,23 +42,28 @@ public class helloParser extends Parser implements ParserInterface {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public helloParser(TokenStream input) {
+	public HelloParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class CompilationUnitContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(helloParser.ID, 0); }
+		public TerminalNode ID() { return getToken(HelloParser.ID, 0); }
 		public CompilationUnitContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_compilationUnit; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof helloListener ) ((helloListener)listener).enterCompilationUnit(this);
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCompilationUnit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof helloListener ) ((helloListener)listener).exitCompilationUnit(this);
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCompilationUnit(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCompilationUnit(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
