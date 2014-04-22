@@ -33,7 +33,8 @@ public class OutputGenerator {
      * @throws HtmlParserException when a result string cannot be parsed into
      * HTML.
      */
-    public void generateOutput(ArrayList<OverallResult> results, ArrayList<String> unsupportedFiles) throws NoResultsDefinedException,
+    public void generateOutput(ArrayList<OverallResult> results, ArrayList<String> unsupportedFiles, 
+            ArrayList<String> syntaxErrors) throws NoResultsDefinedException,
             TemplateNotFoundException,
             HtmlParserException {
         
@@ -61,6 +62,8 @@ public class OutputGenerator {
         main.add("unsupportedFiles", unsupportedFiles);
         main.add("hasUnsupported", (unsupportedFiles.size() > 0));
         main.add("results", res);
+        main.add("hasSyntax", (!syntaxErrors.isEmpty()));
+        main.add("syntaxErrors", syntaxErrors);
         
         //save the rendered template to a file.
         File output = new File(this.outputDestination.getAbsolutePath() + "/output.html");
