@@ -72,8 +72,10 @@ public class CyclomaticComplexity implements MetricInterface {
             //statements only appear inside constructors or methods
             //so we can safety assume the last entry in our entries is the
             //current method/constructor.
-            Entry e = this.entries.get(this.entries.size()-1);
-            this.determineComplexity(state.getContext(), e);
+            if(!this.entries.isEmpty()) {
+                Entry e = this.entries.get(this.entries.size()-1);
+                this.determineComplexity(state.getContext(), e);
+            }
         }
     }
     
