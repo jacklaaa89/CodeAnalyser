@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.codeanalyser.core.generation.ClassGeneration;
 import org.codeanalyser.language.hello.HelloLexer;
 import org.codeanalyser.language.hello.HelloParser;
 
