@@ -1,6 +1,6 @@
 /* classCommenting */
 class Test {
-
+    
     /* testerMethod commenting. */
     void testerMethod(tester1, tester2) {
         switch(tester1) {
@@ -17,6 +17,8 @@ class Test {
     void testerMethod2(tester1, tester2) {
         if(tester1 < tester2) {
             print(tester1);
+        } else {
+            Math.calculate(tester2, tester1);
         }
     }
 
