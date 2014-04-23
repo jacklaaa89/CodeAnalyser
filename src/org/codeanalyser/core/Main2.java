@@ -12,11 +12,15 @@ import org.codeanalyser.language.hello.HelloParser;
 
 
 /**
- *
- * @author jack
+ * Tester Main class to run specific pieces of code.
+ * @author Jack Timblin - U1051575
  */
 public class Main2 {
     
+    /**
+     * runs tester code.
+     * @param args the arguments from the VM.
+     */
     public static void main(String[] args) {
         try {
             HelloLexer lexer = new HelloLexer(new ANTLRFileStream("test/Test.hello"));

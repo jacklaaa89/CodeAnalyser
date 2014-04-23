@@ -31,10 +31,24 @@ public class MethodProperty {
         return this.name;
     }
     
+    /**
+     * get the event that was occured.
+     * @return the event that was triggered 
+     * while walking the parse tree.
+     */
     public String getEventType() {
         return this.eventType;
     }
     
+    /**
+     * Utility method, splits a camelCased string and returns
+     * a replacement with the replacement. for example
+     * if replacement was _:
+     * enterConstructorBody -> ENTER_CONSTRUCTOR_BODY
+     * @param str the string to split
+     * @param replacement the replacement to use.
+     * @return the string with the replacement based where a word is camelCased.
+     */
     public static String splitCamelCase(String str, String replacement)
     {
          String string = str.replaceAll("((^[a-z]+)|([A-Z]{1}[a-z]+)|([A-Z]+(?=([A-Z][a-z])|($))))", "$1"+replacement).toUpperCase().trim();

@@ -300,7 +300,11 @@ public class LanguageHelper {
      * @author Jack Timblin - U1051575
      */
     public class FileException extends Exception {
-
+        
+        /**
+         * initialises a new FileException
+         * @param message the message to pass to the Exception
+         */
         public FileException(String message) {
             super(message);
         }
@@ -312,7 +316,11 @@ public class LanguageHelper {
      * @author Jack Timblin - U1051575
      */
     public class FileParseException extends Exception {
-
+        
+        /**
+         * initialises a new FileParseException
+         * @param message the message to pass to the Exception
+         */
         public FileParseException(String message) {
             super(message);
         }

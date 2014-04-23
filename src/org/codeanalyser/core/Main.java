@@ -12,11 +12,16 @@ import org.codeanalyser.core.analyser.Analyser;
 import org.codeanalyser.core.analyser.AnalyserException;
 
 /**
- *
- * @author Jack
+ * The Applications Main class, uses Apache CLI to
+ * allow for arguments passed from the VM.
+ * @author Jack Timblin - U1051575
  */
 public class Main {
-
+    
+    /**
+     * runs the application
+     * @param args the arguments from the VM.
+     */
     public static void main(String[] args) {
 
         //create the command line parser.

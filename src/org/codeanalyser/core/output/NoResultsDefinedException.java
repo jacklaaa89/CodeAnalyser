@@ -7,6 +7,10 @@ package org.codeanalyser.core.output;
  */
 public class NoResultsDefinedException extends Exception {
     
+    /**
+     * initialises a new NoResultsDefinedException
+     * @param message the message to pass to the Exception
+     */
     public NoResultsDefinedException(String message) {
         super(message);
     }

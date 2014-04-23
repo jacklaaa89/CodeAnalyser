@@ -27,7 +27,12 @@ public class OutputGenerator {
     /**
      * Uses the a main template output file to push the HTML from the result
      * objects passed from the metrics and then saves the file to disc.
-     *
+     * @param results the OveralResult objects which a collection of metric results 
+     * for a single file.
+     * @param unsupportedFiles the string absolute paths of any files that were not
+     * supported by the analyser. 
+     * @param syntaxErrors the string error messages of any syntax errors that occurred 
+     * in any of the files analysed.
      * @throws NoResultsDefinedException when there are no results to output.
      * @throws TemplateNotFoundException when the main HTML cannot be located.
      * @throws HtmlParserException when a result string cannot be parsed into

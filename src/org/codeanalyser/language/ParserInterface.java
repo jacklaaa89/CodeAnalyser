@@ -16,9 +16,26 @@ import org.antlr.v4.runtime.ParserRuleContext;
  */
 public interface ParserInterface {
     
+    /**
+     * calls the root rule in the parser and returns the parse tree.
+     * @return the parse tree for the source file.
+     */
     public ParserRuleContext compilationUnit();
+    /**
+     * gets the token names used in the parser.
+     * @return the token names.
+     */
     public String[] getTokenNames();
+    /**
+     * get the rule names that were defined in the grammar.
+     * @return the rule names.
+     */
     public String[] getRuleNames();
+    /**
+     * add a ANTLRErrorListener to the parser to listen
+     * for errors that occur.
+     * @param listener the error listener to attach to the parser
+     */
     public void addErrorListener(ANTLRErrorListener listener);
     
 }

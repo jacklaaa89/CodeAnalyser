@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.apache.commons.io.FilenameUtils;
@@ -197,6 +196,7 @@ public class FileAnalyser extends File {
     /**
      * returns the parseTreeListener instance that supports this file. This is calculated by 
      * if the file extension matches a package.
+     * @param parser the parser that was used to parse the current file.
      * @return a ParseTreeListener that supports this language
      * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
      * supported or the Listener could not be instantiated properly.
@@ -222,6 +222,11 @@ public class FileAnalyser extends File {
      * @author Jack Timblin - U1051575
      */
     public class UnsupportedLanguageException extends Exception {
+        
+        /**
+         * initialises a new UnsupportedLanguageException
+         * @param message the message to pass to the Exception
+         */
         public UnsupportedLanguageException(String message) {
             super(message);
         }

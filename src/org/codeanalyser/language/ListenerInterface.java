@@ -1,7 +1,6 @@
 package org.codeanalyser.language;
 
 import java.util.ArrayList;
-import org.antlr.v4.runtime.Parser;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
@@ -18,7 +17,7 @@ public interface ListenerInterface {
     
     /**
      * get the results from all of the attached metrics.
-     * @return ArrayList<Result> the results.
+     * @return ArrayList the results.
      * @throws org.codeanalyser.metric.InvalidResultException if a supplied result from a metric is 
      * not valid.
      */

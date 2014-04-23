@@ -6,6 +6,10 @@ package org.codeanalyser.language;
  */
 public class MetricException extends Exception {
     
+    /**
+     * initialises a new MetricException
+     * @param message the message to pass to the Exception
+     */
     public MetricException(String message) {
         super(message);
     }

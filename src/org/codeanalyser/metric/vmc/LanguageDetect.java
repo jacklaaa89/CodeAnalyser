@@ -51,6 +51,10 @@ public class LanguageDetect {
      * @author Jack Timblin - U1051575
      */
     public class LanguageDetectionException extends Exception  {
+        /**
+         * constructor - initialises new LanguageDetectionException
+         * @param message the message to pass to the exception.
+         */
         public LanguageDetectionException(String message) {
             super(message);
         }

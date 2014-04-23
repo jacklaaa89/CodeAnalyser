@@ -8,6 +8,10 @@ package org.codeanalyser.core.output;
  */
 public class HtmlParserException extends Exception {
     
+    /**
+     * initialises a new HtmlParserException
+     * @param message the message to pass to the Exception
+     */
     public HtmlParserException(String message) {
         super(message);
     }

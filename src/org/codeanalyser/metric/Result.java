@@ -105,6 +105,10 @@ public class Result {
         return this;
     }
     
+    /**
+     * returns a string representation of this object.
+     * @return a string representation of this object.
+     */
     @Override
     public String toString() {
         return "[fileName : \"" + this.getFileName() +"\", sourceLanguage : \"" + this.getSourceLanguage() + "\", " +
