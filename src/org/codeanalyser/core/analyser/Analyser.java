@@ -1,4 +1,5 @@
 package org.codeanalyser.core.analyser;
+
 import java.io.File;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -17,29 +18,33 @@ import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
 
 /**
- * This class is the one that analyses the file/directory that is the input.
- * It determines the supported listener, parser and lexer from a single file and then walks
- * that tree notifying the listener when events occur.
- * @author Jack Timblin - U1051575  
- * @version 1.1 - updated analyse to use OverallResult instead of Result for output generation.
+ * This class is the one that analyses the file/directory that is the input. It
+ * determines the supported listener, parser and lexer from a single file and
+ * then walks that tree notifying the listener when events occur.
+ *
+ * @author Jack Timblin - U1051575
+ * @version 1.1 - updated analyse to use OverallResult instead of Result for
+ * output generation.
  */
 public class Analyser {
-    
+
     private final File sourceCodeLocation;
     private final ArrayList<FileAnalyser> filesToAnalyse;
     private OutputGenerator output;
     private AnalyserResult result;
-    
+
     /**
      * initialises the analyser object with a file/directory location.
+     *
      * @param sourceCodeLocation the file or directory to analyse.
      * @param outputLocation the location to save output files to.
-     * @throws AnalyserException if the given source code location does not exist.
+     * @throws AnalyserException if the given source code location does not
+     * exist.
      */
     public Analyser(String sourceCodeLocation, String outputLocation) throws AnalyserException {
         this.sourceCodeLocation = new File(sourceCodeLocation);
         this.filesToAnalyse = new ArrayList<FileAnalyser>();
-        if(!this.sourceCodeLocation.exists()) {
+        if (!this.sourceCodeLocation.exists()) {
             throw new AnalyserException("file/directory provided does not exist.");
         }
         this.output = new OutputGenerator(outputLocation);
@@ -47,15 +52,17 @@ public class Analyser {
         System.out.println("Found " + this.filesToAnalyse.size() + " Files To Analyse in: " + this.sourceCodeLocation.getAbsolutePath());
         this.result = new AnalyserResult(this.filesToAnalyse);
     }
-    
+
     /**
-     * goes through the sourceCodeLocation and grabs all the of the files to analyse.
+     * goes through the sourceCodeLocation and grabs all the of the files to
+     * analyse.
+     *
      * @param file the current file being determined.
      */
     private void determineFiles(File file) {
-        if(file.isDirectory()) {
-            for(File t : file.listFiles()) {
-                if(t.isDirectory()) {
+        if (file.isDirectory()) {
+            for (File t : file.listFiles()) {
+                if (t.isDirectory()) {
                     determineFiles(t);
                 } else {
                     this.filesToAnalyse.add(new FileAnalyser(t.getAbsolutePath()));
@@ -65,72 +72,63 @@ public class Analyser {
             this.filesToAnalyse.add(new FileAnalyser(file.getAbsolutePath()));
         }
     }
-    
+
     /**
      * analyses the files using a strict source language.
+     *
      * @param forcedLanguage the language to force files to be.
      */
     public void analyse(String forcedLanguage) {
-        for(FileAnalyser file : this.filesToAnalyse) {
+        for (FileAnalyser file : this.filesToAnalyse) {
             file.setForcedLanguage(forcedLanguage);
         }
         this.analyse();
     }
-    
-    
+
     /**
      * Analyses the source location provided in the constructor.
      */
     public void analyse() {
-        for(FileAnalyser file : this.filesToAnalyse) {
+        for (FileAnalyser file : this.filesToAnalyse) {
             try {
                 System.out.println("Started Analysing File: " + file.getAbsolutePath());
                 //generate parse tree from source file.
                 SyntaxErrorAdapter ea = new SyntaxErrorAdapter(file);
-                
+
                 Lexer lexer = file.getSupportedLexer();
                 lexer.addErrorListener(ea);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 ParserInterface parser = file.getSupportedParser(tokens);
                 parser.addErrorListener(ea);
                 ParserRuleContext tree = parser.compilationUnit();
-                
+
                 //check to see if any syntaxical errors occured.
-                if(!ea.getSyntaxErrors().isEmpty()) {
-                    for(String er : ea.getSyntaxErrors()) {
+                if (!ea.getSyntaxErrors().isEmpty()) {
+                    this.result.incrementNoOfSyntaxErrorFiles();
+                    for (String er : ea.getSyntaxErrors()) {
                         this.result.addSyntaxError(er);
                     }
                     throw new SyntaxErrorException("A Syntax Error Occured Parsing File: " + file.getAbsolutePath());
                 }
-                
+
                 ParseTreeListener listener = file.getSupportedListener(parser);
                 ParseTreeWalker walker = new ParseTreeWalker();
-                
+
                 //walk the parse tree calling methods in the metrics.
                 walker.walk(listener, tree);
                 
-                OverallResult result = null;
-                
-                try {
-                    ArrayList<Result> re = ((ListenerInterface) listener).getResults();
-                    //gather the results from the analysis.
-                    result = new OverallResult(
-                            re,
-                            file.getAbsolutePath()
-                    );
-                } catch (InvalidResultException e) {
-                    System.out.println(e.getMessage());
-                }
-                
-                
-                
+                ArrayList<Result> re = ((ListenerInterface) listener).getResults();
+                //gather the results from the analysis.
+                OverallResult res = new OverallResult(
+                        re,
+                        file.getAbsolutePath()
+                );
+
                 //add this to result array.
-                if(result != null) {
-                    this.result.addResult(result);
-                }
-                
+                this.result.addResult(res);
+
                 //call destroy on metrics.
-                ((ListenerInterface)listener).destroy();
+                ((ListenerInterface) listener).destroy();
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
                 this.result.addUnsupportedFile(file.getAbsolutePath());
@@ -139,9 +137,11 @@ public class Analyser {
                 System.out.println(e.getMessage());
             } catch (SyntaxErrorException e) {
                 System.out.println(e.getMessage());
+            } catch (InvalidResultException e) {
+                System.out.println(e.getMessage());
             }
         }
-        
+
         try {
             System.out.println("Generating Output");
             //render the output for this analysis.
@@ -150,5 +150,5 @@ public class Analyser {
             System.out.println(e.getMessage());
         }
     }
-    
+
 }
