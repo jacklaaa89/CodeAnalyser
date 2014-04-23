@@ -1,15 +1,17 @@
 group OutputTemplate;
 
-main(unsupportedFiles, hasUnsupported, results, hasSyntax, syntaxErrors) ::= <<
+main(unsupportedFiles, hasUnsupported, results, hasSyntax,
+ syntaxErrors, overallResult, fileStats) ::= <<
 \<!DocType HTML>
 \<html>
     \<head>
         \<title>Code Analyser Results\</title>
     \</head>
     \<body>
-        \<div>
+        \<div style='width:50%;border-bottom:1px solid;'>
             \<h1>Code Quality Analyser Results.\</h1>
-            \<p>No Of Files Analysed: <length(results)>\</p>
+            <overallResult>
+            <fileStats>
         \</div>
         \<div>
             \<table>
@@ -23,7 +25,7 @@ main(unsupportedFiles, hasUnsupported, results, hasSyntax, syntaxErrors) ::= <<
                 \</tbody>
             \</table>
         \</div>
-        \<div>
+        \<div style='width:50%;border-top:1px solid;'>
             \<table>
                 \<thead>
                     \<tr>
