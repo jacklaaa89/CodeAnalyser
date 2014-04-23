@@ -15,6 +15,7 @@ public class AnalyserResult {
     private ArrayList<OverallResult> results;
     private ArrayList<FileAnalyser> filesToAnalyse;
     private ArrayList<String> unsupportedFiles, syntaxErrors;
+    private int noSyntaxErrorFiles = 0;
     
     /**
      * determines the percentages of each file type that was passed to the
@@ -48,6 +49,23 @@ public class AnalyserResult {
      */
     public int getSuccessCount() {
         return this.results.size();
+    }
+    
+    /**
+     * gets the number of files that have has one of more 
+     * syntax errors occur.
+     * @return the number of files as more than one syntax error
+     * can occur per file.
+     */
+    public int getNoOfSyntaxErrorFiles() {
+        return this.noSyntaxErrorFiles;
+    }
+    
+    /**
+     * increment the number of files by 1.
+     */
+    public void incrementNoOfSyntaxErrorFiles() {
+        this.noSyntaxErrorFiles++;
     }
     
     /**
@@ -102,8 +120,8 @@ public class AnalyserResult {
         f = (f == null) ? 0 : f;
         
         //include failures from syntax errors or if any files were unsupported.
-        if(!this.syntaxErrors.isEmpty() || !this.unsupportedFiles.isEmpty()) {
-            f = f + (this.syntaxErrors.size() + this.unsupportedFiles.size());
+        if(this.getNoOfSyntaxErrorFiles() != 0 || !this.unsupportedFiles.isEmpty()) {
+            f = f + (this.getNoOfSyntaxErrorFiles() + this.unsupportedFiles.size());
         }
         return new int[] {(t == null) ? 0 : t, f};
     }
@@ -212,6 +230,10 @@ public class AnalyserResult {
         return builder.toString();
     }
     
+    /**
+     * returns a string representation of this object.
+     * @return a string representation of this object.
+     */
     @Override
     public String toString() {
         return "AnalyserResult :[fileStats: " + this.determineFileStats().toString() + ", result: " + this.getResult() + "]";
