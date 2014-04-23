@@ -4,20 +4,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.codeanalyser.core.analyser.AnalyserResult;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 
 /**
- * This class is used to generate output from the metric analysis
- * this is done by generating HTML files containing the output.
+ * This class is used to generate output from the metric analysis this is done
+ * by generating HTML files containing the output.
+ *
  * @author Jack Timblin - U1051575
  */
 public class OutputGenerator {
 
     private File outputDestination;
-    
+
     /**
      * initialise output generator.
+     *
      * @param destination the string destination to save the output files.
      */
     public OutputGenerator(String destination) {
@@ -27,49 +30,46 @@ public class OutputGenerator {
     /**
      * Uses the a main template output file to push the HTML from the result
      * objects passed from the metrics and then saves the file to disc.
-     * @param results the OveralResult objects which a collection of metric results 
-     * for a single file.
-     * @param unsupportedFiles the string absolute paths of any files that were not
-     * supported by the analyser. 
-     * @param syntaxErrors the string error messages of any syntax errors that occurred 
-     * in any of the files analysed.
+     *
+     * @param result the overall result from the analyser.
      * @throws NoResultsDefinedException when there are no results to output.
      * @throws TemplateNotFoundException when the main HTML cannot be located.
      * @throws HtmlParserException when a result string cannot be parsed into
      * HTML.
      */
-    public void generateOutput(ArrayList<OverallResult> results, ArrayList<String> unsupportedFiles, 
-            ArrayList<String> syntaxErrors) throws NoResultsDefinedException,
+    public void generateOutput(AnalyserResult result) throws NoResultsDefinedException,
             TemplateNotFoundException,
             HtmlParserException {
-        
+
         //check that the output directory exists.
         if (!this.outputDestination.exists() || !this.outputDestination.isDirectory()) {
             throw new TemplateNotFoundException("Output Location does not exist or is not a directory");
         }
-        
+
         //check that there are some results to display.
-        if(results.isEmpty()) {
+        if (result.getResults().isEmpty()) {
             throw new NoResultsDefinedException("No Results Defined From Running The Metrics.");
         }
-        
-        //foreach of the overallResult entries
+
+            //foreach of the overallResult entries
         //make a single ResultProperty entry to pass to ST.
         ArrayList<ResultProperty> res = new ArrayList<ResultProperty>();
-        for(OverallResult re : results) {
+        for (OverallResult re : result.getResults()) {
             res.add(re.toResultProperty(outputDestination));
         }
-        
+
         //generate the HTML file using the template.
         STGroupFile group = new STGroupFile("antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("main");
 
-        main.add("unsupportedFiles", unsupportedFiles);
-        main.add("hasUnsupported", (unsupportedFiles.size() > 0));
+        main.add("unsupportedFiles", result.getUnsupportedFiles());
+        main.add("hasUnsupported", (result.getUnsupportedFiles().size() > 0));
         main.add("results", res);
-        main.add("hasSyntax", (!syntaxErrors.isEmpty()));
-        main.add("syntaxErrors", syntaxErrors);
-        
+        main.add("hasSyntax", (!result.getSyntaxErrors().isEmpty()));
+        main.add("syntaxErrors", result.getSyntaxErrors());
+        main.add("overallResult", result.getResult());
+        main.add("fileStats", result.getFileStats());
+
         //save the rendered template to a file.
         File output = new File(this.outputDestination.getAbsolutePath() + "/output.html");
 
@@ -85,6 +85,7 @@ public class OutputGenerator {
         } catch (IOException e) {
             throw new TemplateNotFoundException("Could not open, read or write output destination.");
         }
+
     }
 
 }
