@@ -68,7 +68,7 @@ public class LanguageHelper {
                     "javac"
                 }
                 : new String[]{"bash", "-c",
-                    pathStart + "antlr4.sh", "",
+                    "java -jar " + pathStart + "antlr-4.2-complete.jar", "bash: java: command not found",
                     "javac"
                 };
 
@@ -172,7 +172,7 @@ public class LanguageHelper {
                     }
 
                     //check that the new grammar was generated correctly.
-                    File javaParser = new File("src/org/codeanalyser/language/" + grammarName + "/" + grammarName + "Parser.java");
+                    File javaParser = new File("src/org/codeanalyser/language/" + grammarName.toLowerCase() + "/" + grammarName + "Parser.java");
                     if (!javaParser.exists()) {
                         throw new AntlrException("Grammar: '" + grammarName + "' was not generated correctly");
                     }
@@ -212,7 +212,7 @@ public class LanguageHelper {
                         
                         ProcessBuilder p = new ProcessBuilder(
                             arguments[0], arguments[1], "javac -cp " + a.getAbsolutePath()+"/antlr-4.2-complete.jar -d "+o.getAbsolutePath()+" -sourcepath " + b.getAbsolutePath()
-                                    + " \"" + grammarFile.getAbsolutePath()+"/*.java\""
+                                    + " " + grammarFile.getAbsolutePath()+"/*.java"
                         );
                         Process cp = p.start();
                         cp.waitFor();
@@ -225,7 +225,7 @@ public class LanguageHelper {
                         ClassGeneration.generateBaseListener(grammarName, parser.getRuleNames());
                         
                     } catch (Exception e) {
-                        throw new FileException("Could not generate BaseListener for Grammar: "+grammarName);
+                        throw new FileException("Could not generate BaseListener for Grammar: "+grammarName + ", Error: " + e.getMessage());
                     }
                     
                     System.out.println("Compiling new Grammar/Lexer Files for Grammar: " + grammarName);
