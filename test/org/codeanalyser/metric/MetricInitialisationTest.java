@@ -1,19 +1,11 @@
 package org.codeanalyser.metric;
 
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
-import org.codeanalyser.language.ParserInterface;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -22,38 +14,35 @@ import org.junit.Test;
  */
 public class MetricInitialisationTest {
     
-    private ParserInterface parser;
     private FileAnalyser file;
+    private ListenerInterface listener;
     
     @Before
     public void setUp() {
         try {
             this.file = new FileAnalyser("testData/Test2.java");
-            Lexer l = file.getSupportedLexer();
-            CommonTokenStream s = new CommonTokenStream(l);
-            parser = file.getSupportedParser(s);
+            listener = (ListenerInterface)file.getSupportedListener();
         } catch (FileAnalyser.UnsupportedLanguageException e) {
-            fail();
+            fail(e.getMessage());
+        }  catch (ClassCastException e) {
+            fail(e.getMessage());
         }
     }
     
     @After
     public void tearDown() {
+        listener.destroy();
+        this.file = null; this.listener = null;
     }
     
+    @Test
     public void testMetricInitialisation() {
         System.out.println("metricInitialisation");
         try {
-            ParseTreeListener listener = file.getSupportedListener(parser);
-            
             //attempt to cast this to ListenerInterface to call init, 
             //which initialises all of the installed metrics.
-            ((ListenerInterface)listener).init(file, parser);
+            listener.init(file);
             
-        } catch (FileAnalyser.UnsupportedLanguageException e) {
-            fail(e.getMessage());
-        } catch (ClassCastException e) {
-            fail(e.getMessage());
         } catch (MetricException e) {
             fail(e.getMessage());
         }

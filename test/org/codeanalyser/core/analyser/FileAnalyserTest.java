@@ -106,7 +106,7 @@ public class FileAnalyserTest {
         HelloLexer l = new HelloLexer(new ANTLRFileStream(file.getAbsolutePath()));
         CommonTokenStream stream = new CommonTokenStream(l);
         HelloParser parser = new HelloParser(stream);
-        ParseTreeListener result = file.getSupportedListener(parser);
+        ParseTreeListener result = file.getSupportedListener();
         assertTrue(result instanceof BaseListener);
     }
     
