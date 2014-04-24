@@ -84,6 +84,16 @@ public class Analyser {
         }
         this.analyse();
     }
+    
+    /**
+     * gets the overall result from the analyser.
+     * Obviously this is only relevant AFTER the analysis
+     * has taken place or analyse() has been called.
+     * @return the overall result.
+     */
+    public AnalyserResult getResults() {
+        return this.result;
+    }
 
     /**
      * Analyses the source location provided in the constructor.
