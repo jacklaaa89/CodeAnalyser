@@ -47,7 +47,7 @@ public class AnalyserResult {
      * get the amount of successfully analysed files.
      * @return the amount of successfully analysed files.
      */
-    public int getSuccessCount() {
+    private int getSuccessCount() {
         return this.results.size();
     }
     
@@ -73,7 +73,7 @@ public class AnalyserResult {
      * due to having syntax errors or being unsupported.
      * @return the amount of files that failed analysis.
      */
-    public int getFailedCount() {
+    private int getFailedCount() {
         return this.syntaxErrors.size() + this.unsupportedFiles.size();
     }
     
@@ -81,7 +81,7 @@ public class AnalyserResult {
      * gets the percentage of how many files were successfully analysed.
      * @return the percentage of successful files.
      */
-    public double getSuccessPercentage() {
+    private double getSuccessPercentage() {
         return (this.getSuccessCount()/this.filesToAnalyse.size())*100;
     }
     
@@ -89,7 +89,7 @@ public class AnalyserResult {
      * gets the percentage of how many files failed to be analysed.
      * @return the percentage of failed files.
      */
-    public double getFailedPercentage() {
+    private double getFailedPercentage() {
         return (this.getFailedCount()/this.filesToAnalyse.size())*100;
     }
     
