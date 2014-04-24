@@ -1,5 +1,5 @@
 package org.codeanalyser.language.java;
-//NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
+// Generated from Documents/University/CodeAnalyser/grammars/Java.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -500,15 +500,15 @@ public class JavaLexer extends Lexer {
 		"\u041b\3\2\2\2\u0418\u041a\13\2\2\2\u0419\u0418\3\2\2\2\u041a\u041d\3"+
 		"\2\2\2\u041b\u041c\3\2\2\2\u041b\u0419\3\2\2\2\u041c\u041e\3\2\2\2\u041d"+
 		"\u041b\3\2\2\2\u041e\u041f\7,\2\2\u041f\u0420\7\61\2\2\u0420\u0421\3\2"+
-		"\2\2\u0421\u0422\b\u0093\2\2\u0422\u0126\3\2\2\2\u0423\u0424\7\61\2\2"+
+		"\2\2\u0421\u0422\b\u0093\3\2\u0422\u0126\3\2\2\2\u0423\u0424\7\61\2\2"+
 		"\u0424\u0425\7\61\2\2\u0425\u0429\3\2\2\2\u0426\u0428\n\27\2\2\u0427\u0426"+
 		"\3\2\2\2\u0428\u042b\3\2\2\2\u0429\u0427\3\2\2\2\u0429\u042a\3\2\2\2\u042a"+
-		"\u042c\3\2\2\2\u042b\u0429\3\2\2\2\u042c\u042d\b\u0094\2\2\u042d\u0128"+
+		"\u042c\3\2\2\2\u042b\u0429\3\2\2\2\u042c\u042d\b\u0094\3\2\u042d\u0128"+
 		"\3\2\2\2\64\2\u0280\u0284\u0288\u028c\u0290\u0297\u029c\u029e\u02a4\u02a8"+
 		"\u02ac\u02b2\u02b7\u02c1\u02c5\u02cb\u02cf\u02d7\u02db\u02e1\u02eb\u02ef"+
 		"\u02f5\u02f9\u02fe\u0301\u0304\u0309\u030c\u0311\u0316\u031e\u0329\u032d"+
 		"\u0332\u0336\u0346\u0350\u0356\u035d\u0361\u0367\u0374\u03f5\u03fe\u0406"+
-		"\u0411\u041b\u0429\3\b\2\2";
+		"\u0411\u041b\u0429\4\b\2\2\2\3\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

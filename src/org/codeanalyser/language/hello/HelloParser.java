@@ -1,5 +1,5 @@
 package org.codeanalyser.language.hello;
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from Documents/University/CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -78,11 +78,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCompilationUnit(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCompilationUnit(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CompilationUnitContext compilationUnit() throws RecognitionException {
@@ -133,11 +128,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitClassDeclaration(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitClassDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ClassDeclarationContext classDeclaration() throws RecognitionException {
@@ -180,11 +170,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitClassBody(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitClassBody(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -245,11 +230,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMethodDeclaration(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMethodDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MethodDeclarationContext methodDeclaration() throws RecognitionException {
@@ -290,11 +270,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMethodBody(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMethodBody(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -348,11 +323,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitStatement(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitStatement(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -448,11 +418,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMethodCall(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMethodCall(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MethodCallContext methodCall() throws RecognitionException {
@@ -510,11 +475,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitInformalParameterList(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitInformalParameterList(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final InformalParameterListContext informalParameterList() throws RecognitionException {
@@ -565,11 +525,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitInformalParameters(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitInformalParameters(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -633,11 +588,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitExpression(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitExpression(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
@@ -697,11 +647,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitSwitchBlockStatementGroup(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitSwitchBlockStatementGroup(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SwitchBlockStatementGroupContext switchBlockStatementGroup() throws RecognitionException {
@@ -743,11 +688,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitSwitchLabel(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitSwitchLabel(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -820,11 +760,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitStringLiteral(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitStringLiteral(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StringLiteralContext stringLiteral() throws RecognitionException {
@@ -865,11 +800,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitClassIdentifier(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitClassIdentifier(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ClassIdentifierContext classIdentifier() throws RecognitionException {
@@ -907,11 +837,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitParExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitParExpression(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -977,11 +902,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitOperator(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitOperator(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OperatorContext operator() throws RecognitionException {
@@ -1028,11 +948,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitInnerBlock(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitInnerBlock(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1087,11 +1002,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitFormalParameterList(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitFormalParameterList(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final FormalParameterListContext formalParameterList() throws RecognitionException {
@@ -1142,11 +1052,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitFormalParameters(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitFormalParameters(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1199,11 +1104,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitVariableDeclaratorId(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitVariableDeclaratorId(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final VariableDeclaratorIdContext variableDeclaratorId() throws RecognitionException {
@@ -1240,11 +1140,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitIdentifier(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitIdentifier(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final IdentifierContext identifier() throws RecognitionException {
@@ -1280,11 +1175,6 @@ public class HelloParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitNumber(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitNumber(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 

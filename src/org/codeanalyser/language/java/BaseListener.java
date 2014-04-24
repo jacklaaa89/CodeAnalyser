@@ -37,8 +37,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.
         try {
-            ParserInfo info = new ParserInfo(parser, file.getAbsolutePath(), 
-                                            file.getSourceLanguage());
+            ParserInfo info = new ParserInfo(file);
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {

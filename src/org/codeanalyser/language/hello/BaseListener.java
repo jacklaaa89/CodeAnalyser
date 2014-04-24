@@ -37,8 +37,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.
         try {
-            ParserInfo info = new ParserInfo(parser, file.getAbsolutePath(),
-                                            file.getSourceLanguage());
+            ParserInfo info = new ParserInfo(file);
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
                 try {
@@ -50,7 +49,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                 metrics.add(m);
             }
         } catch (Exception e) {
-            throw new MetricException("An error occured initialising all of the metrics.");
+            throw new MetricException("An error occured initialising all of the metrics, Error:" + e.getMessage());
         }
     }
 

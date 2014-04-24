@@ -1,14 +1,14 @@
 package org.codeanalyser.language.java;
-import org.codeanalyser.language.ParserInterface;
-//NetBeansProjects\CodeAnalyser\grammars\Java.g4 by ANTLR 4.2
+// Generated from Documents/University/CodeAnalyser/grammars/Java.g4 by ANTLR 4.2
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
-import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
+import org.codeanalyser.language.ParserInterface;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class JavaParser extends Parser implements ParserInterface {
@@ -134,12 +134,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class CompilationUnitContext extends ParserRuleContext {
-		public TypeDeclarationContext typeDeclaration(int i) {
-			return getRuleContext(TypeDeclarationContext.class,i);
-		}
-		public ImportDeclarationContext importDeclaration(int i) {
-			return getRuleContext(ImportDeclarationContext.class,i);
-		}
 		public List<ImportDeclarationContext> importDeclaration() {
 			return getRuleContexts(ImportDeclarationContext.class);
 		}
@@ -147,8 +141,14 @@ public class JavaParser extends Parser implements ParserInterface {
 		public PackageDeclarationContext packageDeclaration() {
 			return getRuleContext(PackageDeclarationContext.class,0);
 		}
+		public ImportDeclarationContext importDeclaration(int i) {
+			return getRuleContext(ImportDeclarationContext.class,i);
+		}
 		public List<TypeDeclarationContext> typeDeclaration() {
 			return getRuleContexts(TypeDeclarationContext.class);
+		}
+		public TypeDeclarationContext typeDeclaration(int i) {
+			return getRuleContext(TypeDeclarationContext.class,i);
 		}
 		public CompilationUnitContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -161,11 +161,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitCompilationUnit(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitCompilationUnit(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -225,14 +220,14 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class PackageDeclarationContext extends ParserRuleContext {
-		public List<AnnotationContext> annotation() {
-			return getRuleContexts(AnnotationContext.class);
+		public AnnotationContext annotation(int i) {
+			return getRuleContext(AnnotationContext.class,i);
 		}
 		public QualifiedNameContext qualifiedName() {
 			return getRuleContext(QualifiedNameContext.class,0);
 		}
-		public AnnotationContext annotation(int i) {
-			return getRuleContext(AnnotationContext.class,i);
+		public List<AnnotationContext> annotation() {
+			return getRuleContexts(AnnotationContext.class);
 		}
 		public PackageDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -245,11 +240,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitPackageDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitPackageDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -305,11 +295,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitImportDeclaration(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitImportDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ImportDeclarationContext importDeclaration() throws RecognitionException {
@@ -353,23 +338,23 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class TypeDeclarationContext extends ParserRuleContext {
+		public InterfaceDeclarationContext interfaceDeclaration() {
+			return getRuleContext(InterfaceDeclarationContext.class,0);
+		}
+		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
+			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
+		}
 		public ClassOrInterfaceModifierContext classOrInterfaceModifier(int i) {
 			return getRuleContext(ClassOrInterfaceModifierContext.class,i);
 		}
 		public EnumDeclarationContext enumDeclaration() {
 			return getRuleContext(EnumDeclarationContext.class,0);
 		}
-		public ClassDeclarationContext classDeclaration() {
-			return getRuleContext(ClassDeclarationContext.class,0);
-		}
-		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
-			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
-		}
 		public List<ClassOrInterfaceModifierContext> classOrInterfaceModifier() {
 			return getRuleContexts(ClassOrInterfaceModifierContext.class);
 		}
-		public InterfaceDeclarationContext interfaceDeclaration() {
-			return getRuleContext(InterfaceDeclarationContext.class,0);
+		public ClassDeclarationContext classDeclaration() {
+			return getRuleContext(ClassDeclarationContext.class,0);
 		}
 		public TypeDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -382,11 +367,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -515,11 +495,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitModifier(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitModifier(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ModifierContext modifier() throws RecognitionException {
@@ -587,11 +562,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassOrInterfaceModifier(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassOrInterfaceModifier(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ClassOrInterfaceModifierContext classOrInterfaceModifier() throws RecognitionException {
@@ -655,11 +625,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitVariableModifier(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitVariableModifier(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final VariableModifierContext variableModifier() throws RecognitionException {
@@ -696,16 +661,16 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ClassDeclarationContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
 		public ClassBodyContext classBody() {
 			return getRuleContext(ClassBodyContext.class,0);
 		}
 		public TypeListContext typeList() {
 			return getRuleContext(TypeListContext.class,0);
 		}
-		public TypeParametersContext typeParameters() {
-			return getRuleContext(TypeParametersContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -720,11 +685,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -796,11 +756,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeParameters(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeParameters(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TypeParametersContext typeParameters() throws RecognitionException {
@@ -857,11 +812,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeParameter(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeParameter(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TypeParameterContext typeParameter() throws RecognitionException {
@@ -913,11 +863,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeBound(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeBound(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TypeBoundContext typeBound() throws RecognitionException {
@@ -956,16 +901,16 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class EnumDeclarationContext extends ParserRuleContext {
-		public EnumBodyDeclarationsContext enumBodyDeclarations() {
-			return getRuleContext(EnumBodyDeclarationsContext.class,0);
-		}
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public TerminalNode ENUM() { return getToken(JavaParser.ENUM, 0); }
 		public TypeListContext typeList() {
 			return getRuleContext(TypeListContext.class,0);
 		}
-		public TerminalNode ENUM() { return getToken(JavaParser.ENUM, 0); }
 		public EnumConstantsContext enumConstants() {
 			return getRuleContext(EnumConstantsContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public EnumBodyDeclarationsContext enumBodyDeclarations() {
+			return getRuleContext(EnumBodyDeclarationsContext.class,0);
 		}
 		public EnumDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -978,11 +923,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnumDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnumDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1062,11 +1002,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnumConstants(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnumConstants(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final EnumConstantsContext enumConstants() throws RecognitionException {
@@ -1107,15 +1042,15 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class EnumConstantContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
-		public List<AnnotationContext> annotation() {
-			return getRuleContexts(AnnotationContext.class);
+		public AnnotationContext annotation(int i) {
+			return getRuleContext(AnnotationContext.class,i);
 		}
 		public ClassBodyContext classBody() {
 			return getRuleContext(ClassBodyContext.class,0);
 		}
-		public AnnotationContext annotation(int i) {
-			return getRuleContext(AnnotationContext.class,i);
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public List<AnnotationContext> annotation() {
+			return getRuleContexts(AnnotationContext.class);
 		}
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
@@ -1131,11 +1066,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnumConstant(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnumConstant(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1190,11 +1120,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class EnumBodyDeclarationsContext extends ParserRuleContext {
-		public List<ClassBodyDeclarationContext> classBodyDeclaration() {
-			return getRuleContexts(ClassBodyDeclarationContext.class);
-		}
 		public ClassBodyDeclarationContext classBodyDeclaration(int i) {
 			return getRuleContext(ClassBodyDeclarationContext.class,i);
+		}
+		public List<ClassBodyDeclarationContext> classBodyDeclaration() {
+			return getRuleContexts(ClassBodyDeclarationContext.class);
 		}
 		public EnumBodyDeclarationsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1207,11 +1137,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnumBodyDeclarations(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnumBodyDeclarations(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1250,15 +1175,15 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InterfaceDeclarationContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
-		public InterfaceBodyContext interfaceBody() {
-			return getRuleContext(InterfaceBodyContext.class,0);
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
 		}
 		public TypeListContext typeList() {
 			return getRuleContext(TypeListContext.class,0);
 		}
-		public TypeParametersContext typeParameters() {
-			return getRuleContext(TypeParametersContext.class,0);
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public InterfaceBodyContext interfaceBody() {
+			return getRuleContext(InterfaceBodyContext.class,0);
 		}
 		public InterfaceDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1271,11 +1196,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInterfaceDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInterfaceDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1338,11 +1258,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeList(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeList(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TypeListContext typeList() throws RecognitionException {
@@ -1381,11 +1296,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ClassBodyContext extends ParserRuleContext {
-		public List<ClassBodyDeclarationContext> classBodyDeclaration() {
-			return getRuleContexts(ClassBodyDeclarationContext.class);
-		}
 		public ClassBodyDeclarationContext classBodyDeclaration(int i) {
 			return getRuleContext(ClassBodyDeclarationContext.class,i);
+		}
+		public List<ClassBodyDeclarationContext> classBodyDeclaration() {
+			return getRuleContexts(ClassBodyDeclarationContext.class);
 		}
 		public ClassBodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1398,11 +1313,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassBody(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassBody(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1442,11 +1352,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InterfaceBodyContext extends ParserRuleContext {
-		public List<InterfaceBodyDeclarationContext> interfaceBodyDeclaration() {
-			return getRuleContexts(InterfaceBodyDeclarationContext.class);
-		}
 		public InterfaceBodyDeclarationContext interfaceBodyDeclaration(int i) {
 			return getRuleContext(InterfaceBodyDeclarationContext.class,i);
+		}
+		public List<InterfaceBodyDeclarationContext> interfaceBodyDeclaration() {
+			return getRuleContexts(InterfaceBodyDeclarationContext.class);
 		}
 		public InterfaceBodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1459,11 +1369,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInterfaceBody(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInterfaceBody(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1503,17 +1408,17 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ClassBodyDeclarationContext extends ParserRuleContext {
-		public List<ModifierContext> modifier() {
-			return getRuleContexts(ModifierContext.class);
-		}
 		public MemberDeclarationContext memberDeclaration() {
 			return getRuleContext(MemberDeclarationContext.class,0);
 		}
-		public ModifierContext modifier(int i) {
-			return getRuleContext(ModifierContext.class,i);
+		public List<ModifierContext> modifier() {
+			return getRuleContexts(ModifierContext.class);
 		}
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
+		}
+		public ModifierContext modifier(int i) {
+			return getRuleContext(ModifierContext.class,i);
 		}
 		public ClassBodyDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1526,11 +1431,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassBodyDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassBodyDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1599,32 +1499,32 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class MemberDeclarationContext extends ParserRuleContext {
-		public GenericMethodDeclarationContext genericMethodDeclaration() {
-			return getRuleContext(GenericMethodDeclarationContext.class,0);
-		}
-		public MethodDeclarationContext methodDeclaration() {
-			return getRuleContext(MethodDeclarationContext.class,0);
-		}
-		public EnumDeclarationContext enumDeclaration() {
-			return getRuleContext(EnumDeclarationContext.class,0);
-		}
-		public ClassDeclarationContext classDeclaration() {
-			return getRuleContext(ClassDeclarationContext.class,0);
+		public InterfaceDeclarationContext interfaceDeclaration() {
+			return getRuleContext(InterfaceDeclarationContext.class,0);
 		}
 		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
 			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
-		}
-		public GenericConstructorDeclarationContext genericConstructorDeclaration() {
-			return getRuleContext(GenericConstructorDeclarationContext.class,0);
-		}
-		public InterfaceDeclarationContext interfaceDeclaration() {
-			return getRuleContext(InterfaceDeclarationContext.class,0);
 		}
 		public ConstructorDeclarationContext constructorDeclaration() {
 			return getRuleContext(ConstructorDeclarationContext.class,0);
 		}
 		public FieldDeclarationContext fieldDeclaration() {
 			return getRuleContext(FieldDeclarationContext.class,0);
+		}
+		public EnumDeclarationContext enumDeclaration() {
+			return getRuleContext(EnumDeclarationContext.class,0);
+		}
+		public GenericMethodDeclarationContext genericMethodDeclaration() {
+			return getRuleContext(GenericMethodDeclarationContext.class,0);
+		}
+		public MethodDeclarationContext methodDeclaration() {
+			return getRuleContext(MethodDeclarationContext.class,0);
+		}
+		public GenericConstructorDeclarationContext genericConstructorDeclaration() {
+			return getRuleContext(GenericConstructorDeclarationContext.class,0);
+		}
+		public ClassDeclarationContext classDeclaration() {
+			return getRuleContext(ClassDeclarationContext.class,0);
 		}
 		public MemberDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1637,11 +1537,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitMemberDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitMemberDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1727,18 +1622,18 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class MethodDeclarationContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public MethodBodyContext methodBody() {
 			return getRuleContext(MethodBodyContext.class,0);
-		}
-		public QualifiedNameListContext qualifiedNameList() {
-			return getRuleContext(QualifiedNameListContext.class,0);
 		}
 		public FormalParametersContext formalParameters() {
 			return getRuleContext(FormalParametersContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
+		}
+		public QualifiedNameListContext qualifiedNameList() {
+			return getRuleContext(QualifiedNameListContext.class,0);
 		}
 		public MethodDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1751,11 +1646,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitMethodDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitMethodDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1843,11 +1733,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class GenericMethodDeclarationContext extends ParserRuleContext {
-		public MethodDeclarationContext methodDeclaration() {
-			return getRuleContext(MethodDeclarationContext.class,0);
-		}
 		public TypeParametersContext typeParameters() {
 			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public MethodDeclarationContext methodDeclaration() {
+			return getRuleContext(MethodDeclarationContext.class,0);
 		}
 		public GenericMethodDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1860,11 +1750,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitGenericMethodDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitGenericMethodDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1890,15 +1775,15 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ConstructorDeclarationContext extends ParserRuleContext {
+		public FormalParametersContext formalParameters() {
+			return getRuleContext(FormalParametersContext.class,0);
+		}
 		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ConstructorBodyContext constructorBody() {
 			return getRuleContext(ConstructorBodyContext.class,0);
 		}
 		public QualifiedNameListContext qualifiedNameList() {
 			return getRuleContext(QualifiedNameListContext.class,0);
-		}
-		public FormalParametersContext formalParameters() {
-			return getRuleContext(FormalParametersContext.class,0);
 		}
 		public ConstructorDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1911,11 +1796,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitConstructorDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitConstructorDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1970,11 +1850,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitGenericConstructorDeclaration(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitGenericConstructorDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final GenericConstructorDeclarationContext genericConstructorDeclaration() throws RecognitionException {
@@ -2017,11 +1892,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitFieldDeclaration(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitFieldDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final FieldDeclarationContext fieldDeclaration() throws RecognitionException {
@@ -2047,14 +1917,14 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InterfaceBodyDeclarationContext extends ParserRuleContext {
+		public InterfaceMemberDeclarationContext interfaceMemberDeclaration() {
+			return getRuleContext(InterfaceMemberDeclarationContext.class,0);
+		}
 		public List<ModifierContext> modifier() {
 			return getRuleContexts(ModifierContext.class);
 		}
 		public ModifierContext modifier(int i) {
 			return getRuleContext(ModifierContext.class,i);
-		}
-		public InterfaceMemberDeclarationContext interfaceMemberDeclaration() {
-			return getRuleContext(InterfaceMemberDeclarationContext.class,0);
 		}
 		public InterfaceBodyDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2067,11 +1937,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInterfaceBodyDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInterfaceBodyDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2150,26 +2015,26 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InterfaceMemberDeclarationContext extends ParserRuleContext {
-		public EnumDeclarationContext enumDeclaration() {
-			return getRuleContext(EnumDeclarationContext.class,0);
-		}
-		public ClassDeclarationContext classDeclaration() {
-			return getRuleContext(ClassDeclarationContext.class,0);
-		}
 		public GenericInterfaceMethodDeclarationContext genericInterfaceMethodDeclaration() {
 			return getRuleContext(GenericInterfaceMethodDeclarationContext.class,0);
 		}
-		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
-			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
+		public InterfaceMethodDeclarationContext interfaceMethodDeclaration() {
+			return getRuleContext(InterfaceMethodDeclarationContext.class,0);
 		}
 		public InterfaceDeclarationContext interfaceDeclaration() {
 			return getRuleContext(InterfaceDeclarationContext.class,0);
 		}
+		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
+			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
+		}
+		public EnumDeclarationContext enumDeclaration() {
+			return getRuleContext(EnumDeclarationContext.class,0);
+		}
 		public ConstDeclarationContext constDeclaration() {
 			return getRuleContext(ConstDeclarationContext.class,0);
 		}
-		public InterfaceMethodDeclarationContext interfaceMethodDeclaration() {
-			return getRuleContext(InterfaceMethodDeclarationContext.class,0);
+		public ClassDeclarationContext classDeclaration() {
+			return getRuleContext(ClassDeclarationContext.class,0);
 		}
 		public InterfaceMemberDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2182,11 +2047,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInterfaceMemberDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInterfaceMemberDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2258,11 +2118,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ConstDeclarationContext extends ParserRuleContext {
-		public ConstantDeclaratorContext constantDeclarator(int i) {
-			return getRuleContext(ConstantDeclaratorContext.class,i);
-		}
 		public List<ConstantDeclaratorContext> constantDeclarator() {
 			return getRuleContexts(ConstantDeclaratorContext.class);
+		}
+		public ConstantDeclaratorContext constantDeclarator(int i) {
+			return getRuleContext(ConstantDeclaratorContext.class,i);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
@@ -2278,11 +2138,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitConstDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitConstDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2340,11 +2195,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitConstantDeclarator(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitConstantDeclarator(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ConstantDeclaratorContext constantDeclarator() throws RecognitionException {
@@ -2385,15 +2235,15 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InterfaceMethodDeclarationContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
-		public QualifiedNameListContext qualifiedNameList() {
-			return getRuleContext(QualifiedNameListContext.class,0);
-		}
 		public FormalParametersContext formalParameters() {
 			return getRuleContext(FormalParametersContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
+		}
+		public QualifiedNameListContext qualifiedNameList() {
+			return getRuleContext(QualifiedNameListContext.class,0);
 		}
 		public InterfaceMethodDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2406,11 +2256,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInterfaceMethodDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInterfaceMethodDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2484,11 +2329,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class GenericInterfaceMethodDeclarationContext extends ParserRuleContext {
-		public TypeParametersContext typeParameters() {
-			return getRuleContext(TypeParametersContext.class,0);
-		}
 		public InterfaceMethodDeclarationContext interfaceMethodDeclaration() {
 			return getRuleContext(InterfaceMethodDeclarationContext.class,0);
+		}
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
 		}
 		public GenericInterfaceMethodDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2501,11 +2346,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitGenericInterfaceMethodDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitGenericInterfaceMethodDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2531,11 +2371,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class VariableDeclaratorsContext extends ParserRuleContext {
-		public List<VariableDeclaratorContext> variableDeclarator() {
-			return getRuleContexts(VariableDeclaratorContext.class);
-		}
 		public VariableDeclaratorContext variableDeclarator(int i) {
 			return getRuleContext(VariableDeclaratorContext.class,i);
+		}
+		public List<VariableDeclaratorContext> variableDeclarator() {
+			return getRuleContexts(VariableDeclaratorContext.class);
 		}
 		public VariableDeclaratorsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2548,11 +2388,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitVariableDeclarators(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitVariableDeclarators(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2592,11 +2427,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class VariableDeclaratorContext extends ParserRuleContext {
-		public VariableInitializerContext variableInitializer() {
-			return getRuleContext(VariableInitializerContext.class,0);
-		}
 		public VariableDeclaratorIdContext variableDeclaratorId() {
 			return getRuleContext(VariableDeclaratorIdContext.class,0);
+		}
+		public VariableInitializerContext variableInitializer() {
+			return getRuleContext(VariableInitializerContext.class,0);
 		}
 		public VariableDeclaratorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2609,11 +2444,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitVariableDeclarator(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitVariableDeclarator(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2661,11 +2491,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitVariableDeclaratorId(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitVariableDeclaratorId(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final VariableDeclaratorIdContext variableDeclaratorId() throws RecognitionException {
@@ -2704,11 +2529,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class VariableInitializerContext extends ParserRuleContext {
-		public ArrayInitializerContext arrayInitializer() {
-			return getRuleContext(ArrayInitializerContext.class,0);
-		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ArrayInitializerContext arrayInitializer() {
+			return getRuleContext(ArrayInitializerContext.class,0);
 		}
 		public VariableInitializerContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2721,11 +2546,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitVariableInitializer(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitVariableInitializer(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2789,11 +2609,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ArrayInitializerContext extends ParserRuleContext {
-		public List<VariableInitializerContext> variableInitializer() {
-			return getRuleContexts(VariableInitializerContext.class);
-		}
 		public VariableInitializerContext variableInitializer(int i) {
 			return getRuleContext(VariableInitializerContext.class,i);
+		}
+		public List<VariableInitializerContext> variableInitializer() {
+			return getRuleContexts(VariableInitializerContext.class);
 		}
 		public ArrayInitializerContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2806,11 +2626,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitArrayInitializer(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitArrayInitializer(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2883,11 +2698,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnumConstantName(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnumConstantName(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final EnumConstantNameContext enumConstantName() throws RecognitionException {
@@ -2928,11 +2738,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitType(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitType(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3010,15 +2815,15 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ClassOrInterfaceTypeContext extends ParserRuleContext {
-		public List<TypeArgumentsContext> typeArguments() {
-			return getRuleContexts(TypeArgumentsContext.class);
+		public TypeArgumentsContext typeArguments(int i) {
+			return getRuleContext(TypeArgumentsContext.class,i);
 		}
-		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(JavaParser.Identifier, i);
 		}
-		public TypeArgumentsContext typeArguments(int i) {
-			return getRuleContext(TypeArgumentsContext.class,i);
+		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
+		public List<TypeArgumentsContext> typeArguments() {
+			return getRuleContexts(TypeArgumentsContext.class);
 		}
 		public ClassOrInterfaceTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3031,11 +2836,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassOrInterfaceType(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassOrInterfaceType(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3105,11 +2905,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitPrimitiveType(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitPrimitiveType(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final PrimitiveTypeContext primitiveType() throws RecognitionException {
@@ -3156,11 +2951,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeArguments(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeArguments(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3216,11 +3006,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeArgument(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeArgument(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3281,11 +3066,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class QualifiedNameListContext extends ParserRuleContext {
-		public List<QualifiedNameContext> qualifiedName() {
-			return getRuleContexts(QualifiedNameContext.class);
-		}
 		public QualifiedNameContext qualifiedName(int i) {
 			return getRuleContext(QualifiedNameContext.class,i);
+		}
+		public List<QualifiedNameContext> qualifiedName() {
+			return getRuleContexts(QualifiedNameContext.class);
 		}
 		public QualifiedNameListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3298,11 +3083,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitQualifiedNameList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitQualifiedNameList(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3357,11 +3137,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitFormalParameters(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitFormalParameters(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final FormalParametersContext formalParameters() throws RecognitionException {
@@ -3415,11 +3190,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitFormalParameterList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitFormalParameterList(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3483,17 +3253,17 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class FormalParameterContext extends ParserRuleContext {
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
-		public VariableDeclaratorIdContext variableDeclaratorId() {
-			return getRuleContext(VariableDeclaratorIdContext.class,0);
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
+		}
+		public VariableDeclaratorIdContext variableDeclaratorId() {
+			return getRuleContext(VariableDeclaratorIdContext.class,0);
 		}
 		public FormalParameterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3506,11 +3276,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitFormalParameter(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitFormalParameter(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3550,17 +3315,17 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class LastFormalParameterContext extends ParserRuleContext {
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
-		public VariableDeclaratorIdContext variableDeclaratorId() {
-			return getRuleContext(VariableDeclaratorIdContext.class,0);
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
+		}
+		public VariableDeclaratorIdContext variableDeclaratorId() {
+			return getRuleContext(VariableDeclaratorIdContext.class,0);
 		}
 		public LastFormalParameterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3573,11 +3338,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitLastFormalParameter(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitLastFormalParameter(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3633,11 +3393,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitMethodBody(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitMethodBody(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MethodBodyContext methodBody() throws RecognitionException {
@@ -3676,11 +3431,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitConstructorBody(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitConstructorBody(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ConstructorBodyContext constructorBody() throws RecognitionException {
@@ -3704,10 +3454,10 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class QualifiedNameContext extends ParserRuleContext {
-		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(JavaParser.Identifier, i);
 		}
+		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
 		public QualifiedNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -3719,11 +3469,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitQualifiedName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitQualifiedName(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3765,11 +3510,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class LiteralContext extends ParserRuleContext {
-		public TerminalNode StringLiteral() { return getToken(JavaParser.StringLiteral, 0); }
+		public TerminalNode CharacterLiteral() { return getToken(JavaParser.CharacterLiteral, 0); }
 		public TerminalNode IntegerLiteral() { return getToken(JavaParser.IntegerLiteral, 0); }
+		public TerminalNode StringLiteral() { return getToken(JavaParser.StringLiteral, 0); }
 		public TerminalNode FloatingPointLiteral() { return getToken(JavaParser.FloatingPointLiteral, 0); }
 		public TerminalNode BooleanLiteral() { return getToken(JavaParser.BooleanLiteral, 0); }
-		public TerminalNode CharacterLiteral() { return getToken(JavaParser.CharacterLiteral, 0); }
 		public LiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -3781,11 +3526,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitLiteral(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitLiteral(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3816,14 +3556,14 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class AnnotationContext extends ParserRuleContext {
+		public ElementValueContext elementValue() {
+			return getRuleContext(ElementValueContext.class,0);
+		}
 		public ElementValuePairsContext elementValuePairs() {
 			return getRuleContext(ElementValuePairsContext.class,0);
 		}
 		public AnnotationNameContext annotationName() {
 			return getRuleContext(AnnotationNameContext.class,0);
-		}
-		public ElementValueContext elementValue() {
-			return getRuleContext(ElementValueContext.class,0);
 		}
 		public AnnotationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3836,11 +3576,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotation(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotation(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3905,11 +3640,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationName(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationName(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AnnotationNameContext annotationName() throws RecognitionException {
@@ -3933,11 +3663,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ElementValuePairsContext extends ParserRuleContext {
-		public ElementValuePairContext elementValuePair(int i) {
-			return getRuleContext(ElementValuePairContext.class,i);
-		}
 		public List<ElementValuePairContext> elementValuePair() {
 			return getRuleContexts(ElementValuePairContext.class);
+		}
+		public ElementValuePairContext elementValuePair(int i) {
+			return getRuleContext(ElementValuePairContext.class,i);
 		}
 		public ElementValuePairsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3950,11 +3680,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitElementValuePairs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitElementValuePairs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3994,10 +3719,10 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ElementValuePairContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ElementValueContext elementValue() {
 			return getRuleContext(ElementValueContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ElementValuePairContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4009,11 +3734,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitElementValuePair(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitElementValuePair(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4060,11 +3780,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitElementValue(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitElementValue(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4152,11 +3867,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitElementValueArrayInitializer(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitElementValueArrayInitializer(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ElementValueArrayInitializerContext elementValueArrayInitializer() throws RecognitionException {
@@ -4215,10 +3925,10 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class AnnotationTypeDeclarationContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public AnnotationTypeBodyContext annotationTypeBody() {
 			return getRuleContext(AnnotationTypeBodyContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public AnnotationTypeDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4230,11 +3940,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationTypeDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationTypeDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4279,11 +3984,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationTypeBody(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationTypeBody(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4343,11 +4043,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationTypeElementDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationTypeElementDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4424,23 +4119,23 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class AnnotationTypeElementRestContext extends ParserRuleContext {
+		public InterfaceDeclarationContext interfaceDeclaration() {
+			return getRuleContext(InterfaceDeclarationContext.class,0);
+		}
+		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
+			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
+		}
+		public AnnotationMethodOrConstantRestContext annotationMethodOrConstantRest() {
+			return getRuleContext(AnnotationMethodOrConstantRestContext.class,0);
+		}
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
 		public EnumDeclarationContext enumDeclaration() {
 			return getRuleContext(EnumDeclarationContext.class,0);
 		}
 		public ClassDeclarationContext classDeclaration() {
 			return getRuleContext(ClassDeclarationContext.class,0);
-		}
-		public AnnotationMethodOrConstantRestContext annotationMethodOrConstantRest() {
-			return getRuleContext(AnnotationMethodOrConstantRestContext.class,0);
-		}
-		public AnnotationTypeDeclarationContext annotationTypeDeclaration() {
-			return getRuleContext(AnnotationTypeDeclarationContext.class,0);
-		}
-		public InterfaceDeclarationContext interfaceDeclaration() {
-			return getRuleContext(InterfaceDeclarationContext.class,0);
-		}
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
 		}
 		public AnnotationTypeElementRestContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -4453,11 +4148,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationTypeElementRest(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationTypeElementRest(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4555,11 +4245,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class AnnotationMethodOrConstantRestContext extends ParserRuleContext {
-		public AnnotationMethodRestContext annotationMethodRest() {
-			return getRuleContext(AnnotationMethodRestContext.class,0);
-		}
 		public AnnotationConstantRestContext annotationConstantRest() {
 			return getRuleContext(AnnotationConstantRestContext.class,0);
+		}
+		public AnnotationMethodRestContext annotationMethodRest() {
+			return getRuleContext(AnnotationMethodRestContext.class,0);
 		}
 		public AnnotationMethodOrConstantRestContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -4572,11 +4262,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationMethodOrConstantRest(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationMethodOrConstantRest(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4613,10 +4298,10 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class AnnotationMethodRestContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public DefaultValueContext defaultValue() {
 			return getRuleContext(DefaultValueContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public AnnotationMethodRestContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4628,11 +4313,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationMethodRest(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationMethodRest(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4683,11 +4363,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitAnnotationConstantRest(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitAnnotationConstantRest(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AnnotationConstantRestContext annotationConstantRest() throws RecognitionException {
@@ -4725,11 +4400,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitDefaultValue(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitDefaultValue(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4773,11 +4443,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitBlock(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitBlock(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BlockContext block() throws RecognitionException {
@@ -4816,11 +4481,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class BlockStatementContext extends ParserRuleContext {
-		public TypeDeclarationContext typeDeclaration() {
-			return getRuleContext(TypeDeclarationContext.class,0);
-		}
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
+		}
+		public TypeDeclarationContext typeDeclaration() {
+			return getRuleContext(TypeDeclarationContext.class,0);
 		}
 		public LocalVariableDeclarationStatementContext localVariableDeclarationStatement() {
 			return getRuleContext(LocalVariableDeclarationStatementContext.class,0);
@@ -4836,11 +4501,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitBlockStatement(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitBlockStatement(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4899,11 +4559,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitLocalVariableDeclarationStatement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitLocalVariableDeclarationStatement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LocalVariableDeclarationStatementContext localVariableDeclarationStatement() throws RecognitionException {
@@ -4928,14 +4583,14 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class LocalVariableDeclarationContext extends ParserRuleContext {
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
 		public VariableDeclaratorsContext variableDeclarators() {
 			return getRuleContext(VariableDeclaratorsContext.class,0);
+		}
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
@@ -4951,11 +4606,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitLocalVariableDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitLocalVariableDeclaration(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4995,56 +4645,56 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public StatementExpressionContext statementExpression() {
-			return getRuleContext(StatementExpressionContext.class,0);
-		}
-		public StatementContext statement(int i) {
-			return getRuleContext(StatementContext.class,i);
-		}
-		public List<SwitchLabelContext> switchLabel() {
-			return getRuleContexts(SwitchLabelContext.class);
-		}
-		public List<SwitchBlockStatementGroupContext> switchBlockStatementGroup() {
-			return getRuleContexts(SwitchBlockStatementGroupContext.class);
-		}
-		public ParExpressionContext parExpression() {
-			return getRuleContext(ParExpressionContext.class,0);
-		}
-		public List<CatchClauseContext> catchClause() {
-			return getRuleContexts(CatchClauseContext.class);
-		}
-		public CatchClauseContext catchClause(int i) {
-			return getRuleContext(CatchClauseContext.class,i);
-		}
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
-		public FinallyBlockContext finallyBlock() {
-			return getRuleContext(FinallyBlockContext.class,0);
-		}
-		public SwitchBlockStatementGroupContext switchBlockStatementGroup(int i) {
-			return getRuleContext(SwitchBlockStatementGroupContext.class,i);
-		}
-		public ForControlContext forControl() {
-			return getRuleContext(ForControlContext.class,0);
-		}
-		public TerminalNode ASSERT() { return getToken(JavaParser.ASSERT, 0); }
-		public ResourceSpecificationContext resourceSpecification() {
-			return getRuleContext(ResourceSpecificationContext.class,0);
-		}
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
-		}
-		public BlockContext block() {
-			return getRuleContext(BlockContext.class,0);
-		}
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
 		}
 		public SwitchLabelContext switchLabel(int i) {
 			return getRuleContext(SwitchLabelContext.class,i);
 		}
+		public ForControlContext forControl() {
+			return getRuleContext(ForControlContext.class,0);
+		}
+		public List<SwitchLabelContext> switchLabel() {
+			return getRuleContexts(SwitchLabelContext.class);
+		}
+		public ParExpressionContext parExpression() {
+			return getRuleContext(ParExpressionContext.class,0);
+		}
+		public ResourceSpecificationContext resourceSpecification() {
+			return getRuleContext(ResourceSpecificationContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public CatchClauseContext catchClause(int i) {
+			return getRuleContext(CatchClauseContext.class,i);
+		}
+		public FinallyBlockContext finallyBlock() {
+			return getRuleContext(FinallyBlockContext.class,0);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public SwitchBlockStatementGroupContext switchBlockStatementGroup(int i) {
+			return getRuleContext(SwitchBlockStatementGroupContext.class,i);
+		}
+		public StatementExpressionContext statementExpression() {
+			return getRuleContext(StatementExpressionContext.class,0);
+		}
+		public List<CatchClauseContext> catchClause() {
+			return getRuleContexts(CatchClauseContext.class);
+		}
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
+		}
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
+		}
+		public List<SwitchBlockStatementGroupContext> switchBlockStatementGroup() {
+			return getRuleContexts(SwitchBlockStatementGroupContext.class);
+		}
+		public TerminalNode ASSERT() { return getToken(JavaParser.ASSERT, 0); }
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -5056,11 +4706,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitStatement(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitStatement(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5360,18 +5005,18 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class CatchClauseContext extends ParserRuleContext {
-		public CatchTypeContext catchType() {
-			return getRuleContext(CatchTypeContext.class,0);
-		}
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
+		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
+		}
+		public CatchTypeContext catchType() {
+			return getRuleContext(CatchTypeContext.class,0);
 		}
 		public CatchClauseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5384,11 +5029,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitCatchClause(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitCatchClause(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5432,11 +5072,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class CatchTypeContext extends ParserRuleContext {
-		public List<QualifiedNameContext> qualifiedName() {
-			return getRuleContexts(QualifiedNameContext.class);
-		}
 		public QualifiedNameContext qualifiedName(int i) {
 			return getRuleContext(QualifiedNameContext.class,i);
+		}
+		public List<QualifiedNameContext> qualifiedName() {
+			return getRuleContexts(QualifiedNameContext.class);
 		}
 		public CatchTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5449,11 +5089,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitCatchType(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitCatchType(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5508,11 +5143,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitFinallyBlock(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitFinallyBlock(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final FinallyBlockContext finallyBlock() throws RecognitionException {
@@ -5552,11 +5182,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitResourceSpecification(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitResourceSpecification(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ResourceSpecificationContext resourceSpecification() throws RecognitionException {
@@ -5591,11 +5216,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ResourcesContext extends ParserRuleContext {
-		public ResourceContext resource(int i) {
-			return getRuleContext(ResourceContext.class,i);
-		}
 		public List<ResourceContext> resource() {
 			return getRuleContexts(ResourceContext.class);
+		}
+		public ResourceContext resource(int i) {
+			return getRuleContext(ResourceContext.class,i);
 		}
 		public ResourcesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5608,11 +5233,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitResources(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitResources(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5654,20 +5274,20 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ResourceContext extends ParserRuleContext {
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
-		public ClassOrInterfaceTypeContext classOrInterfaceType() {
-			return getRuleContext(ClassOrInterfaceTypeContext.class,0);
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
 		public VariableDeclaratorIdContext variableDeclaratorId() {
 			return getRuleContext(VariableDeclaratorIdContext.class,0);
 		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+		public ClassOrInterfaceTypeContext classOrInterfaceType() {
+			return getRuleContext(ClassOrInterfaceTypeContext.class,0);
 		}
 		public ResourceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5680,11 +5300,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitResource(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitResource(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5729,14 +5344,14 @@ public class JavaParser extends Parser implements ParserInterface {
 		public List<BlockStatementContext> blockStatement() {
 			return getRuleContexts(BlockStatementContext.class);
 		}
+		public SwitchLabelContext switchLabel(int i) {
+			return getRuleContext(SwitchLabelContext.class,i);
+		}
 		public List<SwitchLabelContext> switchLabel() {
 			return getRuleContexts(SwitchLabelContext.class);
 		}
 		public BlockStatementContext blockStatement(int i) {
 			return getRuleContext(BlockStatementContext.class,i);
-		}
-		public SwitchLabelContext switchLabel(int i) {
-			return getRuleContext(SwitchLabelContext.class,i);
 		}
 		public SwitchBlockStatementGroupContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5749,11 +5364,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitSwitchBlockStatementGroup(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitSwitchBlockStatementGroup(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5822,11 +5432,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitSwitchLabel(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitSwitchLabel(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SwitchLabelContext switchLabel() throws RecognitionException {
@@ -5874,9 +5479,6 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ForControlContext extends ParserRuleContext {
-		public ForUpdateContext forUpdate() {
-			return getRuleContext(ForUpdateContext.class,0);
-		}
 		public ForInitContext forInit() {
 			return getRuleContext(ForInitContext.class,0);
 		}
@@ -5885,6 +5487,9 @@ public class JavaParser extends Parser implements ParserInterface {
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ForUpdateContext forUpdate() {
+			return getRuleContext(ForUpdateContext.class,0);
 		}
 		public ForControlContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5897,11 +5502,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitForControl(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitForControl(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5964,11 +5564,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ForInitContext extends ParserRuleContext {
-		public LocalVariableDeclarationContext localVariableDeclaration() {
-			return getRuleContext(LocalVariableDeclarationContext.class,0);
-		}
 		public ExpressionListContext expressionList() {
 			return getRuleContext(ExpressionListContext.class,0);
+		}
+		public LocalVariableDeclarationContext localVariableDeclaration() {
+			return getRuleContext(LocalVariableDeclarationContext.class,0);
 		}
 		public ForInitContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5981,11 +5581,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitForInit(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitForInit(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6022,20 +5617,20 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class EnhancedForControlContext extends ParserRuleContext {
-		public VariableModifierContext variableModifier(int i) {
-			return getRuleContext(VariableModifierContext.class,i);
-		}
 		public List<VariableModifierContext> variableModifier() {
 			return getRuleContexts(VariableModifierContext.class);
 		}
-		public VariableDeclaratorIdContext variableDeclaratorId() {
-			return getRuleContext(VariableDeclaratorIdContext.class,0);
+		public VariableModifierContext variableModifier(int i) {
+			return getRuleContext(VariableModifierContext.class,i);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
+		}
+		public VariableDeclaratorIdContext variableDeclaratorId() {
+			return getRuleContext(VariableDeclaratorIdContext.class,0);
 		}
 		public EnhancedForControlContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -6048,11 +5643,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitEnhancedForControl(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitEnhancedForControl(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6109,11 +5699,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitForUpdate(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitForUpdate(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ForUpdateContext forUpdate() throws RecognitionException {
@@ -6151,11 +5736,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitParExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitParExpression(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6199,11 +5779,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitExpressionList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitExpressionList(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6258,11 +5833,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitStatementExpression(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitStatementExpression(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StatementExpressionContext statementExpression() throws RecognitionException {
@@ -6301,11 +5871,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitConstantExpression(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitConstantExpression(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ConstantExpressionContext constantExpression() throws RecognitionException {
@@ -6329,33 +5894,33 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public NonWildcardTypeArgumentsContext nonWildcardTypeArguments() {
 			return getRuleContext(NonWildcardTypeArgumentsContext.class,0);
-		}
-		public ExplicitGenericInvocationContext explicitGenericInvocation() {
-			return getRuleContext(ExplicitGenericInvocationContext.class,0);
-		}
-		public ExpressionListContext expressionList() {
-			return getRuleContext(ExpressionListContext.class,0);
-		}
-		public InnerCreatorContext innerCreator() {
-			return getRuleContext(InnerCreatorContext.class,0);
-		}
-		public SuperSuffixContext superSuffix() {
-			return getRuleContext(SuperSuffixContext.class,0);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
+		public ExplicitGenericInvocationContext explicitGenericInvocation() {
+			return getRuleContext(ExplicitGenericInvocationContext.class,0);
+		}
 		public PrimaryContext primary() {
 			return getRuleContext(PrimaryContext.class,0);
 		}
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
+		}
+		public SuperSuffixContext superSuffix() {
+			return getRuleContext(SuperSuffixContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
+		}
+		public InnerCreatorContext innerCreator() {
+			return getRuleContext(InnerCreatorContext.class,0);
 		}
 		public CreatorContext creator() {
 			return getRuleContext(CreatorContext.class,0);
@@ -6371,11 +5936,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitExpression(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6837,24 +6397,24 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class PrimaryContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public NonWildcardTypeArgumentsContext nonWildcardTypeArguments() {
 			return getRuleContext(NonWildcardTypeArgumentsContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ExplicitGenericInvocationSuffixContext explicitGenericInvocationSuffix() {
 			return getRuleContext(ExplicitGenericInvocationSuffixContext.class,0);
-		}
-		public LiteralContext literal() {
-			return getRuleContext(LiteralContext.class,0);
 		}
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
 		}
 		public PrimaryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -6867,11 +6427,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitPrimary(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitPrimary(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6973,11 +6528,11 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class CreatorContext extends ParserRuleContext {
-		public ArrayCreatorRestContext arrayCreatorRest() {
-			return getRuleContext(ArrayCreatorRestContext.class,0);
-		}
 		public NonWildcardTypeArgumentsContext nonWildcardTypeArguments() {
 			return getRuleContext(NonWildcardTypeArgumentsContext.class,0);
+		}
+		public ArrayCreatorRestContext arrayCreatorRest() {
+			return getRuleContext(ArrayCreatorRestContext.class,0);
 		}
 		public ClassCreatorRestContext classCreatorRest() {
 			return getRuleContext(ClassCreatorRestContext.class,0);
@@ -6996,11 +6551,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitCreator(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitCreator(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7063,18 +6613,18 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class CreatedNameContext extends ParserRuleContext {
-		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
+		public TypeArgumentsOrDiamondContext typeArgumentsOrDiamond(int i) {
+			return getRuleContext(TypeArgumentsOrDiamondContext.class,i);
+		}
 		public TerminalNode Identifier(int i) {
 			return getToken(JavaParser.Identifier, i);
 		}
+		public List<TerminalNode> Identifier() { return getTokens(JavaParser.Identifier); }
 		public List<TypeArgumentsOrDiamondContext> typeArgumentsOrDiamond() {
 			return getRuleContexts(TypeArgumentsOrDiamondContext.class);
 		}
 		public PrimitiveTypeContext primitiveType() {
 			return getRuleContext(PrimitiveTypeContext.class,0);
-		}
-		public TypeArgumentsOrDiamondContext typeArgumentsOrDiamond(int i) {
-			return getRuleContext(TypeArgumentsOrDiamondContext.class,i);
 		}
 		public CreatedNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -7087,11 +6637,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitCreatedName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitCreatedName(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7167,12 +6712,12 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class InnerCreatorContext extends ParserRuleContext {
+		public NonWildcardTypeArgumentsOrDiamondContext nonWildcardTypeArgumentsOrDiamond() {
+			return getRuleContext(NonWildcardTypeArgumentsOrDiamondContext.class,0);
+		}
 		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ClassCreatorRestContext classCreatorRest() {
 			return getRuleContext(ClassCreatorRestContext.class,0);
-		}
-		public NonWildcardTypeArgumentsOrDiamondContext nonWildcardTypeArgumentsOrDiamond() {
-			return getRuleContext(NonWildcardTypeArgumentsOrDiamondContext.class,0);
 		}
 		public InnerCreatorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -7185,11 +6730,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitInnerCreator(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitInnerCreator(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7224,14 +6764,14 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ArrayCreatorRestContext extends ParserRuleContext {
-		public ArrayInitializerContext arrayInitializer() {
-			return getRuleContext(ArrayInitializerContext.class,0);
-		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
+		}
+		public ArrayInitializerContext arrayInitializer() {
+			return getRuleContext(ArrayInitializerContext.class,0);
 		}
 		public ArrayCreatorRestContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -7244,11 +6784,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitArrayCreatorRest(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitArrayCreatorRest(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7383,11 +6918,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitClassCreatorRest(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitClassCreatorRest(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ClassCreatorRestContext classCreatorRest() throws RecognitionException {
@@ -7437,11 +6967,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitExplicitGenericInvocation(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitExplicitGenericInvocation(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ExplicitGenericInvocationContext explicitGenericInvocation() throws RecognitionException {
@@ -7480,11 +7005,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitNonWildcardTypeArguments(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitNonWildcardTypeArguments(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7525,11 +7045,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitTypeArgumentsOrDiamond(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitTypeArgumentsOrDiamond(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7581,11 +7096,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitNonWildcardTypeArgumentsOrDiamond(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitNonWildcardTypeArgumentsOrDiamond(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7639,11 +7149,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitSuperSuffix(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitSuperSuffix(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SuperSuffixContext superSuffix() throws RecognitionException {
@@ -7689,10 +7194,10 @@ public class JavaParser extends Parser implements ParserInterface {
 	}
 
 	public static class ExplicitGenericInvocationSuffixContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public SuperSuffixContext superSuffix() {
 			return getRuleContext(SuperSuffixContext.class,0);
 		}
+		public TerminalNode Identifier() { return getToken(JavaParser.Identifier, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -7707,11 +7212,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitExplicitGenericInvocationSuffix(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitExplicitGenericInvocationSuffix(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7765,11 +7265,6 @@ public class JavaParser extends Parser implements ParserInterface {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavaListener ) ((JavaListener)listener).exitArguments(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JavaVisitor ) return ((JavaVisitor<? extends T>)visitor).visitArguments(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7843,13 +7338,13 @@ public class JavaParser extends Parser implements ParserInterface {
 
 		case 15: return precpred(_ctx, 22);
 
-		case 16: return precpred(_ctx, 21);
-
 		case 17: return precpred(_ctx, 20);
 
-		case 18: return precpred(_ctx, 19);
+		case 16: return precpred(_ctx, 21);
 
 		case 19: return precpred(_ctx, 16);
+
+		case 18: return precpred(_ctx, 19);
 
 		case 20: return precpred(_ctx, 9);
 		}

@@ -107,8 +107,8 @@ NUMBER : [0..9]+;
 WS  :  [ \t\r\n]+ -> skip
     ;
 COMMENT
-    :   '/*' .*? '*/' -> skip
+    :   '/*' .*? '*/' -> channel(HIDDEN)
     ;
 LINE_COMMENT
-    :   '//' ~[\r\n]* -> skip
+    :   '//' ~[\r\n]* -> channel(HIDDEN)
     ;

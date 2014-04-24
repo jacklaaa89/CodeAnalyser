@@ -1,5 +1,5 @@
 package org.codeanalyser.language.hello;
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from Documents/University/CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -115,11 +115,12 @@ public class HelloLexer extends Lexer {
 		"\u00ac\7\61\2\2\u00ac\u00ad\7,\2\2\u00ad\u00b1\3\2\2\2\u00ae\u00b0\13"+
 		"\2\2\2\u00af\u00ae\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b1"+
 		"\u00af\3\2\2\2\u00b2\u00b4\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b4\u00b5\7,"+
-		"\2\2\u00b5\u00b6\7\61\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00b8\b\37\2\2\u00b8"+
+		"\2\2\u00b5\u00b6\7\61\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00b8\b\37\3\2\u00b8"+
 		">\3\2\2\2\u00b9\u00ba\7\61\2\2\u00ba\u00bb\7\61\2\2\u00bb\u00bf\3\2\2"+
 		"\2\u00bc\u00be\n\5\2\2\u00bd\u00bc\3\2\2\2\u00be\u00c1\3\2\2\2\u00bf\u00bd"+
 		"\3\2\2\2\u00bf\u00c0\3\2\2\2\u00c0\u00c2\3\2\2\2\u00c1\u00bf\3\2\2\2\u00c2"+
-		"\u00c3\b \2\2\u00c3@\3\2\2\2\b\2\u009d\u00a2\u00a7\u00b1\u00bf\3\b\2\2";
+		"\u00c3\b \3\2\u00c3@\3\2\2\2\b\2\u009d\u00a2\u00a7\u00b1\u00bf\4\b\2\2"+
+		"\2\3\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
