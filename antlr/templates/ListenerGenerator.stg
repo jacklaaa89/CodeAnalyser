@@ -36,7 +36,7 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
     <variables:declareVariable()>
     
     @Override
-    public void init(FileAnalyser file, ParserInterface parser) throws MetricException {
+    public void init(FileAnalyser file) throws MetricException {
         this.file = file;
         metrics = new ArrayList\<MetricInterface>();
         //initialise the metrics.

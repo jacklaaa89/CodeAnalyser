@@ -32,7 +32,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
 
 
     @Override
-    public void init(FileAnalyser file, ParserInterface parser) throws MetricException {
+    public void init(FileAnalyser file) throws MetricException {
         this.file = file;
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.

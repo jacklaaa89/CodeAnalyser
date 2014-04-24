@@ -121,7 +121,7 @@ public class Analyser {
                     throw new SyntaxErrorException("A Syntax Error Occured Parsing File: " + file.getAbsolutePath());
                 }
 
-                ParseTreeListener listener = file.getSupportedListener(parser);
+                ParseTreeListener listener = file.getSupportedListener();
                 ParseTreeWalker walker = new ParseTreeWalker();
 
                 //walk the parse tree calling methods in the metrics.

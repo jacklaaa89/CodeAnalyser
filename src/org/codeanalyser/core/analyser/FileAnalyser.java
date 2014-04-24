@@ -196,18 +196,17 @@ public class FileAnalyser extends File {
     /**
      * returns the parseTreeListener instance that supports this file. This is calculated by 
      * if the file extension matches a package.
-     * @param parser the parser that was used to parse the current file.
      * @return a ParseTreeListener that supports this language
      * @throws org.codeanalyser.core.analyser.FileAnalyser.UnsupportedLanguageException if the language was not 
      * supported or the Listener could not be instantiated properly.
      */
-    public ParseTreeListener getSupportedListener(ParserInterface parser) throws UnsupportedLanguageException
+    public ParseTreeListener getSupportedListener() throws UnsupportedLanguageException
     {
         String[] names = this.getClassNames();
         
         try {
             ParseTreeListener listener = (ParseTreeListener) Class.forName("org.codeanalyser.language."+names[0]+".BaseListener").newInstance();
-            ((ListenerInterface)listener).init(this, parser);
+            ((ListenerInterface)listener).init(this);
             return listener;
         } catch (Exception e) {
             throw new UnsupportedLanguageException(e.getMessage());

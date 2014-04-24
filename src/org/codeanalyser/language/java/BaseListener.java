@@ -6,7 +6,6 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
-import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
@@ -32,7 +31,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
 
 
     @Override
-    public void init(FileAnalyser file, ParserInterface parser) throws MetricException {
+    public void init(FileAnalyser file) throws MetricException {
         this.file = file;
         metrics = new ArrayList<MetricInterface>();
         //initialise the metrics.

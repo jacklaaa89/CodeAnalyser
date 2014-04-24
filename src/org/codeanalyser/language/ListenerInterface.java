@@ -26,11 +26,10 @@ public interface ListenerInterface {
     /**
      * gives the listener initial values about the file it is processing.
      * @param file the file it is analysing.
-     * @param parser an instance of the parser used to generate the parse tree.
      * @throws org.codeanalyser.language.MetricException if any of the metrics could
      * not be initialised.
      */
-    public void init(FileAnalyser file, ParserInterface parser) throws MetricException;
+    public void init(FileAnalyser file) throws MetricException;
     
     /**
      * called after this listener has finished analysing a single file, 
