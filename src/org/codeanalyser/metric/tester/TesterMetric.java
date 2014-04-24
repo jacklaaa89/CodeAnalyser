@@ -17,16 +17,23 @@ public class TesterMetric implements MetricInterface {
     
     @Override
     public Result getResults() throws InvalidResultException {
+        System.out.println("getResults() called");
         return null;
     }
     
     @Override
-    public void onParserEvent(EventState state) {}
+    public void onParserEvent(EventState state) {
+        System.out.println("onParserEvent() called: EVENT: " + state.getEventType());
+    }
 
     @Override
-    public void init(ParserInfo initialInformation) throws MetricInitialisationException {}
+    public void init(ParserInfo initialInformation) throws MetricInitialisationException {
+        System.out.println("init() called: SOURCE: " + initialInformation.getSourceLanguage());
+    }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+        System.out.println("destroy() called");
+    }
     
 }
