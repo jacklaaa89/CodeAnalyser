@@ -1,13 +1,12 @@
 package org.codeanalyser.metric;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.ParserInterface;
 
@@ -40,34 +39,29 @@ public class ParserInfo {
         CommonTokenStream s = new CommonTokenStream(this.lexer);
         this.parser = file.getSupportedParser(s);
         this.tokenTypes = new HashMap<Integer, String>();
-        this.readTokenFile();
+        this.getParserTokens();
     }
     
     /**
-     * reads the token file associated with the supported listener and parses
-     * it to a HashMap.
-     * @throws FileNotFoundException if the token file was not found.
-     * @throws IOException if the token file could not be read.
-     * @throws NumberFormatException if a type found in the file was not a valid number.
+     * gets the tokens that have been defined by the grammar.
+     * @version 1.1 updated to use reflection and read the final 
+     * static int fields that are defined in the {SOURCE_LANGUAGE}Parser
+     * classes when antlr generates them. This means that it no longer depends
+     * on a certain file location.
      */
-    public void readTokenFile() throws FileNotFoundException, IOException, 
-            NumberFormatException {
-        String lcs = this.sourceLanguage.toLowerCase();
-        String ucs = this.sourceLanguage.substring(0, 1).toUpperCase()
-                +this.sourceLanguage.substring(1);
-        
-        //read the token file for the source language.
-        File f = new File("src/org/codeanalyser/language/"+lcs+"/"+ucs+".tokens");
-        if(f.exists()) {
-            BufferedReader reader = new BufferedReader(new FileReader(f));
-            String line;
-            while((line = reader.readLine()) != null) {
-                if(!line.startsWith("'")) {
-                    String[] split = line.split("=");
-                    this.tokenTypes.put(Integer.parseInt(split[1]), split[0]);
+    public void getParserTokens() {
+        Class<?> c = parser.getClass();
+        HashMap<Integer, String> tokens = new HashMap<Integer, String>();
+        for(Field f : c.getFields()) {
+            if(f.getType().getName().equals("int")) {
+                if(!f.getName().startsWith("RULE_")) {
+                    try {
+                        tokens.put(f.getInt(null), f.getName());
+                    } catch (IllegalAccessException e) {}
                 }
             }
         }
+        this.tokenTypes = tokens;
     }
     
     /**
