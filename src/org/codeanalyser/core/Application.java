@@ -1,6 +1,9 @@
 package org.codeanalyser.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +37,7 @@ public class Application {
     /**
      * iterates over the packages in 'languages' to determine which languages
      * are currently supported by the system.
+     *
      * @version 1.1 - used reflection to determine the package names instead of
      * depending on a specific file location.
      * @return an ArrayList<String> of supported language names.
@@ -42,17 +46,39 @@ public class Application {
         ArrayList<String> support = new ArrayList<String>();
         String pc = "org.codeanalyser.language";
         ArrayList<Class<?>> classes = ReflectionHelper.getClassesForPackage(pc);
-        for(Class c : classes) {
+        for (Class c : classes) {
             try {
                 String n = c.getPackage().getName();
-                String ln = n.substring(pc.length()+1, n.length());
-                if(!ln.isEmpty() && !support.contains(ln)) {
+                String ln = n.substring(pc.length() + 1, n.length());
+                if (!ln.isEmpty() && !support.contains(ln)) {
                     support.add(ln);
                 }
-            } catch(StringIndexOutOfBoundsException e) {}
+            } catch (StringIndexOutOfBoundsException e) {
+            }
         }
 
         return support;
+    }
+    
+    /**
+     * Utility method to determine if the user has an internet connection.
+     * @return true if a connection was made, false if not.
+     */
+    public static boolean hasInternetConnection() {
+        //a site that is more than likey going to be online.
+        String site = "google.com";
+        Socket sock = new Socket();
+        InetSocketAddress addr = new InetSocketAddress(site, 80);
+        try {
+            sock.connect(addr, 3000);
+            return true;
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                sock.close();
+            } catch (IOException e) {}
+        }
     }
 
     /**
@@ -72,17 +98,19 @@ public class Application {
      * iterates through the metrics packages to find which classes are declared
      * to be 'metrics'. A metric is defined as any class that implements
      * MetricInterface.
-     * @version 1.1 - uses reflection instead of depending on a certain file location.
+     *
+     * @version 1.1 - uses reflection instead of depending on a certain file
+     * location.
      * @return an ArrayList<String> the class names of the found metrics.
      * @throws ClassNotFoundException when a class could not be found.
      */
     private static ArrayList<String> initMetricsList() throws ClassNotFoundException {
         ArrayList<String> classes = new ArrayList<String>();
         ArrayList<Class<?>> cs = ReflectionHelper.getClassesForPackage("org.codeanalyser.metric");
-        for(Class c : cs) {
+        for (Class c : cs) {
             Class<?>[] in = c.getInterfaces();
-            if(in.length != 0) {
-                if(in[0].getSimpleName().equals("MetricInterface") && !c.getSimpleName().equals("TesterMetric")) {
+            if (in.length != 0) {
+                if (in[0].getSimpleName().equals("MetricInterface") && !c.getSimpleName().equals("TesterMetric")) {
                     classes.add(c.getName());
                 }
             }
