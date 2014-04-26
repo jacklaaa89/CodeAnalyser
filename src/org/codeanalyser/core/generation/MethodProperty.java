@@ -48,11 +48,16 @@ public class MethodProperty {
      * @param str the string to split
      * @param replacement the replacement to use.
      * @return the string with the replacement based where a word is camelCased.
+     * @version 1.1 - updated a bug where if no replacements are made the 'replacement'
+     * wasn't appended to the end, meaning it was cutting part of the word.
      */
     public static String splitCamelCase(String str, String replacement)
     {
          String string = str.replaceAll("((^[a-z]+)|([A-Z]{1}[a-z]+)|([A-Z]+(?=([A-Z][a-z])|($))))", "$1"+replacement).toUpperCase().trim();
-         return string.substring(0, string.length()-1);
+         if(string.endsWith(replacement)) {
+             string = string.substring(0, string.length()-1);
+         }
+         return string;
     }
     
     /**
