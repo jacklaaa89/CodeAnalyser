@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
@@ -63,7 +64,7 @@ public class CommentRatio implements MetricInterface {
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
 
         //determine command line args dependant on OS.
-        File clocStart = new File("antlr/cloc");
+        File clocStart = new File(Application.getSystemPath()+"/antlr/cloc");
         String[] args;
         boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
@@ -90,7 +91,7 @@ public class CommentRatio implements MetricInterface {
                 p.waitFor();
                 //load the generated YAML file.
                 Yaml y = new Yaml();
-                File fi = new File("antlr/output.txt");
+                File fi = new File(Application.getSystemPath()+"/antlr/output.txt");
 
                 if (fi.exists()) {
                     InputStream input = new FileInputStream(fi);
@@ -164,7 +165,6 @@ public class CommentRatio implements MetricInterface {
     private void determineCommentRatioBackup(ParserInfo info) throws MetricInitialisationException {
         //get the tokens that were defined in the grammar.
         HashMap<Integer, String> tokenTypes = info.getTokenTypes();
-        
         //check that the LINE_COMMENT|COMMENT token types exist.
         boolean lce = false, ce = false;
         for(Map.Entry<Integer, String> entry : tokenTypes.entrySet()) {
