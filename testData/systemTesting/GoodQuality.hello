@@ -1,0 +1,26 @@
+/**
+ * This class would be considered to be that of good quality in 
+ * accordance to the metrics that I have defined.
+ * This class would essentially just be a random set of methods.
+ * @author Jack Timblin - U1051575
+ */
+class GoodQuality {
+
+    /**
+     * sets another variable.
+     * @param one another variable.
+     */
+    void setAnotherVariable(one) {
+        switch(one) {
+            case "1" { 
+                print(one);
+            }
+            case "2" {
+                print(two);
+            }
+            default { 
+                print(one, two);
+            }
+        }
+    }
+}

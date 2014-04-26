@@ -1,0 +1,43 @@
+/**
+ * This class would be considered to be that of bad quality in 
+ * accordance to the metrics that I have defined.
+ * This class would essentially just be a random set of methods, with
+ * a low amount of commenting.
+ * @author Jack Timblin - U1051575
+ */
+class BadQuality {
+    
+    void setAnotherVariable(fjdfn, hello) {
+        switch(fjdfn) {
+            case "1" { 
+                if(fjdfn) {
+                    print();
+                } else {
+                    print(fjdfn);
+                }
+            }
+            case "2" {
+                print(fjdfn);
+            }
+            case hello {
+                print();
+            }
+            default {
+                print(hello);
+            }
+        }
+        if(fjdfn < 1) {
+            if(fjdfn > 0) {
+                if(fjdfn == 100) {
+                    print();
+                } else {}
+            } else {
+                if(hello == 1) {
+                }
+            }
+        }
+        if(hello == 10) {
+            print();
+        }
+    }
+}
