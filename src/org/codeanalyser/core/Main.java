@@ -21,8 +21,19 @@ public class Main {
     /**
      * runs the application
      * @param args the arguments from the VM.
+     * @throws org.codeanalyser.core.ApplicationException if system files could
+     * not be found.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ApplicationException {
+        
+        //check that we can find all of the required files.
+        String[] files = {"antlr", "config"};
+        for(String file : files) {
+            File f = new File(Application.getSystemPath()+"/"+file);
+            if(!f.exists()) {
+                throw new ApplicationException("System file: " + f.getAbsolutePath() + " could not be located");
+            }
+        }
 
         //create the command line parser.
         CommandLineParser parser = new BasicParser();
