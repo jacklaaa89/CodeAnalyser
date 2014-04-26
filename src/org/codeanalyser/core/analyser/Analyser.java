@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.output.NoResultsDefinedException;
 import org.codeanalyser.core.output.OutputGenerator;
 import org.codeanalyser.core.output.OverallResult;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.codeanalyser.core.Application;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -32,7 +33,8 @@ public class LanguageDetect {
         try {
             
             //load the YAML file.
-            InputStream input = new FileInputStream(new File("config/languages.yml"));
+            InputStream input = new FileInputStream(new File(Application.getSystemPath()+"/config/languages.yml"));
+            
             Map o = (Map) yaml.load(input);
             
             //iterate through the entries and parse each entry into a Language object.
