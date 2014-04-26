@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.AnalyserResult;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
@@ -59,7 +60,7 @@ public class OutputGenerator {
         }
 
         //generate the HTML file using the template.
-        STGroupFile group = new STGroupFile("antlr/templates/OutputTemplate.stg");
+        STGroupFile group = new STGroupFile(Application.getSystemPath()+"/antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("main");
 
         main.add("unsupportedFiles", result.getUnsupportedFiles());

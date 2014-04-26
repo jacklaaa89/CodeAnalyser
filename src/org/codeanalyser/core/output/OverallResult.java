@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.Result;
 import org.jsoup.Jsoup;
@@ -79,7 +80,7 @@ public class OverallResult {
             f.delete();
         }
 
-        STGroupFile group = new STGroupFile("antlr/templates/OutputTemplate.stg");
+        STGroupFile group = new STGroupFile(Application.getSystemPath()+"/antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("sub");
         
         //build the HTML for each of the metric results.
