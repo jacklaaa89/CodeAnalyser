@@ -3,6 +3,7 @@ package org.codeanalyser.metric.vmc;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
+import org.codeanalyser.core.Application;
 
 /**
  * Used to detect the language of some text. This is mainly used
@@ -19,7 +20,7 @@ public class LanguageDetect {
      */
     public LanguageDetect() throws LanguageDetectionException {
         try {
-            DetectorFactory.loadProfile("antlr/profiles");
+            DetectorFactory.loadProfile(Application.getSystemPath()+"/antlr/profiles");
         } catch(LangDetectException e) {
             throw new LanguageDetectionException(e.getMessage());
         }
