@@ -2,8 +2,6 @@ package org.codeanalyser.metric.vmc;
 
 import com.cybozu.labs.langdetect.DetectorFactory;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import org.codeanalyser.core.generation.MethodProperty;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
@@ -15,6 +13,14 @@ import org.codeanalyser.metric.Result;
 /**
  * This metric determines if the variables used in a file are acceptable, i.e
  * are CamelCased concatenations of English words.
+ * @version 1.1 - the validity of using single words to determine the language
+ * was too low, this is because even if the word is gibberish, it still contains
+ * english characters, but the confidence in this detection was always low.
+ * 
+ * the way round this was to generate a single string with all the variable names
+ * init space seperated with 'Hello World' at the end, the 'Hello World' is to force
+ * the detection to english but the quality of the variable names would increase the
+ * confidence in this detection, giving us a more accurate result.
  * @author Jack Timblin - U1051575
  */
 public class VariableNamingConventions implements MetricInterface {
@@ -22,37 +28,34 @@ public class VariableNamingConventions implements MetricInterface {
     private ArrayList<String> variableNames;
     private String fileName, sourceLang;
     private LanguageDetect detector;
-    private int tr = 0, fl = 0;
 
     @Override
     public Result getResults() throws InvalidResultException {
-        boolean s = false; //default to failed.
-        String result = "";
-        ArrayList<Variable> vn = new ArrayList<Variable>();
         try {
+            //concatenate all of the variable names together.
+            StringBuilder b = new StringBuilder();
             for(String text : variableNames) {
                 //push through the camel case splitter.
                 String t = MethodProperty.splitCamelCase(text, " ");
-                //remove any numbers that might corrupt the detection process.
-                String lang = detector.detectLanguage(t);
-                Variable v = new Variable();
-                v.setVariableName(text);
-                v.setDetectedLanguage(lang);
-                vn.add(v);
+                b.append(t);
+                b.append(" ");
             }
-            //generate the result string to inject into the template.
-            s = this.isMajorityAcceptable(vn);
-            
-            result = "<table><tr><td>VariableNamingConvertions Results: </td></tr>"
-                    + "<tr><td>Number of Variables Considered Acceptable: "+tr+"</td></tr>"
-                    + "<tr><td>Number of Variables Considered Unacceptable: "+fl+"</td></tr>"
+            Detection lang = detector.detectLanguage(b.toString().trim() + " Hello World");
+            String reason = ((lang.getDetectedLanguage().equalsIgnoreCase("en")) &&
+                    (lang.getConfidence() == 0.01)) 
+                    ? "<tr><td>Reason For Failure: Confidence in Language Detection was too low.</td></tr>" 
+                    : "";
+            String result = "<table><tr><td>VariableNamingConvertions Results: </td></tr>"
+                    + "<tr><td>Determined Overall Language of Variable Names: "+lang.getDetectedLanguage()+"</td></tr>"
+                    + reason
                     + "<tr><td>Total Variables Found: "+variableNames.size()+"</td></tr></table>";
             
+            return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), result,
+                    (lang.getConfidence() != 0.01) && (lang.getDetectedLanguage().equalsIgnoreCase("en")));
+            
         } catch (LanguageDetect.LanguageDetectionException e) {
-            System.out.println(e.getMessage());
+            throw new InvalidResultException(e.getMessage());
         }
-        
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), result, s);
     }
 
     @Override
@@ -79,30 +82,6 @@ public class VariableNamingConventions implements MetricInterface {
     @Override
     public void destroy() {
         DetectorFactory.clear();
-    }
-    
-    /**
-     * determines if the majority of variables used in a file are 
-     * 'conventional' returns true if the majority of entries were true, or false 
-     * otherwise.
-     * @param vn the array of variable objects.
-     * if the name was detected to be english.
-     * @return true on success, false otherwise.
-     */
-    private boolean isMajorityAcceptable(ArrayList<Variable> vn) {
-       boolean isSuccessful = false;
-       
-       if(!vn.isEmpty()) {
-           for(Variable v : vn) {
-               if(v.getDetectedLanguage().equalsIgnoreCase("en")) {
-                   tr++;
-               } else {
-                   fl++;
-               }
-           }
-           isSuccessful = (tr > fl);
-       }
-       return isSuccessful;
     }
     
 }
