@@ -73,7 +73,7 @@ public class LanguageHelper {
                 };
 
         //open grammar file.  
-        grammars = new File("grammars");
+        grammars = new File("./grammars");
         if (!grammars.exists() || !grammars.isDirectory()) {
             throw new FileException("Grammar directory does not exist.");
         }
@@ -144,7 +144,7 @@ public class LanguageHelper {
                 }
 
                 //check that this grammar has been defined.
-                File grammarPackage = new File("src/org/codeanalyser/language/" + grammarName.toLowerCase());
+                File grammarPackage = new File("./src/org/codeanalyser/language/" + grammarName.toLowerCase());
                 if (!grammarPackage.exists()) {
                     System.out.println("Found new Grammar: '" + grammarName + "'. Generating Parser/Lexer");
                     //make new directory.
@@ -172,7 +172,7 @@ public class LanguageHelper {
                     }
 
                     //check that the new grammar was generated correctly.
-                    File javaParser = new File("src/org/codeanalyser/language/" + grammarName.toLowerCase() + "/" + grammarName + "Parser.java");
+                    File javaParser = new File("./src/org/codeanalyser/language/" + grammarName.toLowerCase() + "/" + grammarName + "Parser.java");
                     if (!javaParser.exists()) {
                         throw new AntlrException("Grammar: '" + grammarName + "' was not generated correctly");
                     }
@@ -203,9 +203,9 @@ public class LanguageHelper {
                         System.out.println("Generating BaseListener for the grammar: " + grammarName);
                         
                         //compile the new classes and initialise.
-                        File a = new File("antlr");
-                        File b = new File("src");
-                        File o = new File("build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
+                        File a = new File("./antlr");
+                        File b = new File("./src");
+                        File o = new File("./build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
                         if(!o.exists()) {
                             o.mkdir();
                         }
@@ -231,7 +231,7 @@ public class LanguageHelper {
                     System.out.println("Compiling new Grammar/Lexer Files for Grammar: " + grammarName);
                     
                     //compile new classes and put them in build/classes.
-                    File bGrammarFile = new File("build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
+                    File bGrammarFile = new File("./build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
                     if(!bGrammarFile.exists()) {
                         if(!bGrammarFile.mkdirs()) {
                             throw new FileException("Could not make build directories.");
