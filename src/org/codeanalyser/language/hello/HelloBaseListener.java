@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -90,19 +90,6 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInformalParameters(@NotNull HelloParser.InformalParametersContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterInnerBlock(@NotNull HelloParser.InnerBlockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInnerBlock(@NotNull HelloParser.InnerBlockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -259,6 +246,19 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassBody(@NotNull HelloParser.ClassBodyContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBlock(@NotNull HelloParser.BlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBlock(@NotNull HelloParser.BlockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

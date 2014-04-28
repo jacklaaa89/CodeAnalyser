@@ -18,18 +18,18 @@ methodDeclaration
     ;
 
 methodBody
-    : innerBlock
+    : block
     ;
 
 statement
     : methodCall
-    | 'if' expression innerBlock ('else' innerBlock)?
+    | 'if' expression block ('else' block)?
     | 'switch' expression '{' switchBlockStatementGroup* '}'
-    | 'try' innerBlock catchClause+
+    | 'try' block catchClause+
     ;
 
 catchClause
-    : 'catch' '(' identifier ')' innerBlock
+    : 'catch' '(' identifier ')' block
     ;
 
 methodCall
@@ -50,7 +50,7 @@ expression
     ;
 
 switchBlockStatementGroup
-    : switchLabel innerBlock
+    : switchLabel block
     ;
 
 switchLabel
@@ -82,7 +82,7 @@ operator
     | '--'
     ;
 
-innerBlock
+block
     : '{' statement* '}'
     ;
 

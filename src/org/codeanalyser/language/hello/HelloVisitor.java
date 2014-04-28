@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -53,13 +53,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInformalParameters(@NotNull HelloParser.InformalParametersContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#innerBlock}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInnerBlock(@NotNull HelloParser.InnerBlockContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#informalParameterList}.
@@ -144,6 +137,13 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitClassBody(@NotNull HelloParser.ClassBodyContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(@NotNull HelloParser.BlockContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#formalParameters}.

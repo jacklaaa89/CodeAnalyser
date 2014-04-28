@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

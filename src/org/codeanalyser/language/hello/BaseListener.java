@@ -11,7 +11,6 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.ParserInfo;
-import org.codeanalyser.language.ParserInterface;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -341,10 +340,25 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
      * @param context <p>The context/area of the parse tree that this rule applies to.</p>
      */
      @Override
-     public void enterInnerBlock(HelloParser.InnerBlockContext context) {
+     public void enterBlock(HelloParser.BlockContext context) {
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
-        EventState state = builder.setContext(context).setEventType("ENTER_INNER_BLOCK").build();
+        EventState state = builder.setContext(context).setEventType("ENTER_BLOCK").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+     }
+     
+     /**
+     * generated method to call exitBlock while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void exitBlock(HelloParser.BlockContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("EXIT_BLOCK").build();
         for(MetricInterface metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);

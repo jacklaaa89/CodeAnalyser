@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,14 +34,13 @@ public class HelloParser extends Parser implements ParserInterface {
 		RULE_methodCall = 7, RULE_informalParameterList = 8, RULE_informalParameters = 9, 
 		RULE_expression = 10, RULE_switchBlockStatementGroup = 11, RULE_switchLabel = 12, 
 		RULE_stringLiteral = 13, RULE_classIdentifier = 14, RULE_parExpression = 15, 
-		RULE_operator = 16, RULE_innerBlock = 17, RULE_formalParameterList = 18, 
-		RULE_formalParameters = 19, RULE_variableDeclaratorId = 20, RULE_identifier = 21, 
-		RULE_number = 22;
+		RULE_operator = 16, RULE_block = 17, RULE_formalParameterList = 18, RULE_formalParameters = 19, 
+		RULE_variableDeclaratorId = 20, RULE_identifier = 21, RULE_number = 22;
 	public static final String[] ruleNames = {
 		"compilationUnit", "classDeclaration", "classBody", "methodDeclaration", 
 		"methodBody", "statement", "catchClause", "methodCall", "informalParameterList", 
 		"informalParameters", "expression", "switchBlockStatementGroup", "switchLabel", 
-		"stringLiteral", "classIdentifier", "parExpression", "operator", "innerBlock", 
+		"stringLiteral", "classIdentifier", "parExpression", "operator", "block", 
 		"formalParameterList", "formalParameters", "variableDeclaratorId", "identifier", 
 		"number"
 	};
@@ -280,8 +279,8 @@ public class HelloParser extends Parser implements ParserInterface {
 	}
 
 	public static class MethodBodyContext extends ParserRuleContext {
-		public InnerBlockContext innerBlock() {
-			return getRuleContext(InnerBlockContext.class,0);
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
 		}
 		public MethodBodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -308,7 +307,7 @@ public class HelloParser extends Parser implements ParserInterface {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(69); innerBlock();
+			setState(69); block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -326,20 +325,20 @@ public class HelloParser extends Parser implements ParserInterface {
 		public CatchClauseContext catchClause(int i) {
 			return getRuleContext(CatchClauseContext.class,i);
 		}
-		public List<InnerBlockContext> innerBlock() {
-			return getRuleContexts(InnerBlockContext.class);
+		public BlockContext block(int i) {
+			return getRuleContext(BlockContext.class,i);
 		}
 		public SwitchBlockStatementGroupContext switchBlockStatementGroup(int i) {
 			return getRuleContext(SwitchBlockStatementGroupContext.class,i);
-		}
-		public InnerBlockContext innerBlock(int i) {
-			return getRuleContext(InnerBlockContext.class,i);
 		}
 		public MethodCallContext methodCall() {
 			return getRuleContext(MethodCallContext.class,0);
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
+		}
+		public List<BlockContext> block() {
+			return getRuleContexts(BlockContext.class);
 		}
 		public List<SwitchBlockStatementGroupContext> switchBlockStatementGroup() {
 			return getRuleContexts(SwitchBlockStatementGroupContext.class);
@@ -384,13 +383,13 @@ public class HelloParser extends Parser implements ParserInterface {
 				{
 				setState(72); match(10);
 				setState(73); expression();
-				setState(74); innerBlock();
+				setState(74); block();
 				setState(77);
 				_la = _input.LA(1);
 				if (_la==27) {
 					{
 					setState(75); match(27);
-					setState(76); innerBlock();
+					setState(76); block();
 					}
 				}
 
@@ -422,7 +421,7 @@ public class HelloParser extends Parser implements ParserInterface {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(90); match(11);
-				setState(91); innerBlock();
+				setState(91); block();
 				setState(93); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -454,11 +453,11 @@ public class HelloParser extends Parser implements ParserInterface {
 	}
 
 	public static class CatchClauseContext extends ParserRuleContext {
-		public InnerBlockContext innerBlock() {
-			return getRuleContext(InnerBlockContext.class,0);
-		}
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
+		}
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
 		}
 		public CatchClauseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -489,7 +488,7 @@ public class HelloParser extends Parser implements ParserInterface {
 			setState(100); match(14);
 			setState(101); identifier();
 			setState(102); match(28);
-			setState(103); innerBlock();
+			setState(103); block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -759,11 +758,11 @@ public class HelloParser extends Parser implements ParserInterface {
 	}
 
 	public static class SwitchBlockStatementGroupContext extends ParserRuleContext {
-		public InnerBlockContext innerBlock() {
-			return getRuleContext(InnerBlockContext.class,0);
-		}
 		public SwitchLabelContext switchLabel() {
 			return getRuleContext(SwitchLabelContext.class,0);
+		}
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
 		}
 		public SwitchBlockStatementGroupContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -791,7 +790,7 @@ public class HelloParser extends Parser implements ParserInterface {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(143); switchLabel();
-			setState(144); innerBlock();
+			setState(144); block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1090,35 +1089,35 @@ public class HelloParser extends Parser implements ParserInterface {
 		return _localctx;
 	}
 
-	public static class InnerBlockContext extends ParserRuleContext {
+	public static class BlockContext extends ParserRuleContext {
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
 		}
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
 		}
-		public InnerBlockContext(ParserRuleContext parent, int invokingState) {
+		public BlockContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_innerBlock; }
+		@Override public int getRuleIndex() { return RULE_block; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterInnerBlock(this);
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterBlock(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitInnerBlock(this);
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitBlock(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitInnerBlock(this);
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitBlock(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final InnerBlockContext innerBlock() throws RecognitionException {
-		InnerBlockContext _localctx = new InnerBlockContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_innerBlock);
+	public final BlockContext block() throws RecognitionException {
+		BlockContext _localctx = new BlockContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_block);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);

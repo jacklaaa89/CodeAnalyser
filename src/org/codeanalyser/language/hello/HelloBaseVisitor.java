@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -60,14 +60,6 @@ public class HelloBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInformalParameters(@NotNull HelloParser.InformalParametersContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitInnerBlock(@NotNull HelloParser.InnerBlockContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -164,6 +156,14 @@ public class HelloBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitClassBody(@NotNull HelloParser.ClassBodyContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBlock(@NotNull HelloParser.BlockContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

@@ -1,6 +1,6 @@
 package org.codeanalyser.language.hello;
 
-// Generated from grammars/Hello.g4 by ANTLR 4.2
+// Generated from CodeAnalyser/grammars/Hello.g4 by ANTLR 4.2
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -74,17 +74,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInformalParameters(@NotNull HelloParser.InformalParametersContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#innerBlock}.
-	 * @param ctx the parse tree
-	 */
-	void enterInnerBlock(@NotNull HelloParser.InnerBlockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#innerBlock}.
-	 * @param ctx the parse tree
-	 */
-	void exitInnerBlock(@NotNull HelloParser.InnerBlockContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#informalParameterList}.
@@ -217,6 +206,17 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClassBody(@NotNull HelloParser.ClassBodyContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(@NotNull HelloParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(@NotNull HelloParser.BlockContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#formalParameters}.
