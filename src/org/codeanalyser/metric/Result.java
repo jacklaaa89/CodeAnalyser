@@ -14,6 +14,11 @@ public class Result {
     private boolean passedMetric;
     
     /**
+     * force Result.newInstance use.
+     */
+    private Result() {}
+    
+    /**
      * returns the file name of the file analysed.
      * @return the file name.
      */
