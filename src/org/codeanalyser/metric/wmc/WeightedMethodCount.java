@@ -1,8 +1,8 @@
 package org.codeanalyser.metric.wmc;
 
+import java.util.Arrays;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
@@ -20,8 +20,9 @@ public class WeightedMethodCount implements MetricInterface {
     private int totalClassComplexity = 0;
     private final int complexityThreshold = 50;
     private String fileName, sourceLang;
-    private String[] tokens;
-    private ParserInterface parser;
+    
+    //events and tokens.
+    private final String[] statementEvents = {"ENTER_STATEMENT", "ENTER_SWITCH_BLOCK_STATEMENT_GROUP", "ENTER_CATCH_CLAUSE"};
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
     @Override
@@ -36,11 +37,8 @@ public class WeightedMethodCount implements MetricInterface {
 
     @Override
     public void onParserEvent(EventState state) {
-        if (state.getEventType().equals("ENTER_STATEMENT")
-                || state.getEventType().equals("ENTER_SWITCH_BLOCK_STATEMENT_GROUP")) {
-
+        if (Arrays.asList(statementEvents).contains(state.getEventType())) {
             this.determineComplexity(state.getContext());
-
         }
     }
 
@@ -48,7 +46,6 @@ public class WeightedMethodCount implements MetricInterface {
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
         this.fileName = initialInformation.getFileName();
         this.sourceLang = initialInformation.getSourceLanguage();
-        this.parser = initialInformation.getParser();
     }
 
     @Override

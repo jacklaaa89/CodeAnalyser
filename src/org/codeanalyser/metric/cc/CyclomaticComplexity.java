@@ -1,10 +1,10 @@
 package org.codeanalyser.metric.cc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
@@ -20,11 +20,12 @@ import org.codeanalyser.metric.Result;
 public class CyclomaticComplexity implements MetricInterface {
     
     private String fileName, sourceLang;
-    private String[] tokens;
-    private ParserInterface parser;
     private ArrayList<Entry> entries;
-    private boolean isInMethod = false;
     private final int complexityThreshold = 10;
+    
+    //events and tokens.
+    private final String[] statementEvents = {"ENTER_STATEMENT", "ENTER_SWITCH_BLOCK_STATEMENT_GROUP", "ENTER_CATCH_CLAUSE"};
+    private final String[] methodEvents = {"ENTER_CONSTRUCTOR_DECLARATION", "ENTER_METHOD_DECLARATION"};
     private final String[] complexityTokens = {"DEFAULT", "FOR", "WHILE", "IF", "CASE", "CONTINUE", "CATCH"};
 
     @Override
@@ -55,8 +56,7 @@ public class CyclomaticComplexity implements MetricInterface {
 
     @Override
     public void onParserEvent(EventState state) {
-        if(state.getEventType().equals("ENTER_CONSTRUCTOR_DECLARATION") ||
-                state.getEventType().equals("ENTER_METHOD_DECLARATION")) {
+        if(Arrays.asList(methodEvents).contains(state.getEventType())) {
             //if were in a constructor or a method, count the amount of complexity keywords in that
             //method or constructor, store these in a ArrayList.
             Entry currentEntry = new Entry();
@@ -67,8 +67,7 @@ public class CyclomaticComplexity implements MetricInterface {
             currentEntry.setComplexityThreshold(complexityThreshold);
             this.entries.add(currentEntry);
             
-        } else if (state.getEventType().equals("ENTER_STATEMENT") ||
-                state.getEventType().equals("ENTER_SWITCH_BLOCK_STATEMENT_GROUP")) {
+        } else if (Arrays.asList(statementEvents).contains(state.getEventType())) {
             //statements only appear inside constructors or methods
             //so we can safety assume the last entry in our entries is the
             //current method/constructor.
@@ -98,7 +97,6 @@ public class CyclomaticComplexity implements MetricInterface {
         this.fileName = initialInformation.getFileName();
         this.sourceLang = initialInformation.getSourceLanguage();
         this.entries = new ArrayList<Entry>();
-        this.parser = initialInformation.getParser();
     }
 
     @Override
