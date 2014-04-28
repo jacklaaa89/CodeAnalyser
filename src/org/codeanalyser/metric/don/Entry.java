@@ -13,7 +13,7 @@ public class Entry {
     private final ArrayList<NestingEntry> nestingEntries;
     private final String methodName;
     private NestingEntry deepestNestingOccurance = new NestingEntry();
-    private final int nestingThreshold = 5;
+    private final int nestingThreshold = 4;
     
     /**
      * Initialises a new Entry Object.
