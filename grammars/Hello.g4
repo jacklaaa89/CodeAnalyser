@@ -25,6 +25,11 @@ statement
     : methodCall
     | 'if' expression innerBlock ('else' innerBlock)?
     | 'switch' expression '{' switchBlockStatementGroup* '}'
+    | 'try' innerBlock catchClause+
+    ;
+
+catchClause
+    : 'catch' '(' identifier ')' innerBlock
     ;
 
 methodCall
