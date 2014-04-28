@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.codeanalyser.core.analyser.Analyser;
+import org.codeanalyser.core.analyser.AnalyserException;
 import org.codeanalyser.language.hello.HelloLexer;
 import org.codeanalyser.language.hello.HelloParser;
 
@@ -22,14 +24,10 @@ public class Main2 {
      */
     public static void main(String[] args) {
         try {
-            HelloLexer lexer = new HelloLexer(new ANTLRFileStream("test/Test.hello"));
-            CommonTokenStream stream = new CommonTokenStream(lexer);
-            HelloParser parser = new HelloParser(stream);
-            //ClassGeneration.generateBaseListener("Hello", parser.getRuleNames());
-            ParserRuleContext tree = parser.compilationUnit();
-            tree.inspect(parser);
-        } catch (IOException ex) {
-            Logger.getLogger(Main2.class.getName()).log(Level.SEVERE, null, ex);
+        Analyser a = new Analyser("testData/Test.hello", "output");
+        a.analyse("hello");
+        } catch (AnalyserException e) {
+            System.err.println(e.getMessage());
         }
     }
     
