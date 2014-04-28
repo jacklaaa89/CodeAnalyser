@@ -8,13 +8,17 @@ class Test { /* mutli on multi lines.
     
     /* testerMethod commenting. */
     void testerMethod(tester1, tester2) {
-        switch(tester1) {
-            case "hello" {
-                print(tester1);
+        try {
+            switch(tester1) {
+                case "hello" {
+                    print(tester1);
+                }
+                default {
+                    print(tester2);
+                }
             }
-            default {
-                print(tester2);
-            }
+        } catch(exception) {
+            print(exception);
         }
     }
 
