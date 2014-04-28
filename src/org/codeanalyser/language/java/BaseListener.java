@@ -74,6 +74,22 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
     }
     
     /**
+     * generated method to call enterBlock while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterBlock(JavaParser.BlockContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_BLOCK").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+        
+     }
+    
+    /**
      * generated method to call enterCatchClause while walking the parse tree.
      * @param context <p>The context/area of the parse tree that this rule applies to.</p>
      */
@@ -87,6 +103,21 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             metric.onParserEvent(state);
         }
         
+     }
+     
+     /**
+     * generated method to call exitBlock while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void exitBlock(JavaParser.BlockContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("EXIT_BLOCK").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
      }
     
     /**
