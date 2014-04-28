@@ -97,7 +97,7 @@ public class OverallResult {
             
             //clean the inputted HTML from the metric to remove tags which are not allowed.
             Whitelist list = Whitelist.relaxed();
-            list.addTags("div");
+            list.addTags("div", "style", "span");
             String doc = Jsoup.clean(r.getResult(), list);
             
             builder.append(doc);
