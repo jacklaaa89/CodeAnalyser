@@ -87,6 +87,7 @@ public class CyclomaticComplexity implements MetricInterface {
             if(s.equalsIgnoreCase(context.getStart().getText().toUpperCase())) {
                 int c = entry.getAmountOfComplexKeywords();
                 entry.setAmountOfComplexKeywords(c+1);
+                entry.addKeywordOccurrence(context.getStart().getText());
                 break;
             }
         }

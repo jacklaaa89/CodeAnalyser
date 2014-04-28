@@ -11,7 +11,8 @@ import java.util.Comparator;
 public class EntryComparator implements Comparator<Entry> {
     
     /**
-     * compares two Entry objects by amount of complex keywords.
+     * compares two Entry objects by biggest amount of nesting that 
+     * occured in each method.
      * @param o1 an entry object
      * @param o2 another entry object to compare with o1.
      * @return 1, 0 or -1 dependant on the comparison made.

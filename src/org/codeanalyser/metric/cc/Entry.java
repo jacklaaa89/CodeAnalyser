@@ -1,5 +1,7 @@
 package org.codeanalyser.metric.cc;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
@@ -14,6 +16,26 @@ public class Entry {
     private ParserRuleContext context;
     private String methodName;
     private int complexityThreshold;
+    private final HashMap<String, Integer> keywordOccurrences
+            = new HashMap<String, Integer>();
+    
+    /**
+     * gets the occurrences of different keywords that 
+     * were found in this entry.
+     * @return the keyword occurrences.
+     */
+    public HashMap<String, Integer> getKeywordOccurrences() {
+        return keywordOccurrences;
+    }
+    
+    /**
+     * adds a new keyword instance to the instances.
+     * @param keyword the keyword.
+     */
+    public void addKeywordOccurrence(String keyword) {
+        Integer i = this.getKeywordOccurrences().get(keyword);
+        this.getKeywordOccurrences().put(keyword, (i != null) ? (int)i+1 : 1);
+    }
     
     /**
      * gets the amount of complexity keywords permitted in this entry.
@@ -103,10 +125,15 @@ public class Entry {
      * @return a HTML representation of this object.
      */
     public String toResult() {
-        return "<table><tr><td>CyclomaticComplexity Results:</td></tr>"
+        String result =  "<table><tr><td>CyclomaticComplexity Results:</td></tr>"
                 + "<tr><td>Method With Most Complexity: "+this.getMethodName()+"</td></tr>"
                 + "<tr><td>Amount of Complexity Keywords Found: "+this.getAmountOfComplexKeywords()+"</td></tr>"
-                + "<tr><td>Complexity Threshold: "+this.getComplexityThreshold()+"</td></tr></table>";
+                + "<tr><td>Complexity Threshold: "+this.getComplexityThreshold()+"</td></tr>"
+                + "<tr><td><span style='text-decoration:underline;'>Keyword Occurances:</span> </td></tr>";
+        for(Map.Entry<String, Integer> entry : this.getKeywordOccurrences().entrySet()) {
+            result += "<tr><td>"+entry.getKey()+": </td><td>"+entry.getValue()+"</td></tr>";
+        }
+        return result + "</table>";
     }
     
     /**
