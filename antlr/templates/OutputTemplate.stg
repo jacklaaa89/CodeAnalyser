@@ -130,9 +130,6 @@ sub(fileName, sourceLanguage, html) ::= <<
         thead td, tbody td > span {
             font-weight:bold;
         }
-        tbody tr td:first-of-type {
-            width:386px;
-        }
         table {
             border-spacing: 0px;
         }
