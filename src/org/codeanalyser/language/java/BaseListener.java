@@ -74,6 +74,22 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
     }
     
     /**
+     * generated method to call enterCatchClause while walking the parse tree.
+     * @param context <p>The context/area of the parse tree that this rule applies to.</p>
+     */
+     @Override
+     public void enterCatchClause(JavaParser.CatchClauseContext context) {
+        //build state object.
+        EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
+        EventState state = builder.setContext(context).setEventType("ENTER_CATCH_CLAUSE").build();
+        for(MetricInterface metric : metrics) {
+            //start the metrics evaluation at this event.
+            metric.onParserEvent(state);
+        }
+        
+     }
+    
+    /**
      * generated method to call enterSwitchBlockStatementGroup while walking the parse tree.
      * @param context <p>The context/area of the parse tree that this rule applies to.</p>
      */
