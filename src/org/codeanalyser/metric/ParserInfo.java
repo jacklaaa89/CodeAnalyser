@@ -6,7 +6,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
-import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.ParserInterface;
 
