@@ -10,7 +10,7 @@ public class Test2 {
      * @param tester1 a random parameter.
      * @param tester2 another random parameter.
      */
-    public void testerMethod(String glkfmklfmhnkdmfkghymt, String tester2) {
+    public void testerMethod12(String glkfmklfmhnkdmfkghymt, String tester2) {
         if(glkfmklfmhnkdmfkghymt.equals(tester2)) {
             System.out.println(glkfmklfmhnkdmfkghymt);
         } else {
