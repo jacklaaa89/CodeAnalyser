@@ -48,7 +48,7 @@ public class CommentRatio implements MetricInterface {
                 + "<tr><td>Comment Percentage: " + percentages[1] + "%</td></tr>"
                 + "<tr><td>Blank Lines Percentage: " + percentages[2] + "%</td></tr>"
                 + "<tr><td></td></tr>"
-                + "<tr><td style='font-weight:bold;'>Thresholds: </td></tr>"
+                + "<tr><td><span>Thresholds:</span> </td></tr>"
                 + "<tr><td>Min: " + this.thresholdRatio[0] + "%</td></tr>"
                 + "<tr><td>Max: " + this.thresholdRatio[1] + "%</td></tr></table>";
 
