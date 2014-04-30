@@ -12,9 +12,9 @@ import org.codeanalyser.core.output.OverallResult;
  */
 public class AnalyserResult {
     
-    private ArrayList<OverallResult> results;
-    private ArrayList<FileAnalyser> filesToAnalyse;
-    private ArrayList<String> unsupportedFiles, syntaxErrors;
+    private final ArrayList<OverallResult> results;
+    private final ArrayList<FileAnalyser> filesToAnalyse;
+    private final ArrayList<String> unsupportedFiles, syntaxErrors;
     private int noSyntaxErrorFiles = 0;
     
     /**
@@ -41,15 +41,6 @@ public class AnalyserResult {
         return percentages;
         
     }
-        
-    
-    /**
-     * get the amount of successfully analysed files.
-     * @return the amount of successfully analysed files.
-     */
-    private int getSuccessCount() {
-        return this.results.size();
-    }
     
     /**
      * gets the number of files that have has one of more 
@@ -66,31 +57,6 @@ public class AnalyserResult {
      */
     public void incrementNoOfSyntaxErrorFiles() {
         this.noSyntaxErrorFiles++;
-    }
-    
-    /**
-     * get the amount of files that failed analysis
-     * due to having syntax errors or being unsupported.
-     * @return the amount of files that failed analysis.
-     */
-    private int getFailedCount() {
-        return this.syntaxErrors.size() + this.unsupportedFiles.size();
-    }
-    
-    /**
-     * gets the percentage of how many files were successfully analysed.
-     * @return the percentage of successful files.
-     */
-    private double getSuccessPercentage() {
-        return (this.getSuccessCount()/this.filesToAnalyse.size())*100;
-    }
-    
-    /**
-     * gets the percentage of how many files failed to be analysed.
-     * @return the percentage of failed files.
-     */
-    private double getFailedPercentage() {
-        return (this.getFailedCount()/this.filesToAnalyse.size())*100;
     }
     
     /**
