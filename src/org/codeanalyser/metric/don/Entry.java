@@ -1,6 +1,7 @@
 package org.codeanalyser.metric.don;
 
 import java.util.ArrayList;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 /**
  * An encapsulation of a single methods analysis 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * 
  * @author Jack Timblin - U1051575
  */
-public class Entry {
+public class Entry implements Comparable<Entry> {
     
     private final ArrayList<NestingEntry> nestingEntries;
     private final String methodName;
@@ -127,6 +128,20 @@ public class Entry {
     public String toString() {
         return "[MethodName: " + this.getMethodName() + ", DeepestNestingOccurance: " + this.getDeepestNestingOccurance()
                 + ", Nesting Threshold: " + this.getNestingThreshold() + ", NestingOccurances: " + this.nestingEntries + "]";
+    }
+    
+    /**
+     * compares this Entry to another Entry object
+     * based on the largest degree of nesting that 
+     * occurred in a method.
+     * @param o the Entry object to compare to this Object.
+     * @return 1, 0 or -1 dependant on the comparison.
+     */
+    @Override
+    public int compareTo(Entry o) {
+        return new CompareToBuilder()
+                .append(this.getDeepestNestingOccuranceAmount(), o.getDeepestNestingOccuranceAmount())
+                .toComparison();
     }
     
 }

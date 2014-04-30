@@ -3,13 +3,14 @@ package org.codeanalyser.metric.cc;
 import java.util.HashMap;
 import java.util.Map;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 /**
  * An encapsulation of an Entry. An Entry is defined as an evaluation
  * of a single method based on the amount of complexity keywords.
  * @author Jack Timblin - u1051575
  */
-public class Entry {
+public class Entry implements Comparable<Entry> {
     
     private String type;
     private int amountOfComplexKeywords = -1;
@@ -143,6 +144,19 @@ public class Entry {
     @Override
     public String toString() {
         return "methodName: " + this.getMethodName() + ", amount of complexity keywords: " + this.getAmountOfComplexKeywords();
+    }
+    
+    /**
+     * compares this Entry to another Entry object
+     * based on the amount of complexity keywords.
+     * @param o the Entry object to compare to this Object.
+     * @return 1, 0 or -1 dependant on the comparison.
+     */
+    @Override
+    public int compareTo(Entry o) {
+        return new CompareToBuilder()
+                .append(this.getAmountOfComplexKeywords(), o.getAmountOfComplexKeywords())
+                .toComparison();
     }
     
 }

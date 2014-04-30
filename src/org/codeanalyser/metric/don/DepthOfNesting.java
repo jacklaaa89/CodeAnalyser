@@ -31,7 +31,7 @@ public class DepthOfNesting implements MetricInterface {
             if(entries.size() > 1) {
                 //sort the entries in natural order based on the amount of
                 //complex keywords.
-                Collections.sort(entries, new EntryComparator());
+                Collections.sort(entries);
                 e = entries.get(entries.size()-1); //get the last object.
             } else {
                 //get the only entry and see how well it done.
