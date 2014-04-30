@@ -8,9 +8,7 @@
                 <root id="src.dependancies.dir" name="Dependancies"/>
                 <root id="src.src.dir" name="Source"/>
             </source-roots>
-            <test-roots>
-                <root id="test.test.dir" name="Test"/>
-            </test-roots>
+            <test-roots/>
         </data>
     </configuration>
 </project>
