@@ -60,7 +60,7 @@ public class OutputGenerator {
         }
 
         //generate the HTML file using the template.
-        STGroupFile group = new STGroupFile(Application.getSystemPath()+"/antlr/templates/OutputTemplate.stg");
+        STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("main");
 
         main.add("unsupportedFiles", result.getUnsupportedFiles());

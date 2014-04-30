@@ -64,7 +64,7 @@ public class CommentRatio implements MetricInterface {
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
 
         //determine command line args dependant on OS.
-        File clocStart = new File(Application.getSystemPath()+"/antlr/cloc");
+        File clocStart = new File(Application.getSystemPath()+"antlr/cloc");
         String[] args;
         boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
@@ -91,7 +91,7 @@ public class CommentRatio implements MetricInterface {
                 p.waitFor();
                 //load the generated YAML file.
                 Yaml y = new Yaml();
-                File fi = new File(Application.getSystemPath()+"/antlr/output.txt");
+                File fi = new File(Application.getSystemPath()+"antlr/output.txt");
 
                 if (fi.exists()) {
                     InputStream input = new FileInputStream(fi);

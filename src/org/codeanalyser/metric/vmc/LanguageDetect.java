@@ -30,7 +30,7 @@ public class LanguageDetect {
     public LanguageDetect() throws LanguageDetectionException {
         DetectLanguage.apiKey = "24c69c6ca861f7f1f3af61c1afcab223";
         try {
-            DetectorFactory.loadProfile(Application.getSystemPath() + "/antlr/profiles");
+            DetectorFactory.loadProfile(Application.getSystemPath() + "antlr/profiles");
         } catch (LangDetectException e) {
             throw new LanguageDetectionException(e.getMessage());
         }

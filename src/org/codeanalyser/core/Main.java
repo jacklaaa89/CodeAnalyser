@@ -29,7 +29,7 @@ public class Main {
         //check that we can find all of the required files.
         String[] files = {"antlr", "config"};
         for(String file : files) {
-            File f = new File(Application.getSystemPath()+"/"+file);
+            File f = new File(Application.getSystemPath()+file);
             if(!f.exists()) {
                 throw new ApplicationException("System file: " + f.getAbsolutePath() + " could not be located");
             }

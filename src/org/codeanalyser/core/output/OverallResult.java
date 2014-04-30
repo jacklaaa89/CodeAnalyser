@@ -80,7 +80,7 @@ public class OverallResult {
             f.delete();
         }
 
-        STGroupFile group = new STGroupFile(Application.getSystemPath()+"/antlr/templates/OutputTemplate.stg");
+        STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("sub");
         
         //build the HTML for each of the metric results.

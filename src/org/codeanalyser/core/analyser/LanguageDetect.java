@@ -33,7 +33,7 @@ public class LanguageDetect {
         try {
             
             //load the YAML file.
-            InputStream input = new FileInputStream(new File(Application.getSystemPath()+"/config/languages.yml"));
+            InputStream input = new FileInputStream(new File(Application.getSystemPath()+"config/languages.yml"));
             
             Map o = (Map) yaml.load(input);
             
