@@ -91,7 +91,7 @@ public class Application {
         String command = System.getProperty("sun.java.command");
         String[] split = command.split(" analyser ");
         File f = new File(split[0]);
-        return (f.getParent() != null) ? f.getParent() + "/" : "/"; //assume that we are in the same directory.
+        return (f.getParent() != null) ? f.getParent() + "/" : ""; //assume that we are in the same directory.
     }
 
     /**
