@@ -49,26 +49,30 @@ public class DepthOfNesting implements MetricInterface {
             Entry e = new Entry(state.getContext().getChild(1).getText());
             this.entries.add(e);
         } else if(state.getEventType().equals("ENTER_BLOCK")) {
-            Entry e = this.entries.get(this.entries.size()-1);
-            NestingEntry ne = e.getLastNestingEntry();
-            if(ne != null && !ne.isClosed()) {
-                //we are still in a nest.
-                ne.setAmountOfNesting(ne.getAmountOfNesting()+1);
-            } else {
-                //this is a new nest.
-                ne = new NestingEntry();
-                ne.setAmountOfNesting(1);
-                e.setNestingEntry(ne);
+            if(!entries.isEmpty()) {
+                Entry e = this.entries.get(this.entries.size()-1);
+                NestingEntry ne = e.getLastNestingEntry();
+                if(ne != null && !ne.isClosed()) {
+                    //we are still in a nest.
+                    ne.setAmountOfNesting(ne.getAmountOfNesting()+1);
+                } else {
+                    //this is a new nest.
+                    ne = new NestingEntry();
+                    ne.setAmountOfNesting(1);
+                    e.setNestingEntry(ne);
+                }
             }
         } else if(state.getEventType().equals("EXIT_BLOCK")) {
             //get the Entry.
-            Entry e = this.entries.get(this.entries.size()-1);
-            NestingEntry ne = e.getLastNestingEntry();
-            if(ne != null) { //if nesting occured in the block.
-                e.setDeepestNestingOccurance(ne);
-                //set this nesting occurance to 'closed'.
-                ne.setIsClosed(true);
-                ne.setText(state.getContext());
+            if(!entries.isEmpty()) {
+                Entry e = this.entries.get(this.entries.size()-1);
+                NestingEntry ne = e.getLastNestingEntry();
+                if(ne != null) { //if nesting occured in the block.
+                    e.setDeepestNestingOccurance(ne);
+                    //set this nesting occurance to 'closed'.
+                    ne.setIsClosed(true);
+                    ne.setText(state.getContext());
+                }
             }
             
         }
