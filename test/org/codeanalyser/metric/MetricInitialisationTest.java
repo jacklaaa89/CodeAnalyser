@@ -1,5 +1,6 @@
 package org.codeanalyser.metric;
 
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
@@ -31,7 +32,9 @@ public class MetricInitialisationTest {
     
     @After
     public void tearDown() {
-        listener.destroy();
+        if(listener != null) {
+            listener.destroy();
+        }
         this.file = null; this.listener = null;
     }
     

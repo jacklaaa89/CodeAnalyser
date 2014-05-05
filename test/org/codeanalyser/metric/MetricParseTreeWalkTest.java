@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.ParserInterface;
 import org.junit.After;
@@ -23,6 +24,7 @@ public class MetricParseTreeWalkTest {
     
     @Before
     public void setUp() {
+        Application.systemPath = "";
         javaFile = new FileAnalyser("testData/Test2.java");
         helloFile = new FileAnalyser("testData/Test.hello");
     }

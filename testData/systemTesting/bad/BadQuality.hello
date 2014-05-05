@@ -7,10 +7,16 @@
  */
 class BadQuality {
     
-    void setAnotherVariable(fjdfn, hello) {
+    void setAnotherVariable(fjdfn, hello, ffgfgfgh, sgfvcgfrvt, crvgrbh) {
         switch(fjdfn) {
             case "1" { 
                 if(fjdfn) {
+                    if(fjdfn > ffgfgfgh) {
+                        if(fjdfn < crygrbh) {
+                            system.out.print();
+                        }
+                        var.print(ffdfn);
+                    }
                     print();
                 } else {
                     print(fjdfn);

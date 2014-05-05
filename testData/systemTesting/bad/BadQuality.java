@@ -9,6 +9,7 @@ public class BadQuality {
     
     private String agvf;
     private int fjdfn;
+    private double vfgfg;
     
     
     public BadQuality(String agvf, int fjdfn) {
@@ -17,11 +18,20 @@ public class BadQuality {
     }
     
     
-    public void setAnotherVariable(int fjdfn) {
+    public void setAnotherVariable(int fjdfn, double frdgdfgt,
+            char gfijgfvgfv, Object o, double vfgfg, boolean istrue) {
         switch(fjdfn) {
             case 1 : 
                 if(fjdfn > 10) {
-                    this.fjdfn = -1;
+                    if(fjdfn == 9) {
+                        while(true) {
+                            System.out.println("Printing While True");
+                            if(vfgfg == 10) {
+                                this.fjdfn = 1;
+                            }
+                            this.fjdfn = -1;
+                        }
+                    }
                 } else if(fjdfn < 10) {
                     this.fjdfn = 10;
                 }
