@@ -88,6 +88,15 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         }
         
      }
+     
+    @Override
+    public void destroy() {
+        //do any more work before destruction.
+        for(MetricInterface metric : metrics) {
+            metric.destroy();
+        }
+    }
+     
     
     /**
      * generated method to call enterCatchClause while walking the parse tree.
@@ -222,14 +231,5 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             metric.onParserEvent(state);
         }
      }
-
-    @Override
-    public void destroy() {
-        //do any more work before destruction.
-        for(MetricInterface metric : metrics) {
-            metric.destroy();
-        }
-    }
-     
 
 }

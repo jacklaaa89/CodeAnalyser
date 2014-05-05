@@ -5,9 +5,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.core.analyser.Analyser;
 import org.codeanalyser.core.analyser.AnalyserException;
+import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.language.hello.HelloLexer;
 import org.codeanalyser.language.hello.HelloParser;
 
@@ -24,9 +28,15 @@ public class Main2 {
      */
     public static void main(String[] args) {
         try {
-        Analyser a = new Analyser("testData/Test.hello", "output");
-        a.analyse("hello");
-        } catch (AnalyserException e) {
+        FileAnalyser a = new FileAnalyser("testData/Test.hello", "hello");
+        Lexer l = a.getSupportedLexer();
+        CommonTokenStream c = new CommonTokenStream(l);
+        ParserInterface p = a.getSupportedParser(c);
+        ParserRuleContext t = p.compilationUnit();
+        
+        t.inspect((Parser)p);
+        
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }

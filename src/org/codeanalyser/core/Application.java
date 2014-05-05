@@ -16,7 +16,7 @@ public class Application {
 
     private static ArrayList<String> metrics;
     private static ArrayList<String> supported;
-    private static final String systemPath;
+    public static String systemPath;
 
     //declare static variables, i.e initialise system properties.
     static {

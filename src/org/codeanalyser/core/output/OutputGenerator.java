@@ -49,7 +49,7 @@ public class OutputGenerator {
 
         //check that there are some results to display.
         if (result.getResults().isEmpty()) {
-            throw new NoResultsDefinedException("No Results Defined From Running The Metrics.");
+            System.out.println("No Results Defined From Running The Metrics.");
         }
 
             //foreach of the overallResult entries
@@ -66,6 +66,7 @@ public class OutputGenerator {
         main.add("unsupportedFiles", result.getUnsupportedFiles());
         main.add("hasUnsupported", (result.getUnsupportedFiles().size() > 0));
         main.add("results", res);
+        main.add("hasResults", !res.isEmpty());
         main.add("hasSyntax", (!result.getSyntaxErrors().isEmpty()));
         main.add("syntaxErrors", result.getSyntaxErrors());
         main.add("overallResult", result.getResult());

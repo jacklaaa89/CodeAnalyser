@@ -1,7 +1,7 @@
 group OutputTemplate;
 
 main(unsupportedFiles, hasUnsupported, results, hasSyntax,
- syntaxErrors, overallResult, fileStats) ::= <<
+ syntaxErrors, overallResult, fileStats, hasResults) ::= <<
 \<!DocType HTML>
 \<html>
     \<head>
@@ -21,7 +21,13 @@ main(unsupportedFiles, hasUnsupported, results, hasSyntax,
                     \</tr>
                 \</thead>
                 \<tbody>
+                    <if(hasResults)>
                     <results:renderResult()>
+                    <else>
+                    \<tr>
+                        \<td>No Results were defined.\</td>
+                    \</tr>
+                    <endif>
                 \</tbody>
             \</table>
         \</div>

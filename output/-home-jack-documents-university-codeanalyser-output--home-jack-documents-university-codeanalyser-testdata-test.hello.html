@@ -15,7 +15,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>NumberOfMethods</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:green;'>Success</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
+                    <tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>DepthOfNesting</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:green;'>Success</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
+                     <tbody>
+                      <tr>
+                       <td>DepthOfNesting Results: </td>
+                      </tr>
+                      <tr>
+                       <td>Method With Most Nesting: testerMethod</td>
+                      </tr>
+                      <tr>
+                       <td>Biggest Nesting That Occured: 3</td>
+                      </tr>
+                      <tr>
+                       <td>Nesting Threshold: 4</td>
+                      </tr>
+                      <tr>
+                       <td><span>Source Code Text:</span> </td>
+                      </tr>
+                      <tr>
+                       <td>{switch(tester1){case&quot;hello&quot;{print(tester1);}default{print(tester2);}}}</td>
+                      </tr>
+                     </tbody>
+                    </table></div></td></tr><tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>NumberOfMethods</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:green;'>Success</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
                      <tbody>
                       <tr>
                        <td>Number of Methods In Class: 2</td>
@@ -30,7 +51,7 @@
                        <td>LinesOfCode Result: </td>
                       </tr>
                       <tr>
-                       <td>Lines Of Code: 29</td>
+                       <td>Lines Of Code: 33</td>
                       </tr>
                       <tr>
                        <td>Threshold: 100</td>
@@ -45,22 +66,37 @@
                        <td>Method With Most Complexity: testerMethod</td>
                       </tr>
                       <tr>
-                       <td>Amount of Complexity Keywords Found: 2</td>
+                       <td>Amount of Complexity Keywords Found: 3</td>
                       </tr>
                       <tr>
                        <td>Complexity Threshold: 10</td>
                       </tr>
+                      <tr>
+                       <td><span>Keyword Occurances:</span> </td>
+                      </tr>
+                      <tr>
+                       <td>default: </td>
+                       <td>1</td>
+                      </tr>
+                      <tr>
+                       <td>catch: </td>
+                       <td>1</td>
+                      </tr>
+                      <tr>
+                       <td>case: </td>
+                       <td>1</td>
+                      </tr>
                      </tbody>
-                    </table></div></td></tr><tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>VariableNamingConventions</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:green;'>Success</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
+                    </table></div></td></tr><tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>VariableNamingConventions</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:red;'>Failure</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
                      <tbody>
                       <tr>
                        <td>VariableNamingConvertions Results: </td>
                       </tr>
                       <tr>
-                       <td>Number of Variables Considered Acceptable: 4</td>
+                       <td>Determined Overall Language of Variable Names: en</td>
                       </tr>
                       <tr>
-                       <td>Number of Variables Considered Unacceptable: 0</td>
+                       <td>Reason For Failure: Confidence in Language Detection was too low.</td>
                       </tr>
                       <tr>
                        <td>Total Variables Found: 4</td>
@@ -72,7 +108,7 @@
                        <td>WeightedMethodCount Result: </td>
                       </tr>
                       <tr>
-                       <td>Total Amount of Complexity Keywords Found: 3</td>
+                       <td>Total Amount of Complexity Keywords Found: 4</td>
                       </tr>
                       <tr>
                        <td>Complexity Threshold: 50</td>
@@ -84,25 +120,46 @@
                        <td>CommentRatio Results: </td>
                       </tr>
                       <tr>
-                       <td>Code Percentage: 70.0%</td>
+                       <td>Code Percentage: 74.0%</td>
                       </tr>
                       <tr>
-                       <td>Comment Percentage: 23.0%</td>
+                       <td>Comment Percentage: 21.0%</td>
                       </tr>
                       <tr>
-                       <td>Blank Lines Percentage: 7.0%</td>
+                       <td>Blank Lines Percentage: 6.0%</td>
                       </tr>
                       <tr>
                        <td></td>
                       </tr>
                       <tr>
-                       <td>Thresholds: </td>
+                       <td><span>Thresholds:</span> </td>
                       </tr>
                       <tr>
                        <td>Min: 20%</td>
                       </tr>
                       <tr>
                        <td>Max: 40%</td>
+                      </tr>
+                     </tbody>
+                    </table></div></td></tr><tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>ProcedureDeclarationLength</td><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Was Successful: </span><span style='color:green;'>Success</span></td></tr><tr><td><span>Comments: </span></td></tr><tr><td><div><table>
+                     <tbody>
+                      <tr>
+                       <td>ProcedureDeclarationLength Results: </td>
+                      </tr>
+                      <tr>
+                       <td>Amount of Methods Within Threshold: 2</td>
+                      </tr>
+                      <tr>
+                       <td>Worst defined procedure declaration: testerMethod2</td>
+                      </tr>
+                      <tr>
+                       <td><span>Thresholds: </span></td>
+                      </tr>
+                      <tr>
+                       <td>Method Length: 20</td>
+                      </tr>
+                      <tr>
+                       <td>No Of Variables: 5</td>
                       </tr>
                      </tbody>
                     </table></div></td></tr>
@@ -113,9 +170,6 @@
     <style>
         thead td, tbody td > span {
             font-weight:bold;
-        }
-        tbody tr td:first-of-type {
-            width:386px;
         }
         table {
             border-spacing: 0px;
