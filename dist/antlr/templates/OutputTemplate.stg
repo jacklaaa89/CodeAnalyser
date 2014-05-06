@@ -1,0 +1,147 @@
+group OutputTemplate;
+
+main(unsupportedFiles, hasUnsupported, results, hasSyntax,
+ syntaxErrors, overallResult, fileStats, hasResults) ::= <<
+\<!DocType HTML>
+\<html>
+    \<head>
+        \<title>Code Analyser Results\</title>
+    \</head>
+    \<body>
+        \<div style='width:50%;border-bottom:1px solid;'>
+            \<h1>Code Quality Analyser Results.\</h1>
+            <overallResult>
+            <fileStats>
+        \</div>
+        \<div>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td>Metric Results\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <if(hasResults)>
+                    <results:renderResult()>
+                    <else>
+                    \<tr>
+                        \<td>No Results were defined.\</td>
+                    \</tr>
+                    <endif>
+                \</tbody>
+            \</table>
+        \</div>
+        \<div style='width:50%;border-top:1px solid;'>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td>Unsupported Files\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <if(hasUnsupported)>
+                    <unsupportedFiles:renderUnsupported()>
+                    <else>
+                    \<tr>
+                        \<td>No Files Were Unsupported.\</td>
+                    \</tr>
+                    <endif>
+                \</tbody>
+            \</table>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td> Syntax Errors\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <if(hasSyntax)>
+                    <syntaxErrors:renderUnsupported()>
+                    <else>
+                    \<tr>
+                        \<td>No Files Contained Syntax Errors.\</td>
+                    \</tr>
+                    <endif>
+                \</tbody>
+            \</table>
+        \</div>
+    \</body>
+    \<style>
+        table thead td {
+            font-weight:bold;
+        }
+        table table thead td {
+        font-weight:normal;
+        }
+    \</style>
+\</html>
+>>
+
+renderUnsupported(unsupported) ::= <<
+\<tr>
+    \<td><unsupported>\</td>
+\</tr>
+>>
+
+renderResult(result) ::= <<
+\<tr>
+    \<td>
+        \<table>
+            \<thead>
+                \<tr>
+                    \<td>\<span style='font-weight:bold;'>Filename: \</span><result.fileName>\</td>
+                \</tr>
+                \<tr>
+                    \<td>\<span style='font-weight:bold;'>Source Language: \</span><result.sourceLanguage>\</td>
+                \</tr>
+                \<tr>
+                    \<td>\<span style='font-weight:bold;'>Overall Result: \</span>\<span style='color:<result.colorCode>;'><result.successMessage>\</span>\</td>
+                \</tr>
+                \<tr>
+                    \<td>\<a href='<result.link>'>Metric Results \</a>\</td>
+                \</tr>
+            \</thead>
+            \<tr>
+                
+            \</tr>
+        \</table>
+    \</td>
+\</tr>
+>>
+
+sub(fileName, sourceLanguage, html) ::= <<
+\<!DocType HTML>
+\<html>
+    \<head>
+        \<title>Code Analyser Results - <fileName>\</title>
+    \</head>
+    \<body>
+        \<div>
+            \<h1>Code Quality Analyser Results - <fileName>\</h1>
+        \</div>
+        \<div>
+            \<table>
+                \<thead>
+                    \<tr>
+                        \<td>Metric Results\</td>
+                    \</tr>
+                \</thead>
+                \<tbody>
+                    <html>
+                \</tbody>
+            \</table>
+        \</div>
+    \</body>
+    \<style>
+        thead td, tbody td > span {
+            font-weight:bold;
+        }
+        table {
+            border-spacing: 0px;
+        }
+        tbody tr:nth-of-type(3n) td, thead td {padding-bottom:10px;}
+        /* reset any table css in comments. */
+        tbody tr:nth-of-type(3n) td > div td {padding:0px;border:none;font-weight:normal;}
+    \</style>
+\</html>
+>>
