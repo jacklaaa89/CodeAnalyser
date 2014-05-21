@@ -18,11 +18,20 @@ public class Logger {
      * default interface type. normal logging.
      */
     public static final String DEFAULT = "default";
+    
     /**
      * web interface type, no logging on the console.
      */
     public static final String WEB = "web";
+    
+    /**
+     * use System.err.println(); to print the message. 
+     */
     public static final int ERROR_STREAM = 1;
+    
+    /**
+     * use System.out.println(); to print the message. 
+     */
     public static final int DEFAULT_STREAM = 2;
     
     public Logger() {
