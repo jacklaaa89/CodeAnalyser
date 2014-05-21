@@ -37,7 +37,7 @@ public class Main2 {
         t.inspect((Parser)p);
         
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            Application.getLogger().log(e);
         }
     }
     

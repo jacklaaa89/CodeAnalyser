@@ -1,5 +1,6 @@
 package org.codeanalyser.metric.tester;
 
+import org.codeanalyser.core.Application;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
@@ -17,23 +18,23 @@ public class TesterMetric implements MetricInterface {
     
     @Override
     public Result getResults() throws InvalidResultException {
-        System.out.println("getResults() called");
+        Application.getLogger().log("getResults() called");
         return null;
     }
     
     @Override
     public void onParserEvent(EventState state) {
-        System.out.println("onParserEvent() called: EVENT: " + state.getEventType());
+        Application.getLogger().log("onParserEvent() called: EVENT: " + state.getEventType());
     }
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        System.out.println("init() called: SOURCE: " + initialInformation.getSourceLanguage());
+        Application.getLogger().log("init() called: SOURCE: " + initialInformation.getSourceLanguage());
     }
 
     @Override
     public void destroy() {
-        System.out.println("destroy() called");
+        Application.getLogger().log("destroy() called");
     }
     
 }

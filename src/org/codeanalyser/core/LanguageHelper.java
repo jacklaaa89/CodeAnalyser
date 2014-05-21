@@ -123,7 +123,7 @@ public class LanguageHelper {
 
         //go through files in directory and 
         //see if there is any grammars that need initialising.
-        System.out.println("Checking for new grammars");
+        Application.getLogger().log("Checking for new grammars");
         for (File grammarFile : grammars.listFiles()) {
             if (grammarFile.getName().endsWith(".g4") || grammarFile.getName().endsWith(".G4")) {
                 String grammarName = "";
@@ -146,7 +146,7 @@ public class LanguageHelper {
                 //check that this grammar has been defined.
                 File grammarPackage = new File("./src/org/codeanalyser/language/" + grammarName.toLowerCase());
                 if (!grammarPackage.exists()) {
-                    System.out.println("Found new Grammar: '" + grammarName + "'. Generating Parser/Lexer");
+                    Application.getLogger().log("Found new Grammar: '" + grammarName + "'. Generating Parser/Lexer");
                     //make new directory.
                     if (!grammarPackage.mkdir()) {
                         throw new FileException("Could not create directory for: " + grammarName);
@@ -165,7 +165,7 @@ public class LanguageHelper {
                         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                         String line;
                         while ((line = r.readLine()) != null) {
-                            System.out.println(line);
+                            Application.getLogger().log(line);
                         }
                     } catch (IOException e) {
                         throw new AntlrException("Could not execute Antlr Command");
@@ -200,7 +200,7 @@ public class LanguageHelper {
                     
                     //generate BaseListener class so that metrics can be invoked.
                     try {
-                        System.out.println("Generating BaseListener for the grammar: " + grammarName);
+                        Application.getLogger().log("Generating BaseListener for the grammar: " + grammarName);
                         
                         //compile the new classes and initialise.
                         File a = new File("./antlr");
@@ -228,7 +228,7 @@ public class LanguageHelper {
                         throw new FileException("Could not generate BaseListener for Grammar: "+grammarName + ", Error: " + e.getMessage());
                     }
                     
-                    System.out.println("Compiling new Grammar/Lexer Files for Grammar: " + grammarName);
+                    Application.getLogger().log("Compiling new Grammar/Lexer Files for Grammar: " + grammarName);
                     
                     //compile new classes and put them in build/classes.
                     File bGrammarFile = new File("./build/classes/org/codeanalyser/language/"+grammarName.toLowerCase());
@@ -251,9 +251,7 @@ public class LanguageHelper {
                             throw new AntlrException("Could not compile new Antlr files.");
                         }
                     }
-                    
-                    System.out.println("Completed Building Parser/Lexer for grammar: " + grammarName);
-                    
+                    Application.getLogger().log("Completed Building Parser/Lexer for grammar: " + grammarName);
                 }
             }
         }

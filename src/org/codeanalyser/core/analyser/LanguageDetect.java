@@ -59,7 +59,7 @@ public class LanguageDetect {
             }
             
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            Application.getLogger().log(e);
         }
     }
     

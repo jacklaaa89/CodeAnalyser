@@ -10,6 +10,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.codeanalyser.core.analyser.Analyser;
 import org.codeanalyser.core.analyser.AnalyserException;
+import org.codeanalyser.core.utils.Logger;
 
 /**
  * The Applications Main class, uses Apache CLI to
@@ -52,6 +53,10 @@ public class Main {
                 .withDescription("force language, no auto-language detection will take place.")
                 .hasArg()
                 .create("fl"));
+        options.addOption(OptionBuilder.withLongOpt("interface")
+                .withDescription("Determines which interface to use, i.e what output is returned etc.")
+                .hasArg()
+                .create("i"));
         options.addOption("h", "help", false, "Displays this help message");
 
         try {
@@ -62,13 +67,18 @@ public class Main {
                 formatter.printHelp("analyser", options);
                 return;
             }
+            
+            if(line.hasOption("i")) {
+                Application.initInterface(line.getOptionValue("i"));
+            }
+            
 
             //determines the output source location.
             File file = new File("output");
             if (line.hasOption("o")) {
                 file = new File(line.getOptionValue("o"));
                 if (!file.exists()) {
-                    System.out.println("Output Destination Provided Does not Exist");
+                    Application.getLogger().log("Output Destination Provided Does not Exist");
                 }
             } else {
                 if (!file.exists()) {
@@ -83,7 +93,7 @@ public class Main {
                     LanguageHelper helper = new LanguageHelper();
                     helper.initLanguages();
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    Application.getLogger().log(e, Logger.DEFAULT_STREAM);
                 }
             } else {
 
@@ -96,7 +106,7 @@ public class Main {
                         boolean force = line.hasOption("fl");
                         if (force) {
                             if (!Application.getSupportedLanguages().contains(line.getOptionValue("fl"))) {
-                                System.out.println("The Supplied Forced Language is not Supported");
+                                Application.getLogger().log("The Supplied Forced Language is not Supported");
                                 return;
                             }
                             
@@ -104,14 +114,17 @@ public class Main {
                         } else {
                             analyser.analyse();
                         }
+                    } else {
+                        HelpFormatter formatter = new HelpFormatter();
+                        formatter.printHelp("analyser", options);
                     }
                 } catch (AnalyserException ex) {
-                    System.out.println(ex.getMessage());
+                    Application.getLogger().log(ex);
                 }
-            }
+            } 
 
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            Application.getLogger().log(e);
         }
 
     }

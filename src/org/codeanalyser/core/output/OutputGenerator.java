@@ -49,7 +49,7 @@ public class OutputGenerator {
 
         //check that there are some results to display.
         if (result.getResults().isEmpty()) {
-            System.out.println("No Results Defined From Running The Metrics.");
+            Application.getLogger().log("No Results Defined From Running The Metrics.");
         }
 
             //foreach of the overallResult entries
