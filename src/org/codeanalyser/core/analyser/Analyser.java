@@ -148,7 +148,7 @@ public class Analyser {
                 ((ListenerInterface) listener).destroy();
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
-                this.result.addUnsupportedFile(file.getAbsolutePath());
+                this.result.addUnsupportedFile(file.getName());
                 Application.getLogger().log(e);
             } catch (NoResultsDefinedException e) {
                 Application.getLogger().log(e);

@@ -1,5 +1,7 @@
 package org.codeanalyser.metric;
 
+import org.json.simple.JSONObject;
+
 /**
  * This class is an encapsulation of a result object which contains everything
  * we will need to gauge a result from analysis from a single metric.
@@ -118,6 +120,18 @@ public class Result {
     public String toString() {
         return "[fileName : \"" + this.getFileName() +"\", sourceLanguage : \"" + this.getSourceLanguage() + "\", " +
                "metricName : \"" + this.getMetricName() + "\", result : \"" + this.getResult() + "\"]";
+    }
+    
+    /**
+     * returns this object as a JSONObject.
+     * @return this object as a JSONObject.
+     */
+    public JSONObject toJSON() {
+        JSONObject root = new JSONObject();
+        root.put("metricName", this.getMetricName());
+        root.put("passedMetric", this.isSuccessful());
+        root.put("resultHTML", this.getResult());
+        return root;
     }
     
     /**

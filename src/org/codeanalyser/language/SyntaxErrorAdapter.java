@@ -52,7 +52,7 @@ public class SyntaxErrorAdapter implements ANTLRErrorListener {
     @Override
     public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol,
             int line, int charPositionInLine, String msg, RecognitionException e) {
-        this.errors.add("File: "+file.getAbsolutePath() + ", Error: " + msg);
+        this.errors.add("File: "+file.getName() + ", Error: " + msg);
     }
     
     /**
