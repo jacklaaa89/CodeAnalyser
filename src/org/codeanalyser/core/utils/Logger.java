@@ -10,7 +10,7 @@ import org.codeanalyser.core.Application;
  */
 public class Logger {
     
-    private final String mInterface = Application.getInterface();
+    private String mInterface = Application.getInterface();
     private boolean consoleLogging = true;
     private final ArrayList<Exception> exceptions = new ArrayList<Exception>();
     
@@ -73,6 +73,11 @@ public class Logger {
      * @param isException if the message is derived from an exception.
      */
     private void log(String message, int stream, boolean isException) {
+        
+        //update mInterface && consoleLogging incase it was changed in the application.
+        this.mInterface = Application.getInterface();
+        this.consoleLogging = (mInterface.equals(DEFAULT));
+        
         //determine if the stream is valid.
         if(stream != ERROR_STREAM || stream != DEFAULT_STREAM) {
             stream = (isException) ? ERROR_STREAM : DEFAULT_STREAM;
