@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.AnalyserResult;
+import org.codeanalyser.core.utils.Logger;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 
@@ -17,7 +18,7 @@ import org.stringtemplate.v4.STGroupFile;
  */
 public class OutputGenerator {
 
-    private File outputDestination;
+    private final File outputDestination;
 
     /**
      * initialise output generator.
@@ -60,32 +61,41 @@ public class OutputGenerator {
         }
 
         //generate the HTML file using the template.
-        STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
-        ST main = group.getInstanceOf("main");
+        
+        if(Application.getInterface().equals(Logger.DEFAULT)) {
 
-        main.add("unsupportedFiles", result.getUnsupportedFiles());
-        main.add("hasUnsupported", (result.getUnsupportedFiles().size() > 0));
-        main.add("results", res);
-        main.add("hasResults", !res.isEmpty());
-        main.add("hasSyntax", (!result.getSyntaxErrors().isEmpty()));
-        main.add("syntaxErrors", result.getSyntaxErrors());
-        main.add("overallResult", result.getResult());
-        main.add("fileStats", result.getFileStats());
+            STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
+            ST main = group.getInstanceOf("main");
 
-        //save the rendered template to a file.
-        File output = new File(this.outputDestination.getAbsolutePath() + "/output.html");
+            main.add("unsupportedFiles", result.getUnsupportedFiles());
+            main.add("hasUnsupported", (result.getUnsupportedFiles().size() > 0));
+            main.add("results", res);
+            main.add("hasResults", !res.isEmpty());
+            main.add("hasSyntax", (!result.getSyntaxErrors().isEmpty()));
+            main.add("syntaxErrors", result.getSyntaxErrors());
+            main.add("overallResult", result.getResult());
+            main.add("fileStats", result.getFileStats());
 
-        if (output.exists()) {
-            output.delete();
-        }
+            //save the rendered template to a file.
+            File output = new File(this.outputDestination.getAbsolutePath() + "/output.html");
 
-        try {
-            FileWriter writer = new FileWriter(output);
-            writer.append(main.render());
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            throw new TemplateNotFoundException("Could not open, read or write output destination.");
+            if (output.exists()) {
+                output.delete();
+            }
+
+            try {
+                FileWriter writer = new FileWriter(output);
+                writer.append(main.render());
+                writer.flush();
+                writer.close();
+
+            } catch (IOException e) {
+                throw new TemplateNotFoundException("Could not open, read or write output destination.");
+            }
+            
+        } else {
+            //print the JSON Object.
+            System.out.println(result.toJSON().toJSONString());
         }
 
     }
