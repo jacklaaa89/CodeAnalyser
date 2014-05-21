@@ -107,9 +107,15 @@ public class Analyser {
                 SyntaxErrorAdapter ea = new SyntaxErrorAdapter(file);
 
                 Lexer lexer = file.getSupportedLexer();
+                
+                //remove default error handlers and add my own custom one.
+                lexer.removeErrorListeners();
                 lexer.addErrorListener(ea);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 ParserInterface parser = file.getSupportedParser(tokens);
+                
+                //same with the parser, sort the error listeners.
+                parser.removeErrorListeners();
                 parser.addErrorListener(ea);
                 ParserRuleContext tree = parser.compilationUnit();
 
