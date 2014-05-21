@@ -38,4 +38,9 @@ public interface ParserInterface {
      */
     public void addErrorListener(ANTLRErrorListener listener);
     
+    /**
+     * removes all of the current error listeners attached to the parser.
+     */
+    public void removeErrorListeners();
+    
 }

@@ -42,7 +42,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
-                    System.out.println("Failed to Initialise Metric: \"" + metric + "\", Error: " + e.getMessage());
+                    Application.getLogger().log(e);
                     continue;
                 }
                 metrics.add(m);
@@ -74,7 +74,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
-                System.out.println(e.getMessage());
+                Application.getLogger().log(e);
             }
         }
         return results;

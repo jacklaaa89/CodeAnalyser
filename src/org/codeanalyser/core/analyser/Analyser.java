@@ -50,7 +50,7 @@ public class Analyser {
         }
         this.output = new OutputGenerator(outputLocation);
         determineFiles(this.sourceCodeLocation);
-        System.out.println("Found " + this.filesToAnalyse.size() + " Files To Analyse in: " + this.sourceCodeLocation.getAbsolutePath());
+        Application.getLogger().log("Found " + this.filesToAnalyse.size() + " Files To Analyse in: " + this.sourceCodeLocation.getAbsolutePath());
         this.result = new AnalyserResult(this.filesToAnalyse);
     }
 
@@ -102,14 +102,20 @@ public class Analyser {
     public void analyse() {
         for (FileAnalyser file : this.filesToAnalyse) {
             try {
-                System.out.println("Started Analysing File: " + file.getAbsolutePath());
+                Application.getLogger().log("Started Analysing File: " + file.getAbsolutePath());
                 //generate parse tree from source file.
                 SyntaxErrorAdapter ea = new SyntaxErrorAdapter(file);
 
                 Lexer lexer = file.getSupportedLexer();
+                
+                //remove default error handlers and add my own custom one.
+                lexer.removeErrorListeners();
                 lexer.addErrorListener(ea);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 ParserInterface parser = file.getSupportedParser(tokens);
+                
+                //same with the parser, sort the error listeners.
+                parser.removeErrorListeners();
                 parser.addErrorListener(ea);
                 ParserRuleContext tree = parser.compilationUnit();
 
@@ -142,23 +148,23 @@ public class Analyser {
                 ((ListenerInterface) listener).destroy();
 
             } catch (FileAnalyser.UnsupportedLanguageException e) {
-                this.result.addUnsupportedFile(file.getAbsolutePath());
-                System.out.println(e.getMessage());
+                this.result.addUnsupportedFile(file.getName());
+                Application.getLogger().log(e);
             } catch (NoResultsDefinedException e) {
-                System.out.println(e.getMessage());
+                Application.getLogger().log(e);
             } catch (SyntaxErrorException e) {
-                System.out.println(e.getMessage());
+                Application.getLogger().log(e);
             } catch (InvalidResultException e) {
-                System.out.println(e.getMessage());
+                Application.getLogger().log(e);
             }
         }
 
         try {
-            System.out.println("Generating Output");
+            Application.getLogger().log("Generating Output");
             //render the output for this analysis.
             this.output.generateOutput(this.result);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Application.getLogger().log(e);
         }
     }
 

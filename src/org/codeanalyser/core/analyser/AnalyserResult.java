@@ -3,7 +3,10 @@ package org.codeanalyser.core.analyser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.output.OverallResult;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * A container class used to inject the template with the overall
@@ -203,6 +206,64 @@ public class AnalyserResult {
     @Override
     public String toString() {
         return "AnalyserResult :[fileStats: " + this.determineFileStats().toString() + ", result: " + this.getResult() + "]";
+    }
+    
+    /**
+     * returns the entire analyser result as a JSON object.
+     * @return the entire result as a JSON Object.
+     */
+    public JSONObject toJSON() {
+        JSONObject root = new JSONObject();
+        root.put("amountOfFilesAnalysed", this.filesToAnalyse.size());
+            //get the success fail figures.
+            JSONObject successFail = new JSONObject();
+            int[] sf = this.getSuccessFailFigures();
+            successFail.put("success", sf[0]); successFail.put("fail", sf[1]);
+        root.put("successFailFigures", successFail);
+            //determine file stats.
+            JSONObject fileStats = new JSONObject();
+            HashMap<String, Double> stats = this.determineFileStats();
+            for(Map.Entry<String, Double> entry : stats.entrySet()) {
+                fileStats.put(entry.getKey(), entry.getValue());
+            }
+        root.put("fileStats", fileStats);
+            //get any syntax errors that occured.
+            JSONObject s = new JSONObject();
+            s.put("noOfFilesWithSyntaxError", this.getNoOfSyntaxErrorFiles());
+            s.put("noOfSyntaxErrors", this.syntaxErrors.size());
+                //list the syntax errors.
+                JSONArray syn = new JSONArray();
+                for(String ste : this.syntaxErrors) {
+                    syn.add(ste);
+                }
+            s.put("errorMessages", syn);
+        root.put("syntaxErrors", s);
+            //get any unsupported files.
+            JSONObject un = new JSONObject();
+            un.put("noOfUnsupportedFiles", this.unsupportedFiles.size());
+                //list the unsupported files.
+                JSONArray uf = new JSONArray();
+                for(String usf : this.unsupportedFiles) {
+                    uf.add(usf);
+                }
+            un.put("fileNames", uf);
+        root.put("unsupportedFiles", un);
+            //add the results.
+            JSONArray res = new JSONArray();
+            for(OverallResult r : this.getResults()) {
+                res.add(r.toJSON());
+            }
+        root.put("results", res);
+            //get any exceptions that occured in the Logger.
+            JSONArray ex = new JSONArray();
+            for(Exception e : Application.getLogger().getExceptions()) {
+                JSONObject jex = new JSONObject();
+                jex.put("exceptionType", e.getClass().getSimpleName());
+                jex.put("message", e.getMessage());
+                ex.add(jex);
+            }
+        root.put("exceptions", ex);
+        return root;
     }
     
 }

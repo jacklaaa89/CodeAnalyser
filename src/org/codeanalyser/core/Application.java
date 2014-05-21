@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import org.codeanalyser.core.utils.Logger;
 
 /**
  * This class will be initialised on startup and contain global properties that
@@ -16,7 +17,9 @@ public class Application {
 
     private static ArrayList<String> metrics;
     private static ArrayList<String> supported;
+    private static String mInterface = "default";
     public static String systemPath;
+    private final static Logger logger;
 
     //declare static variables, i.e initialise system properties.
     static {
@@ -32,6 +35,7 @@ public class Application {
             System.err.println(ex.getMessage());
         }
         systemPath = Application.initSystemPath();
+        logger = new Logger();
     }
 
     /**
@@ -58,6 +62,16 @@ public class Application {
         }
 
         return support;
+    }
+    
+    /**
+     * sets the interface the application is using.
+     * @param mInterface the interface to use.
+     */
+    protected static void initInterface(String mInterface) {
+        if(mInterface.equalsIgnoreCase("default") || mInterface.equalsIgnoreCase("web")) {
+            Application.mInterface = mInterface.toLowerCase();
+        }
     }
     
     /**
@@ -147,6 +161,24 @@ public class Application {
      */
     public static ArrayList<String> getSupportedLanguages() {
         return Application.supported;
+    }
+    
+    /**
+     * System property - gets the current interface we are using.
+     * @return the current interface we are using.
+     */
+    public static String getInterface() {
+        return Application.mInterface;
+    }
+    
+    /**
+     * gets the generic Logger instance for the application.
+     * The logger is attached to the Application class so that it is a 'shared'
+     * instance, i.e each of the classes use the same Logger instance.
+     * @return the logger for this application.
+     */
+    public static Logger getLogger() {
+        return Application.logger;
     }
 
 }
