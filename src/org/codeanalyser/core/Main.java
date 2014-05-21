@@ -54,9 +54,15 @@ public class Main {
                 .hasArg()
                 .create("fl"));
         options.addOption(OptionBuilder.withLongOpt("interface")
-                .withDescription("Determines which interface to use, i.e what output is returned etc.")
+                .withDescription("The interface to use, i.e whats outputted etc.This can be 'web' or 'default'. If the interface is default"
+                        + ", all exceptions are displayed in the console with other messages and the output is in the standard form. If the interface is"
+                        + "web, no log messages are displayed and the output is a JSON array of the analyser result. Obviously 'default' is the default.")
                 .hasArg()
                 .create("i"));
+        options.addOption(OptionBuilder.withLongOpt("hash")
+                .withDescription("The hash to generate templates for. If the interface is 'web' this is required.")
+                .hasArg()
+                .create("ha"));
         options.addOption("h", "help", false, "Displays this help message");
 
         try {
@@ -71,7 +77,6 @@ public class Main {
             if(line.hasOption("i")) {
                 Application.initInterface(line.getOptionValue("i"));
             }
-            
 
             //determines the output source location.
             File file = new File("output");

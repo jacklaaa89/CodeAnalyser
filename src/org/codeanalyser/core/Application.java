@@ -19,7 +19,7 @@ public class Application {
     private static ArrayList<String> supported;
     private static String mInterface = "default";
     public static String systemPath;
-    private static Logger logger;
+    private final static Logger logger;
 
     //declare static variables, i.e initialise system properties.
     static {
@@ -171,6 +171,12 @@ public class Application {
         return Application.mInterface;
     }
     
+    /**
+     * gets the generic Logger instance for the application.
+     * The logger is attached to the Application class so that it is a 'shared'
+     * instance, i.e each of the classes use the same Logger instance.
+     * @return the logger for this application.
+     */
     public static Logger getLogger() {
         return Application.logger;
     }
