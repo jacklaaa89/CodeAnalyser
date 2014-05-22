@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.ParserInterface;
 
@@ -27,13 +28,13 @@ public class ParserInfo {
     /**
      * initialises a new ParserInfo object.
      * @param file the file currently being evaluated.
-     * @throws FileAnalyser.UnsupportedLanguageException if the supported lexer
+     * @throws UnsupportedLanguageException if the supported lexer
      * or parser could not be initialised.
      * @throws FileNotFoundException if the tokens file could not be found.
      * @throws IOException if the token file could not be read.
      * @throws NumberFormatException if a number from the token file is not a valid number.
      */
-    public ParserInfo(FileAnalyser file) throws FileAnalyser.UnsupportedLanguageException,
+    public ParserInfo(FileAnalyser file) throws UnsupportedLanguageException,
             FileNotFoundException, IOException, NumberFormatException {
         this.fileName = file.getAbsolutePath();
         this.sourceLanguage = file.getSourceLanguage();
