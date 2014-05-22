@@ -2,6 +2,7 @@ package org.codeanalyser.language;
 
 import java.util.ArrayList;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.Result;
 
@@ -30,6 +31,12 @@ public interface ListenerInterface {
      * not be initialised.
      */
     public void init(FileAnalyser file) throws MetricException;
+    
+    /**
+     * report a syntax error to the metric files.
+     * @param e the exception that occurred
+     */
+    public void reportSyntaxError(SyntaxErrorException e);
     
     /**
      * called after this listener has finished analysing a single file, 

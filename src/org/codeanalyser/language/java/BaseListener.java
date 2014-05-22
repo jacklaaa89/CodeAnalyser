@@ -1,11 +1,16 @@
 package org.codeanalyser.language.java;
 
 import java.util.ArrayList;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
+import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
@@ -239,5 +244,21 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             metric.onParserEvent(state);
         }
      }
+
+    @Override
+    public void reportSyntaxError(SyntaxErrorException e) {
+        for (MetricInterface m : metrics) {
+            try {
+                Lexer l = this.file.getSupportedLexer();
+                CommonTokenStream s = new CommonTokenStream(l);
+                ParserInterface p = this.file.getSupportedParser(s);
+                ((MetricErrorAdapter) m).onSyntaxErrorOccured(e, this.file.getAbsolutePath(),
+                        p, l, Application.getLogger());
+            } catch (ClassCastException ex) {
+            } catch (UnsupportedLanguageException ule) {
+                Application.getLogger().log(ule);
+            }
+        }
+    }
 
 }
