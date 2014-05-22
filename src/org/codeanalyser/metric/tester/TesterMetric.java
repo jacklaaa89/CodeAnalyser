@@ -1,8 +1,10 @@
 package org.codeanalyser.metric.tester;
 
-import org.codeanalyser.core.Application;
+import org.antlr.v4.runtime.Lexer;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
+import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
@@ -14,6 +16,8 @@ import org.codeanalyser.metric.Result;
  * This class is a tester metric used to test that the generic autoloading of metrics
  * works correctly. It just prints the context to the console when an event is
  * triggered.
+ * @version 1.1 - This tester metric now implements the MetricErrorAdapter class to 
+ * demonstrate that metrics can how handle their own errors.
  * @author Jack Timblin - U1051575
  */
 public class TesterMetric implements MetricInterface, MetricErrorAdapter {
@@ -44,6 +48,12 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
     @Override
     public void onInvalidResultException(InvalidResultException e, Result result, Logger logger) {
         logger.log("onInvalidResultException() called");
+    }
+
+    @Override
+    public void onSyntaxErrorOccured(SyntaxErrorException e, String fileName,
+            ParserInterface parser, Lexer lexer, Logger logger) {
+        logger.log("onSyntaxErrorOccured() called");
     }
     
 }
