@@ -21,3 +21,4 @@ in the 'metrics' package will be initialised and used if it implements the Metri
             This version outputs auto-generated HTML files.
 * **1.1 -** This version has been highly modified in order to be used to deliver output in the JSON format so it can be used             on a webserver. Obivously the default output is still available and this feature can be toggled by using the                ```--interface``` argument when run on the command line. Example use on a PHP server could be 
             ```$json = json_decode(shell_exec('java -jar CodeAnalyser.jar analyser --interface web --source <SOURCE>'));```
+            Also this version introduced the ```MetricErrorAdapter``` class which can be used so that metrics can be                    notified when an error occurs using that metric.
