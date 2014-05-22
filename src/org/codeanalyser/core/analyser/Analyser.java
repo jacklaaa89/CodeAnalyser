@@ -101,6 +101,12 @@ public class Analyser {
      */
     public void analyse() {
         for (FileAnalyser file : this.filesToAnalyse) {
+            ParseTreeListener listener = null;
+            try {
+                listener = file.getSupportedListener();
+            } catch (UnsupportedLanguageException e) {
+                Application.getLogger().log(e);
+            }
             try {
                 Application.getLogger().log("Started Analysing File: " + file.getAbsolutePath());
                 //generate parse tree from source file.
@@ -125,10 +131,9 @@ public class Analyser {
                     for (String er : ea.getSyntaxErrors()) {
                         this.result.addSyntaxError(er);
                     }
-                    throw new SyntaxErrorException("A Syntax Error Occured Parsing File: " + file.getAbsolutePath());
+                    throw new SyntaxErrorException("A Syntax Error Occured Parsing File: " + file.getName());
                 }
 
-                ParseTreeListener listener = file.getSupportedListener();
                 ParseTreeWalker walker = new ParseTreeWalker();
 
                 //walk the parse tree calling methods in the metrics.
@@ -147,12 +152,13 @@ public class Analyser {
                 //call destroy on metrics.
                 ((ListenerInterface) listener).destroy();
 
-            } catch (FileAnalyser.UnsupportedLanguageException e) {
+            } catch (UnsupportedLanguageException e) {
                 this.result.addUnsupportedFile(file.getName());
                 Application.getLogger().log(e);
             } catch (NoResultsDefinedException e) {
                 Application.getLogger().log(e);
             } catch (SyntaxErrorException e) {
+                ((ListenerInterface)listener).reportSyntaxError(e);
                 Application.getLogger().log(e);
             } catch (InvalidResultException e) {
                 Application.getLogger().log(e);
