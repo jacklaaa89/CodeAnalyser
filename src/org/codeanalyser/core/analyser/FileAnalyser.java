@@ -213,22 +213,4 @@ public class FileAnalyser extends File {
         }
     }
     
-    /**
-     * Exception class used when any of the language dependant Objects 
-     * are attempted to be accessed but the language is not supported by the
-     * system, i.e it does not have a generated Parser/Lexer from a grammar.
-     * 
-     * @author Jack Timblin - U1051575
-     */
-    public class UnsupportedLanguageException extends Exception {
-        
-        /**
-         * initialises a new UnsupportedLanguageException
-         * @param message the message to pass to the Exception
-         */
-        public UnsupportedLanguageException(String message) {
-            super(message);
-        }
-    }
-    
 }
