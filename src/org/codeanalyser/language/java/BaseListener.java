@@ -7,6 +7,7 @@ import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
@@ -39,9 +40,13 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
             ParserInfo info = new ParserInfo(file);
             for (String metric : Application.getMetricsList()) {
                 MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
+                
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
+                    try {
+                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger());
+                    } catch (ClassCastException ex) {}
                     Application.getLogger().log(e);
                     continue;
                 }
@@ -60,12 +65,16 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
     public ArrayList<Result> getResults() {
         ArrayList<Result> results = new ArrayList<Result>();
         for(MetricInterface mi : metrics) {
+            Result r = null;
             try {
-                Result r = mi.getResults();
+                r = mi.getResults();
                 if(r != null) {
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
+                try {
+                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger());
+                } catch (ClassCastException ex) {}
                 Application.getLogger().log(e);
             }
         }

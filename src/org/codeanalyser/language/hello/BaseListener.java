@@ -9,6 +9,7 @@ import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.metric.Result;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.ParserInfo;
 
@@ -42,6 +43,9 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
+                    try {
+                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger());
+                    } catch (ClassCastException ex) {}
                     Application.getLogger().log(e);
                     continue;
                 }
@@ -68,12 +72,16 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         ArrayList<Result> results = new ArrayList<Result>();
         for(int i = 0; i < metrics.size(); i++) {
             MetricInterface mi = metrics.get(i);
+            Result r = null;
             try {
-                Result r = mi.getResults();
+                r = mi.getResults();
                 if(r != null) {
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
+                try {
+                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger());
+                } catch (ClassCastException ex) {}
                 Application.getLogger().log(e);
             }
         }

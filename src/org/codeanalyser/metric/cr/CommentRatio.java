@@ -14,6 +14,7 @@ import org.antlr.v4.runtime.Token;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;

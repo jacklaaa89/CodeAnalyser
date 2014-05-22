@@ -1,8 +1,10 @@
 package org.codeanalyser.metric.tester;
 
 import org.codeanalyser.core.Application;
+import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
@@ -14,27 +16,34 @@ import org.codeanalyser.metric.Result;
  * triggered.
  * @author Jack Timblin - U1051575
  */
-public class TesterMetric implements MetricInterface {
+public class TesterMetric implements MetricInterface, MetricErrorAdapter {
     
     @Override
     public Result getResults() throws InvalidResultException {
-        Application.getLogger().log("getResults() called");
-        return null;
+        throw new InvalidResultException("Hellppp");
     }
     
     @Override
     public void onParserEvent(EventState state) {
-        Application.getLogger().log("onParserEvent() called: EVENT: " + state.getEventType());
     }
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        Application.getLogger().log("init() called: SOURCE: " + initialInformation.getSourceLanguage());
+        //throw new MetricInitialisationException("Helllpppp-Again");
     }
 
     @Override
     public void destroy() {
-        Application.getLogger().log("destroy() called");
+    }
+
+    @Override
+    public void onInitialisationError(MetricInitialisationException e, Logger logger) {
+        logger.log("onInitialisationError() called");
+    }
+
+    @Override
+    public void onInvalidResultException(InvalidResultException e, Result result, Logger logger) {
+        logger.log("onInvalidResultException() called");
     }
     
 }

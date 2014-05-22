@@ -6,7 +6,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
+import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.ParserInterface;
 
 /**
@@ -16,10 +18,11 @@ import org.codeanalyser.language.ParserInterface;
  */
 public class ParserInfo {
     
-    private String fileName, sourceLanguage;
-    private ParserInterface parser;
-    private Lexer lexer;
+    private final String fileName, sourceLanguage;
+    private final ParserInterface parser;
+    private final Lexer lexer;
     private HashMap<Integer, String> tokenTypes;
+    private final Logger logger;
     
     /**
      * initialises a new ParserInfo object.
@@ -38,6 +41,7 @@ public class ParserInfo {
         CommonTokenStream s = new CommonTokenStream(this.lexer);
         this.parser = file.getSupportedParser(s);
         this.tokenTypes = new HashMap<Integer, String>();
+        this.logger = Application.getLogger();
         this.getParserTokens();
     }
     
@@ -61,6 +65,14 @@ public class ParserInfo {
             }
         }
         this.tokenTypes = tokens;
+    }
+    
+    /**
+     * returns the generic logger being used in this application.
+     * @return get the applications logger.
+     */
+    public Logger getLogger() {
+        return this.logger;
     }
     
     /**

@@ -17,6 +17,7 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.ParserInfo;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.language.ParserInterface;
 
 /**
@@ -47,13 +48,16 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
-                    System.out.println("Failed to Initialise Metric: \"" + metric + "\", Error: " + e.getMessage());
+                    try {
+                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger());
+                    } catch (ClassCastException ex) {}
+                    Application.getLogger().log(e);
                     continue;
                 }
                 metrics.add(m);
             }
         } catch (Exception e) {
-            throw new MetricException("An error occured initialising all of the metrics.");
+            throw new MetricException(e.getMessage());
         }
     }
     
@@ -79,7 +83,10 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
-                System.out.println(e.getMessage());
+                try {
+                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger());
+                } catch (ClassCastException ex) {}
+                Application.getLogger().log(e);
             }
         }
         return results;

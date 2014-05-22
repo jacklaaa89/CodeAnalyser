@@ -20,7 +20,7 @@ public interface MetricInterface {
      * Called when an event is triggered while walking the parse tree.
      * @param state the state of the event.
      */
-    public void onParserEvent(EventState state);
+    public void onParserEvent(EventState state);  
     
     /**
      * give the metric initial information regarding the file
