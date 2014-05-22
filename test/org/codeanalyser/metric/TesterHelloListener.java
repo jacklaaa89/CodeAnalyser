@@ -5,6 +5,7 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
+import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.language.hello.HelloBaseListener;
 import org.codeanalyser.language.hello.HelloParser;
 
@@ -143,6 +144,10 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         for(MetricInterface m : this.metrics) {
             m.destroy();
         }
+    }
+
+    @Override
+    public void reportSyntaxError(SyntaxErrorException e) {
     }
     
 }

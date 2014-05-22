@@ -5,6 +5,7 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
+import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.language.java.JavaBaseListener;
 import org.codeanalyser.language.java.JavaParser;
 
@@ -158,6 +159,10 @@ public class TesterJavaListener extends JavaBaseListener implements ListenerInte
         for(MetricInterface m : this.metrics) {
             m.destroy();
         }
+    }
+
+    @Override
+    public void reportSyntaxError(SyntaxErrorException e) {
     }
     
 }

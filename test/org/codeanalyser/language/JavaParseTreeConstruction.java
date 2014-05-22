@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -44,7 +45,7 @@ public class JavaParseTreeConstruction {
             //the string representation is not an empty string.
             assertTrue(!tree.toStringTree((Parser)p).isEmpty() && tree.getChildCount() != 0);
             
-        } catch (FileAnalyser.UnsupportedLanguageException e) {
+        } catch (UnsupportedLanguageException e) {
             fail(e.getMessage());
         }
     }

@@ -2,6 +2,7 @@ package org.codeanalyser.metric;
 
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.codeanalyser.language.ListenerInterface;
 import org.codeanalyser.language.MetricException;
 import org.junit.After;
@@ -23,7 +24,7 @@ public class MetricInitialisationTest {
         try {
             this.file = new FileAnalyser("testData/Test2.java");
             listener = (ListenerInterface)file.getSupportedListener();
-        } catch (FileAnalyser.UnsupportedLanguageException e) {
+        } catch (UnsupportedLanguageException e) {
             fail(e.getMessage());
         }  catch (ClassCastException e) {
             fail(e.getMessage());

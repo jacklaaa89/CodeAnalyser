@@ -4,7 +4,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
 import org.junit.After;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -44,7 +46,7 @@ public class SyntaxErrorAdapterTest {
             ParserRuleContext context = parser.compilationUnit();
             //check that a syntax error was recorded.
             assertTrue(instance.getSyntaxErrors().size() > 0);
-        } catch (FileAnalyser.UnsupportedLanguageException e) {
+        } catch (UnsupportedLanguageException e) {
             fail("Could not initialise parser or lexer.");
         }
     }
