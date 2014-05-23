@@ -86,7 +86,6 @@ public class OverallResult {
         STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("sub");
         StringBuilder builder = new StringBuilder();
-        try {
         //build the HTML for each of the metric results.
         
         for (Result r : results) {
@@ -102,22 +101,19 @@ public class OverallResult {
             //clean the inputted HTML from the metric to remove tags which are not allowed.
             Whitelist list = Whitelist.relaxed();
             list.addTags("div", "style", "span");
-            String doc = Jsoup.clean(r.getResult(), list);
+            String doc = Jsoup.clean(r.getResult().toHTML(), list);
             
             builder.append(doc);
             builder.append("</div></td></tr>");
             //append any custom errors from the metric.
+            if(!r.getMetricDefinedErrors().isEmpty()) {
                 builder.append("<tr><td><span>Errors: </span></td></tr>");
                 for(MetricError e : r.getMetricDefinedErrors()) {
                     builder.append("<tr><td>");
                     builder.append(e.toHTML());
                     builder.append("</td></tr>");
                 }
-            
-        }
-        
-        } catch (Exception e) {
-            e.printStackTrace();
+            }
         }
         
         //add the attributes to the template.
