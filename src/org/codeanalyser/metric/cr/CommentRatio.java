@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.utils.Logger;
+import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricError;
@@ -21,6 +22,7 @@ import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
+import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -28,7 +30,7 @@ import org.yaml.snakeyaml.Yaml;
  *
  * @author Jack Timblin - U1051575
  */
-public class CommentRatio implements MetricInterface, MetricErrorAdapter {
+public class CommentRatio implements MetricInterface, MetricErrorAdapter, OutputInterface {
 
     private double commentCount, blankCount, codeCount;
     private String fileLocation;
@@ -38,27 +40,11 @@ public class CommentRatio implements MetricInterface, MetricErrorAdapter {
     @Override
     public Result getResults() throws InvalidResultException {
 
-        //generate the result text.
-        double[] percentages = this.getPercentages();
         
-        //round the results.
-        for(int i = 0; i < percentages.length; i++) {
-            percentages[i] = Math.round(percentages[i]);
-        }
-        
-        //generate output.
-        String result = "<table><tr><td>CommentRatio Results: </td></tr>"
-                + "<tr><td>Code Percentage: " + percentages[0] + "%</td></tr>"
-                + "<tr><td>Comment Percentage: " + percentages[1] + "%</td></tr>"
-                + "<tr><td>Blank Lines Percentage: " + percentages[2] + "%</td></tr>"
-                + "<tr><td></td></tr>"
-                + "<tr><td><span>Thresholds:</span> </td></tr>"
-                + "<tr><td>Min: " + this.thresholdRatio[0] + "%</td></tr>"
-                + "<tr><td>Max: " + this.thresholdRatio[1] + "%</td></tr></table>";
 
         //return the result object for the application to use.
         return Result.newInstance(this.getClass().getSimpleName(),
-                result, this.isWithinThreshold(), errors);
+                this, this.isWithinThreshold(), errors);
     }
 
     @Override
@@ -155,7 +141,12 @@ public class CommentRatio implements MetricInterface, MetricErrorAdapter {
         double codePercentage = (codeCount / totalLines) * 100;
         double commentPercentage = (commentCount / totalLines) * 100;
         double blankPercentage = (blankCount / totalLines) * 100;
-        return new double[]{codePercentage, commentPercentage, blankPercentage};
+        double[] pc = new double[]{codePercentage, commentPercentage, blankPercentage};
+        //round the results.
+        for(int i = 0; i < pc.length; i++) {
+            pc[i] = Math.round(pc[i]);
+        }
+        return pc;
     }
     
     /**
@@ -255,4 +246,37 @@ public class CommentRatio implements MetricInterface, MetricErrorAdapter {
 
     @Override
     public void onInvalidResultException(InvalidResultException e, Result result, Logger logger, ParserInfo info) {}
+
+    @Override
+    public String toHTML() {
+        //generate the result text.
+        double[] percentages = this.getPercentages();
+
+        //generate output.
+        String result = "<table><tr><td>CommentRatio Results: </td></tr>"
+                + "<tr><td>Code Percentage: " + percentages[0] + "%</td></tr>"
+                + "<tr><td>Comment Percentage: " + percentages[1] + "%</td></tr>"
+                + "<tr><td>Blank Lines Percentage: " + percentages[2] + "%</td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td><span>Thresholds:</span> </td></tr>"
+                + "<tr><td>Min: " + this.thresholdRatio[0] + "%</td></tr>"
+                + "<tr><td>Max: " + this.thresholdRatio[1] + "%</td></tr></table>";
+        return result;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        double[] percentages = this.getPercentages();
+        JSONObject o = new JSONObject();
+        o.put("codePercentage", percentages[0]);
+        o.put("blankLinePercentage", percentages[2]);
+        o.put("commentPercentage", percentages[1]);
+        JSONObject t = new JSONObject();
+        t.put("min", this.thresholdRatio[0]);
+        t.put("max", this.thresholdRatio[1]);
+        o.put("thresholds", t);
+        return o;
+    }
+    
+    
 }

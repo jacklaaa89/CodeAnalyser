@@ -3,13 +3,14 @@ package org.codeanalyser.metric.vmc;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import java.util.ArrayList;
 import org.codeanalyser.core.generation.MethodProperty;
+import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
-import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
+import org.json.simple.JSONObject;
 
 /**
  * This metric determines if the variables used in a file are acceptable, i.e
@@ -40,18 +41,36 @@ public class VariableNamingConventions implements MetricInterface {
                 b.append(t);
                 b.append(" ");
             }
-            Detection lang = detector.detectLanguage(b.toString().trim() + " Hello World");
-            String reason = ((lang.getDetectedLanguage().equalsIgnoreCase("en")) &&
+            final Detection lang = detector.detectLanguage(b.toString().trim() + " Hello World");
+            final String reason = ((lang.getDetectedLanguage().equalsIgnoreCase("en")) &&
                     (lang.getConfidence() == 0.01)) 
                     ? "<tr><td>Reason For Failure: Confidence in Language Detection was too low.</td></tr>" 
                     : "";
-            String result = "<table><tr><td>VariableNamingConvertions Results: </td></tr>"
+            final String result = "<table><tr><td>VariableNamingConvertions Results: </td></tr>"
                     + "<tr><td>Determined Overall Language of Variable Names: "+lang.getDetectedLanguage()+"</td></tr>"
                     + reason
                     + "<tr><td>Total Variables Found: "+variableNames.size()+"</td></tr></table>";
             
-            return Result.newInstance(this.getClass().getSimpleName(), result,
-                    (lang.getConfidence() != 0.01) && (lang.getDetectedLanguage().equalsIgnoreCase("en")));
+            return Result.newInstance(this.getClass().getSimpleName(), new OutputInterface() {
+
+                @Override
+                public String toHTML() {
+                    return result;
+                }
+
+                @Override
+                public JSONObject toJSON() {
+                    JSONObject o = new JSONObject();
+                    o.put("determinedLanguage", lang.getDetectedLanguage());
+                    o.put("totalVariablesFound", variableNames.size());
+                    if(!reason.equals("")) {
+                        o.put("reasonForFailure", reason);
+                    }
+                    return o;
+                }
+                
+            },
+            (lang.getConfidence() != 0.01) && (lang.getDetectedLanguage().equalsIgnoreCase("en")));
             
         } catch (LanguageDetect.LanguageDetectionException e) {
             throw new InvalidResultException(e.getMessage());

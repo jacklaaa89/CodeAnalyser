@@ -2,6 +2,8 @@ package org.codeanalyser.metric.don;
 
 import java.util.ArrayList;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.codeanalyser.core.utils.OutputInterface;
+import org.json.simple.JSONObject;
 
 /**
  * An encapsulation of a single methods analysis 
@@ -9,7 +11,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
  * 
  * @author Jack Timblin - U1051575
  */
-public class Entry implements Comparable<Entry> {
+public class Entry implements Comparable<Entry>, OutputInterface {
     
     private final ArrayList<NestingEntry> nestingEntries;
     private final String methodName;
@@ -111,13 +113,8 @@ public class Entry implements Comparable<Entry> {
      * returns this entry as a HTML string.
      * @return this entry as a HTML string.
      */
-    public String toResult() {
-        return "<table><tr><td>DepthOfNesting Results: </td></tr>"
-                + "<tr><td>Method With Most Nesting: "+this.getMethodName()+"</td></tr>"
-                + "<tr><td>Biggest Nesting That Occured: "+this.getDeepestNestingOccuranceAmount()+"</td></tr>"
-                + "<tr><td>Nesting Threshold: "+this.getNestingThreshold()+"</td></tr>"
-                + "<tr><td><span>Source Code Text:</span> </td></tr>"
-                + "<tr><td>"+this.getDeepestNestingOccurance().getText()+"</td></tr></table>";
+    public OutputInterface toResult() {
+        return this;
     }
     
     /**
@@ -142,6 +139,26 @@ public class Entry implements Comparable<Entry> {
         return new CompareToBuilder()
                 .append(this.getDeepestNestingOccuranceAmount(), o.getDeepestNestingOccuranceAmount())
                 .toComparison();
+    }
+
+    @Override
+    public String toHTML() {
+        return "<table><tr><td>DepthOfNesting Results: </td></tr>"
+                + "<tr><td>Method With Most Nesting: "+this.getMethodName()+"</td></tr>"
+                + "<tr><td>Biggest Nesting That Occured: "+this.getDeepestNestingOccuranceAmount()+"</td></tr>"
+                + "<tr><td>Nesting Threshold: "+this.getNestingThreshold()+"</td></tr>"
+                + "<tr><td><span>Source Code Text:</span> </td></tr>"
+                + "<tr><td>"+this.getDeepestNestingOccurance().getText()+"</td></tr></table>";
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        o.put("methodWithMostNesting", this.getMethodName());
+        o.put("biggestNestingOccurrence", this.getDeepestNestingOccuranceAmount());
+        o.put("nestingThreshold", this.getNestingThreshold());
+        o.put("sourceCodeText", this.getDeepestNestingOccurance().getText());
+        return o;
     }
     
 }

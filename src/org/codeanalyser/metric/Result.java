@@ -1,6 +1,7 @@
 package org.codeanalyser.metric;
 
 import java.util.ArrayList;
+import org.codeanalyser.core.utils.OutputInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -14,9 +15,27 @@ public class Result {
     private String fileName;
     private String sourceLanguage;
     private String metricName;
-    private String result;
+    private OutputInterface result;
     private boolean passedMetric;
     private ArrayList<MetricError> error = new ArrayList<MetricError>();
+    private final OutputInterface defaultOutput = new OutputInterface() {
+
+        @Override
+        public String toHTML() {
+            StringBuilder builder = new StringBuilder();
+            builder.append("<table><tr><td><span>");
+            builder.append(metricName);
+            builder.append(" Results: </span></td></tr><tr><td>No Information Could be Loaded For This Metric.</td></tr></table>");
+            return builder.toString();
+        }
+
+        @Override
+        public JSONObject toJSON() {
+            JSONObject o = new JSONObject();
+            return o;
+        }
+        
+    };
     
     /**
      * force Result.newInstance use.
@@ -66,11 +85,13 @@ public class Result {
     }
     
     /**
-     * returns the HTML representation of this result.
-     * @return the HTML representation of this result.
+     * returns the interface to get different outputs of this result.
+     * @return the output interface.
      */
-    public String getResult() {
-        return result;
+    public OutputInterface getResult() {
+        return (result == null) 
+                ? this.defaultOutput
+                : result;
     }
     
     /**
@@ -124,7 +145,7 @@ public class Result {
      * @param result the HTML result.
      * @return this object for method chaining.
      */
-    private Result setResult(String result) {
+    private Result setResult(OutputInterface result) {
         this.result = result;
         return this;
     }
@@ -147,7 +168,7 @@ public class Result {
         JSONObject root = new JSONObject();
         root.put("metricName", this.getMetricName());
         root.put("passedMetric", this.isSuccessful());
-        root.put("resultHTML", this.getResult());
+        root.put("result", this.getResult().toJSON());
             JSONArray a = new JSONArray();
             for(MetricError e : this.getMetricDefinedErrors()) {
                 a.add(e.toJSON());
@@ -165,7 +186,7 @@ public class Result {
      * @param wasSuccessful if the metric was successful or it failed.
      * @return a new Result object.
      */
-    public static Result newInstance(String metricName, String result, boolean wasSuccessful) {
+    public static Result newInstance(String metricName, OutputInterface result, boolean wasSuccessful) {
         
         return new Result()
         .setMetricName(metricName)
@@ -182,7 +203,7 @@ public class Result {
      * @param errors a list of errors to attach to this result if the metric was listening to errors.
      * @return a new Result object.
      */
-    public static Result newInstance(String metricName, String result, boolean wasSuccessful,
+    public static Result newInstance(String metricName, OutputInterface result, boolean wasSuccessful,
             ArrayList<MetricError> errors) {
         return Result.newInstance(metricName, result, wasSuccessful)
                 .setMetricDefinedErrors(errors);

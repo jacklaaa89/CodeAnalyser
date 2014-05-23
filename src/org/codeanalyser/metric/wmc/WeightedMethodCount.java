@@ -2,12 +2,14 @@ package org.codeanalyser.metric.wmc;
 
 import java.util.Arrays;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
+import org.json.simple.JSONObject;
 
 /**
  * This metric is used to determine the total complexity keywords that are used
@@ -15,7 +17,7 @@ import org.codeanalyser.metric.Result;
  *
  * @author Jack Timblin - U1051575
  */
-public class WeightedMethodCount implements MetricInterface {
+public class WeightedMethodCount implements MetricInterface, OutputInterface {
 
     private int totalClassComplexity = 0;
     private final int complexityThreshold = 50;
@@ -26,12 +28,10 @@ public class WeightedMethodCount implements MetricInterface {
 
     @Override
     public Result getResults() throws InvalidResultException {
-        String result = "<table><tr><td>WeightedMethodCount Result: </td></tr>"
-                + "<tr><td>Total Amount of Complexity Keywords Found: " + this.totalClassComplexity + "</td></tr>"
-                + "<tr><td>Complexity Threshold: " + this.complexityThreshold + "</td></tr></table>";
+        
 
         return Result.newInstance(this.getClass().getSimpleName(),
-                result, totalClassComplexity <= complexityThreshold);
+                this, totalClassComplexity <= complexityThreshold);
     }
 
     @Override
@@ -60,6 +60,21 @@ public class WeightedMethodCount implements MetricInterface {
                 break;
             }
         }
+    }
+
+    @Override
+    public String toHTML() {
+        return "<table><tr><td>WeightedMethodCount Result: </td></tr>"
+                + "<tr><td>Total Amount of Complexity Keywords Found: " + this.totalClassComplexity + "</td></tr>"
+                + "<tr><td>Complexity Threshold: " + this.complexityThreshold + "</td></tr></table>";
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        o.put("totalComplexityKeywordsFound", this.totalClassComplexity);
+        o.put("threshold", this.complexityThreshold);
+        return o;
     }
 
 }

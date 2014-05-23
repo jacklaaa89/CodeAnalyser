@@ -5,20 +5,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
-import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
+import org.json.simple.JSONObject;
 
 /**
  * This metric determines the amount of lines of code that a source code file has
  * and checks to see if this is within a given threshold.
  * @author Jack Timblin - U1051575
  */
-public class LinesOfCode implements MetricInterface {
+public class LinesOfCode implements MetricInterface, OutputInterface {
     
     private int loc = 0;
     private final int locThreashold = 100;
@@ -26,11 +27,9 @@ public class LinesOfCode implements MetricInterface {
     @Override
     public Result getResults() throws InvalidResultException {
         
-        String result = "<table><tr><td>LinesOfCode Result: </td></tr>"
-                + "<tr><td>Lines Of Code: "+this.loc+"</td></tr>"
-                + "<tr><td>Threshold: "+this.locThreashold+"</td></tr></table>";
         
-        return Result.newInstance(this.getClass().getSimpleName(), result, loc <= locThreashold);
+        
+        return Result.newInstance(this.getClass().getSimpleName(), this, loc <= locThreashold);
     }
 
     @Override
@@ -70,6 +69,22 @@ public class LinesOfCode implements MetricInterface {
 
     @Override
     public void destroy() {
+    }
+
+    @Override
+    public String toHTML() {
+        String result = "<table><tr><td>LinesOfCode Result: </td></tr>"
+                + "<tr><td>Lines Of Code: "+this.loc+"</td></tr>"
+                + "<tr><td>Threshold: "+this.locThreashold+"</td></tr></table>";
+        return result;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        o.put("linesOfCode", loc);
+        o.put("threshold", locThreashold);
+        return o;
     }
 
     

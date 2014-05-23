@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
-import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
 import org.codeanalyser.metric.ParserInfo;

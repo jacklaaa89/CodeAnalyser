@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.codeanalyser.core.utils.OutputInterface;
+import org.json.simple.JSONObject;
 
 /**
  * An encapsulation of an Entry. An Entry is defined as an evaluation
  * of a single method based on the amount of complexity keywords.
  * @author Jack Timblin - u1051575
  */
-public class Entry implements Comparable<Entry> {
+public class Entry implements Comparable<Entry>, OutputInterface {
     
     private String type;
     private int amountOfComplexKeywords = -1;
@@ -122,19 +124,11 @@ public class Entry implements Comparable<Entry> {
     }
     
     /**
-     * returns this object as a HTML string to inject into the output template.
+     * returns the Output Interface for this metric.
      * @return a HTML representation of this object.
      */
-    public String toResult() {
-        String result =  "<table><tr><td>CyclomaticComplexity Results:</td></tr>"
-                + "<tr><td>Method With Most Complexity: "+this.getMethodName()+"</td></tr>"
-                + "<tr><td>Amount of Complexity Keywords Found: "+this.getAmountOfComplexKeywords()+"</td></tr>"
-                + "<tr><td>Complexity Threshold: "+this.getComplexityThreshold()+"</td></tr>"
-                + "<tr><td><span style='text-decoration:underline;'>Keyword Occurances:</span> </td></tr>";
-        for(Map.Entry<String, Integer> entry : this.getKeywordOccurrences().entrySet()) {
-            result += "<tr><td>"+entry.getKey()+": </td><td>"+entry.getValue()+"</td></tr>";
-        }
-        return result + "</table>";
+    public OutputInterface toResult() {
+        return this;
     }
     
     /**
@@ -157,6 +151,33 @@ public class Entry implements Comparable<Entry> {
         return new CompareToBuilder()
                 .append(this.getAmountOfComplexKeywords(), o.getAmountOfComplexKeywords())
                 .toComparison();
+    }
+
+    @Override
+    public String toHTML() {
+        String result =  "<table><tr><td>CyclomaticComplexity Results:</td></tr>"
+                + "<tr><td>Method With Most Complexity: "+this.getMethodName()+"</td></tr>"
+                + "<tr><td>Amount of Complexity Keywords Found: "+this.getAmountOfComplexKeywords()+"</td></tr>"
+                + "<tr><td>Complexity Threshold: "+this.getComplexityThreshold()+"</td></tr>"
+                + "<tr><td><span style='text-decoration:underline;'>Keyword Occurances:</span> </td></tr>";
+        for(Map.Entry<String, Integer> entry : this.getKeywordOccurrences().entrySet()) {
+            result += "<tr><td>"+entry.getKey()+": </td><td>"+entry.getValue()+"</td></tr>";
+        }
+        return result + "</table>";
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        o.put("methodWithMostComplexity", this.getMethodName());
+        o.put("amountOfComplexityKeywordsFound", this.getAmountOfComplexKeywords());
+        o.put("complexityThreshold", this.getComplexityThreshold());
+        JSONObject k = new JSONObject();
+        for(Map.Entry<String, Integer> entry : this.getKeywordOccurrences().entrySet()) {
+            k.put(entry.getKey(), entry.getValue());
+        }
+        o.put("keywordOccurrences", k);
+        return o;
     }
     
 }

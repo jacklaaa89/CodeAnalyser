@@ -26,7 +26,8 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
         TesterMetricError tme = new TesterMetricError();
         ArrayList<MetricError> me = new ArrayList<MetricError>();
         me.add(tme);
-        return Result.newInstance(this.getClass().getSimpleName(), "", true, me);
+        //use the default outputadapter.
+        return Result.newInstance(this.getClass().getSimpleName(), null, true, me);
     }
     
     @Override
