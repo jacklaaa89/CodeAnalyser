@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
-import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONArray;
@@ -69,7 +68,7 @@ public class OverallResult {
      */
     public void generateSubPage(File outputDestination)
             throws TemplateNotFoundException {
-        String fileName = outputDestination.getAbsolutePath()+ "/" + this.file.getAbsolutePath() + ".html";
+        String fileName = this.file.getAbsolutePath() + ".html";
         String regex;
         if(File.separator.equals("\\")) {
             regex = "\\";
@@ -86,9 +85,10 @@ public class OverallResult {
 
         STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
         ST main = group.getInstanceOf("sub");
-        
-        //build the HTML for each of the metric results.
         StringBuilder builder = new StringBuilder();
+        try {
+        //build the HTML for each of the metric results.
+        
         for (Result r : results) {
             builder.append("<tr><td style='border-top:1px solid black;border-bottom:1px solid black;'><span>Metric Name: </span>");
             builder.append(r.getMetricName());
@@ -106,17 +106,18 @@ public class OverallResult {
             
             builder.append(doc);
             builder.append("</div></td></tr>");
-            
             //append any custom errors from the metric.
-            if(r.getMetricDefinedErrors() != null) {
                 builder.append("<tr><td><span>Errors: </span></td></tr>");
                 for(MetricError e : r.getMetricDefinedErrors()) {
                     builder.append("<tr><td>");
                     builder.append(e.toHTML());
                     builder.append("</td></tr>");
                 }
-            }
             
+        }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         
         //add the attributes to the template.

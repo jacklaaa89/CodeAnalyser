@@ -59,7 +59,6 @@ public class OutputGenerator {
         for (OverallResult re : result.getResults()) {
             res.add(re.toResultProperty(outputDestination));
         }
-
         //generate the HTML file using the template.
         
         if(Application.getInterface().equals(Logger.DEFAULT)) {
