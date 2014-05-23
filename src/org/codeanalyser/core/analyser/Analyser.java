@@ -158,7 +158,6 @@ public class Analyser {
             } catch (NoResultsDefinedException e) {
                 Application.getLogger().log(e);
             } catch (SyntaxErrorException e) {
-                ((ListenerInterface)listener).reportSyntaxError(e);
                 Application.getLogger().log(e);
             } catch (InvalidResultException e) {
                 Application.getLogger().log(e);

@@ -62,22 +62,6 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
     }
 
     @Override
-    public void reportSyntaxError(SyntaxErrorException e) {
-        for (MetricInterface m : metrics) {
-            try {
-                Lexer l = this.file.getSupportedLexer();
-                CommonTokenStream s = new CommonTokenStream(l);
-                ParserInterface p = this.file.getSupportedParser(s);
-                ((MetricErrorAdapter) m).onSyntaxErrorOccured(e, this.file.getAbsolutePath(),
-                        p, l, Application.getLogger());
-            } catch (ClassCastException ex) {
-            } catch (UnsupportedLanguageException ule) {
-                Application.getLogger().log(ule);
-            }
-        }
-    }
-
-    @Override
     public void destroy() {
         for (MetricInterface metric : metrics) {
             metric.destroy();

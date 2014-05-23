@@ -33,12 +33,6 @@ public interface ListenerInterface {
     public void init(FileAnalyser file) throws MetricException;
     
     /**
-     * report a syntax error to the metric files.
-     * @param e the exception that occurred
-     */
-    public void reportSyntaxError(SyntaxErrorException e);
-    
-    /**
      * called after this listener has finished analysing a single file, 
      * used so metrics can be reset.
      */
