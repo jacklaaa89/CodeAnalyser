@@ -48,11 +48,9 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                     m.init(info);
                 } catch (MetricInitialisationException e) {
                     try {
-                        ((MetricErrorAdapter) m).onInitialisationError(e, Application.getLogger());
-                    } catch (ClassCastException ex) {
-                    }
+                        ((MetricErrorAdapter) m).onInitialisationError(e, Application.getLogger(), info);
+                    } catch (ClassCastException ex) {}
                     Application.getLogger().log(e);
-                    continue;
                 }
                 metrics.add(m);
             }
@@ -82,13 +80,16 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
             try {
                 r = mi.getResults();
                 if (r != null) {
+                    //set system values.
+                    r.setFileName(file.getName());
+                    r.setSourceLanguage(file.getSourceLanguage());
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
                 try {
-                    ((MetricErrorAdapter) mi).onInvalidResultException(e, r, Application.getLogger());
+                    ((MetricErrorAdapter) mi).onInvalidResultException(e, r, Application.getLogger(), new ParserInfo(file));
                 } catch (ClassCastException ex) {
-                }
+                } catch (Exception ex) {}
                 Application.getLogger().log(e);
             }
         }

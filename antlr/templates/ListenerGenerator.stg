@@ -53,31 +53,14 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
                     m.init(info);
                 } catch (MetricInitialisationException e) {
                     try {
-                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger());
+                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger(), info);
                     } catch (ClassCastException ex) {}
                     Application.getLogger().log(e);
-                    continue;
                 }
                 metrics.add(m);
             }
         } catch (Exception e) {
             throw new MetricException(e.getMessage());
-        }
-    }
-    
-    @Override
-    public void reportSyntaxError(SyntaxErrorException e) {
-        for (MetricInterface m : metrics) {
-            try {
-                Lexer l = this.file.getSupportedLexer();
-                CommonTokenStream s = new CommonTokenStream(l);
-                ParserInterface p = this.file.getSupportedParser(s);
-                ((MetricErrorAdapter) m).onSyntaxErrorOccured(e, this.file.getAbsolutePath(),
-                        p, l, Application.getLogger());
-            } catch (ClassCastException ex) {
-            } catch (UnsupportedLanguageException ule) {
-                Application.getLogger().log(ule);
-            }
         }
     }
     
@@ -100,12 +83,16 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
             try {
                 Result r = mi.getResults();
                 if(r != null) {
+                    //set system values.
+                    r.setFileName(file.getName());
+                    r.setSourceLanguage(file.getSourceLanguage());
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
                 try {
-                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger());
-                } catch (ClassCastException ex) {}
+                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger(), new ParserInfo(file));
+                } catch (ClassCastException ex) {
+                } catch (Exception ex) {}
                 Application.getLogger().log(e);
             }
         }
