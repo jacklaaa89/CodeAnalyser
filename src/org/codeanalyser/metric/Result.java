@@ -16,7 +16,7 @@ public class Result {
     private String metricName;
     private String result;
     private boolean passedMetric;
-    private ArrayList<MetricError> error;
+    private ArrayList<MetricError> error = new ArrayList<MetricError>();
     
     /**
      * force Result.newInstance use.
@@ -76,11 +76,9 @@ public class Result {
     /**
      * sets the file name that was analysed.
      * @param fileName the file name.
-     * @return this object for method chaining.
      */
-    private Result setFileName(String fileName) {
+    public void setFileName(String fileName) {
         this.fileName = fileName;
-        return this;
     }
     
     /**
@@ -106,11 +104,9 @@ public class Result {
     /**
      * sets the source language of the file.
      * @param sourceLanguage the source language for the file
-     * @return this object for method chaining.
      */
-    private Result setSourceLanguage(String sourceLanguage) {
+    public void setSourceLanguage(String sourceLanguage) {
         this.sourceLanguage = sourceLanguage;
-        return this;
     }
     
     /**
@@ -152,50 +148,43 @@ public class Result {
         root.put("metricName", this.getMetricName());
         root.put("passedMetric", this.isSuccessful());
         root.put("resultHTML", this.getResult());
-        if(this.getMetricDefinedErrors() != null) {
             JSONArray a = new JSONArray();
             for(MetricError e : this.getMetricDefinedErrors()) {
                 a.add(e.toJSON());
             }
-            root.put("metricDefinedErrors", a);
-        }
+            if(a.size() != 0) {
+                root.put("metricDefinedErrors", a);
+            }
         return root;
     }
     
     /**
      * generates a new instance of a Result object.
-     * @param fileName the file being evaluated.
-     * @param sourceLanguage the source language of the file.
      * @param metricName the name of the metric that carried out the analysis.
      * @param result the HTML result of that analysis to push into the output.
      * @param wasSuccessful if the metric was successful or it failed.
      * @return a new Result object.
      */
-    public static Result newInstance(String fileName, String sourceLanguage, 
-            String metricName, String result, boolean wasSuccessful) {
+    public static Result newInstance(String metricName, String result, boolean wasSuccessful) {
         
         return new Result()
-        .setFileName(fileName)
         .setMetricName(metricName)
         .setResult(result)
-        .setSourceLanguage(sourceLanguage)
         .setIsSuccessful(wasSuccessful);
         
     }
     
     /**
      * generates a new instance of a Result object.
-     * @param fileName the file being evaluated.
-     * @param sourceLanguage the source language of the file.
      * @param metricName the name of the metric that carried out the analysis.
      * @param result the HTML result of that analysis to push into the output.
      * @param wasSuccessful if the metric was successful or it failed.
      * @param errors a list of errors to attach to this result if the metric was listening to errors.
      * @return a new Result object.
      */
-    public static Result newInstance(String fileName, String sourceLanguage, 
-            String metricName, String result, boolean wasSuccessful, ArrayList<MetricError> errors) {
-        return Result.newInstance(fileName, sourceLanguage, metricName, result, wasSuccessful)
+    public static Result newInstance(String metricName, String result, boolean wasSuccessful,
+            ArrayList<MetricError> errors) {
+        return Result.newInstance(metricName, result, wasSuccessful)
                 .setMetricDefinedErrors(errors);
     }
 }

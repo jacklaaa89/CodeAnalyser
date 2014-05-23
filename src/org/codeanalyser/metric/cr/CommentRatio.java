@@ -12,8 +12,10 @@ import java.util.Map;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import org.codeanalyser.core.Application;
+import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
@@ -26,11 +28,12 @@ import org.yaml.snakeyaml.Yaml;
  *
  * @author Jack Timblin - U1051575
  */
-public class CommentRatio implements MetricInterface {
+public class CommentRatio implements MetricInterface, MetricErrorAdapter {
 
     private double commentCount, blankCount, codeCount;
-    private String fileLocation, sourceLanguage;
+    private String fileLocation;
     private final int[] thresholdRatio = {20, 40};
+    private final ArrayList<MetricError> errors = new ArrayList<MetricError>();
 
     @Override
     public Result getResults() throws InvalidResultException {
@@ -54,7 +57,8 @@ public class CommentRatio implements MetricInterface {
                 + "<tr><td>Max: " + this.thresholdRatio[1] + "%</td></tr></table>";
 
         //return the result object for the application to use.
-        return Result.newInstance(fileLocation, sourceLanguage, this.getClass().getSimpleName(), result, this.isWithinThreshold());
+        return Result.newInstance(this.getClass().getSimpleName(),
+                result, this.isWithinThreshold(), errors);
     }
 
     @Override
@@ -76,7 +80,6 @@ public class CommentRatio implements MetricInterface {
 
             //set initial variables about the file.
             this.fileLocation = initialInformation.getFileName();
-            this.sourceLanguage = initialInformation.getSourceLanguage();
 
             File f = new File("antlr");
 
@@ -244,4 +247,12 @@ public class CommentRatio implements MetricInterface {
         this.commentCount = cmc;
         this.codeCount = to-(bc+cmc);
     }
+
+    @Override
+    public void onInitialisationError(MetricInitialisationException e, Logger logger, ParserInfo info) {
+        errors.add(new InitialisationError(e, info));
+    }
+
+    @Override
+    public void onInvalidResultException(InvalidResultException e, Result result, Logger logger, ParserInfo info) {}
 }

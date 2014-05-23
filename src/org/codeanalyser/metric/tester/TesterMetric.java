@@ -26,7 +26,7 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
         TesterMetricError tme = new TesterMetricError();
         ArrayList<MetricError> me = new ArrayList<MetricError>();
         me.add(tme);
-        return Result.newInstance("", "", this.getClass().getSimpleName(), "", true, me);
+        return Result.newInstance(this.getClass().getSimpleName(), "", true, me);
     }
     
     @Override
@@ -43,12 +43,14 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
     }
 
     @Override
-    public void onInitialisationError(MetricInitialisationException e, Logger logger) {
+    public void onInitialisationError(MetricInitialisationException e, Logger logger, 
+            ParserInfo info) {
         logger.log("onInitialisationError() called");
     }
 
     @Override
-    public void onInvalidResultException(InvalidResultException e, Result result, Logger logger) {
+    public void onInvalidResultException(InvalidResultException e, Result result,
+            Logger logger, ParserInfo info) {
         logger.log("onInvalidResultException() called");
     }
     

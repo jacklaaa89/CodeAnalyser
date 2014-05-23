@@ -20,7 +20,6 @@ import org.codeanalyser.metric.Result;
  */
 public class LinesOfCode implements MetricInterface {
     
-    private String fileName, sourceLang;
     private int loc = 0;
     private final int locThreashold = 100;
 
@@ -31,7 +30,7 @@ public class LinesOfCode implements MetricInterface {
                 + "<tr><td>Lines Of Code: "+this.loc+"</td></tr>"
                 + "<tr><td>Threshold: "+this.locThreashold+"</td></tr></table>";
         
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), result, loc <= locThreashold);
+        return Result.newInstance(this.getClass().getSimpleName(), result, loc <= locThreashold);
     }
 
     @Override

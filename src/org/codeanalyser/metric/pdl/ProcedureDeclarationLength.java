@@ -20,7 +20,6 @@ import org.codeanalyser.metric.Result;
  */
 public class ProcedureDeclarationLength implements MetricInterface {
 
-    private String fileName, sourceLang;
     private ArrayList<Entry> entries;
     
     @Override
@@ -52,7 +51,7 @@ public class ProcedureDeclarationLength implements MetricInterface {
                 + "<tr><td>Method Length: "+worst.getLengthThreshold()+"</td></tr>"
                 + "<tr><td>No Of Variables: "+worst.getNoOfParametersThreshold()+"</td></tr></table>";
         
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), result, overallSuccess);
+        return Result.newInstance(this.getClass().getSimpleName(), result, overallSuccess);
     }
 
     @Override
@@ -80,8 +79,6 @@ public class ProcedureDeclarationLength implements MetricInterface {
 
     @Override
     public void init(ParserInfo info) throws MetricInitialisationException {
-        this.fileName = info.getFileName();
-        this.sourceLang = info.getSourceLanguage();
         this.entries = new ArrayList<Entry>();
     }
 

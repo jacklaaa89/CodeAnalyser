@@ -19,7 +19,6 @@ public class WeightedMethodCount implements MetricInterface {
 
     private int totalClassComplexity = 0;
     private final int complexityThreshold = 50;
-    private String fileName, sourceLang;
     
     //events and tokens.
     private final String[] statementEvents = {"ENTER_STATEMENT", "ENTER_SWITCH_BLOCK_STATEMENT_GROUP", "ENTER_CATCH_CLAUSE"};
@@ -31,7 +30,7 @@ public class WeightedMethodCount implements MetricInterface {
                 + "<tr><td>Total Amount of Complexity Keywords Found: " + this.totalClassComplexity + "</td></tr>"
                 + "<tr><td>Complexity Threshold: " + this.complexityThreshold + "</td></tr></table>";
 
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(),
+        return Result.newInstance(this.getClass().getSimpleName(),
                 result, totalClassComplexity <= complexityThreshold);
     }
 
@@ -44,8 +43,6 @@ public class WeightedMethodCount implements MetricInterface {
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        this.fileName = initialInformation.getFileName();
-        this.sourceLang = initialInformation.getSourceLanguage();
     }
 
     @Override

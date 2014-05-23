@@ -17,7 +17,6 @@ import org.codeanalyser.metric.Result;
  */
 public class DepthOfNesting implements MetricInterface {
     
-    private String fileName, sourceLang;
     private ArrayList<Entry> entries;
     private final String[] methodEvents = {"ENTER_CONSTRUCTOR_DECLARATION", "ENTER_METHOD_DECLARATION"};
 
@@ -40,7 +39,7 @@ public class DepthOfNesting implements MetricInterface {
             }
         }
         
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(),
+        return Result.newInstance(this.getClass().getSimpleName(),
                 e.toResult(), e.getDeepestNestingOccuranceAmount() <= e.getNestingThreshold());
     }
 
@@ -81,8 +80,6 @@ public class DepthOfNesting implements MetricInterface {
 
     @Override
     public void init(ParserInfo info) throws MetricInitialisationException {
-        this.fileName = info.getFileName();
-        this.sourceLang = info.getSourceLanguage();
         this.entries = new ArrayList<Entry>();
     }
 

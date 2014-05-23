@@ -19,7 +19,6 @@ import org.codeanalyser.metric.Result;
  */
 public class CyclomaticComplexity implements MetricInterface {
     
-    private String fileName, sourceLang;
     private ArrayList<Entry> entries;
     private final int complexityThreshold = 10;
     
@@ -49,7 +48,7 @@ public class CyclomaticComplexity implements MetricInterface {
             }
         }
         
-        return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), e.toResult(),
+        return Result.newInstance(this.getClass().getSimpleName(), e.toResult(),
                 (e.getAmountOfComplexKeywords() <= this.complexityThreshold 
                         && e.getAmountOfComplexKeywords() != -1));
     }
@@ -95,8 +94,6 @@ public class CyclomaticComplexity implements MetricInterface {
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        this.fileName = initialInformation.getFileName();
-        this.sourceLang = initialInformation.getSourceLanguage();
         this.entries = new ArrayList<Entry>();
     }
 

@@ -27,7 +27,6 @@ import org.codeanalyser.metric.Result;
 public class VariableNamingConventions implements MetricInterface {
     
     private ArrayList<String> variableNames;
-    private String fileName, sourceLang;
     private LanguageDetect detector;
 
     @Override
@@ -51,7 +50,7 @@ public class VariableNamingConventions implements MetricInterface {
                     + reason
                     + "<tr><td>Total Variables Found: "+variableNames.size()+"</td></tr></table>";
             
-            return Result.newInstance(fileName, sourceLang, this.getClass().getSimpleName(), result,
+            return Result.newInstance(this.getClass().getSimpleName(), result,
                     (lang.getConfidence() != 0.01) && (lang.getDetectedLanguage().equalsIgnoreCase("en")));
             
         } catch (LanguageDetect.LanguageDetectionException e) {
@@ -70,8 +69,6 @@ public class VariableNamingConventions implements MetricInterface {
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        this.fileName = initialInformation.getFileName();
-        this.sourceLang = initialInformation.getSourceLanguage();
         this.variableNames = new ArrayList<String>();
         try {
             this.detector = new LanguageDetect();
