@@ -39,6 +39,26 @@ public class Logger {
     }
     
     /**
+     * logs an object on to the default stream (or error stream if the object
+     * is an exception). An object is logged by its toString method.
+     * @param object the object to log.
+     */
+    public void log(Object object) {
+        this.log(object, (object instanceof Exception) 
+                ? ERROR_STREAM : DEFAULT_STREAM);
+    }
+    
+    /**
+     * logs an object on to the a defined stream. An object is logged by its toString method.
+     * @param object the object to log.
+     * @param stream the stream to print to, will print to default stream (or error stream if the object
+     * is an exception) if the supplied stream is invalid.
+     */
+    public void log(Object object, int stream) {
+        this.log(object.toString(), stream, (object instanceof Exception));
+    }
+    
+    /**
      * logs a message on the default stream.
      * @param message the message to log.
      */
