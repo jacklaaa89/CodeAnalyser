@@ -1,11 +1,10 @@
 package org.codeanalyser.metric.tester;
 
-import org.antlr.v4.runtime.Lexer;
+import java.util.ArrayList;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
-import org.codeanalyser.language.ParserInterface;
-import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricInterface;
@@ -24,7 +23,10 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
     
     @Override
     public Result getResults() throws InvalidResultException {
-        throw new InvalidResultException("Hellppp");
+        TesterMetricError tme = new TesterMetricError();
+        ArrayList<MetricError> me = new ArrayList<MetricError>();
+        me.add(tme);
+        return Result.newInstance("", "", this.getClass().getSimpleName(), "", true, me);
     }
     
     @Override
@@ -48,12 +50,6 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
     @Override
     public void onInvalidResultException(InvalidResultException e, Result result, Logger logger) {
         logger.log("onInvalidResultException() called");
-    }
-
-    @Override
-    public void onSyntaxErrorOccured(SyntaxErrorException e, String fileName,
-            ParserInterface parser, Lexer lexer, Logger logger) {
-        logger.log("onSyntaxErrorOccured() called");
     }
     
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.core.utils.Logger;
+import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -105,6 +106,16 @@ public class OverallResult {
             
             builder.append(doc);
             builder.append("</div></td></tr>");
+            
+            //append any custom errors from the metric.
+            if(r.getMetricDefinedErrors() != null) {
+                builder.append("<tr><td><span>Errors: </span></td></tr>");
+                for(MetricError e : r.getMetricDefinedErrors()) {
+                    builder.append("<tr><td>");
+                    builder.append(e.toHTML());
+                    builder.append("</td></tr>");
+                }
+            }
             
         }
         

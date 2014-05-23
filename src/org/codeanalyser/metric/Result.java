@@ -1,5 +1,7 @@
 package org.codeanalyser.metric;
 
+import java.util.ArrayList;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -14,11 +16,20 @@ public class Result {
     private String metricName;
     private String result;
     private boolean passedMetric;
+    private ArrayList<MetricError> error;
     
     /**
      * force Result.newInstance use.
      */
     private Result() {}
+    
+    /**
+     * get the metrics that were set by the metric.
+     * @return the errors defined by the metric.
+     */
+    public ArrayList<MetricError> getMetricDefinedErrors() {
+        return this.error;
+    }
     
     /**
      * returns the file name of the file analysed.
@@ -83,6 +94,16 @@ public class Result {
     }
     
     /**
+     * sets any errors that are the metric handled.
+     * @param errors the errors the metric handled.
+     * @return this object for method chaining.
+     */
+    private Result setMetricDefinedErrors(ArrayList<MetricError> errors) {
+        this.error = errors;
+        return this;
+    }
+    
+    /**
      * sets the source language of the file.
      * @param sourceLanguage the source language for the file
      * @return this object for method chaining.
@@ -131,6 +152,13 @@ public class Result {
         root.put("metricName", this.getMetricName());
         root.put("passedMetric", this.isSuccessful());
         root.put("resultHTML", this.getResult());
+        if(this.getMetricDefinedErrors() != null) {
+            JSONArray a = new JSONArray();
+            for(MetricError e : this.getMetricDefinedErrors()) {
+                a.add(e.toJSON());
+            }
+            root.put("metricDefinedErrors", a);
+        }
         return root;
     }
     
@@ -155,4 +183,19 @@ public class Result {
         
     }
     
+    /**
+     * generates a new instance of a Result object.
+     * @param fileName the file being evaluated.
+     * @param sourceLanguage the source language of the file.
+     * @param metricName the name of the metric that carried out the analysis.
+     * @param result the HTML result of that analysis to push into the output.
+     * @param wasSuccessful if the metric was successful or it failed.
+     * @param errors a list of errors to attach to this result if the metric was listening to errors.
+     * @return a new Result object.
+     */
+    public static Result newInstance(String fileName, String sourceLanguage, 
+            String metricName, String result, boolean wasSuccessful, ArrayList<MetricError> errors) {
+        return Result.newInstance(fileName, sourceLanguage, metricName, result, wasSuccessful)
+                .setMetricDefinedErrors(errors);
+    }
 }
