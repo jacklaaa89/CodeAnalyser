@@ -160,9 +160,5 @@ public class TesterJavaListener extends JavaBaseListener implements ListenerInte
             m.destroy();
         }
     }
-
-    @Override
-    public void reportSyntaxError(SyntaxErrorException e) {
-    }
     
 }

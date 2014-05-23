@@ -145,9 +145,5 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
             m.destroy();
         }
     }
-
-    @Override
-    public void reportSyntaxError(SyntaxErrorException e) {
-    }
     
 }
