@@ -48,7 +48,7 @@ public class CyclomaticComplexity implements MetricInterface {
             }
         }
         
-        return Result.newInstance(this.getClass().getSimpleName(), e.toResult(),
+        return Result.newInstance(this.getClass().getSimpleName(), e,
                 (e.getAmountOfComplexKeywords() <= this.complexityThreshold 
                         && e.getAmountOfComplexKeywords() != -1));
     }

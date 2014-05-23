@@ -110,14 +110,6 @@ public class Entry implements Comparable<Entry>, OutputInterface {
     }
     
     /**
-     * returns this entry as a HTML string.
-     * @return this entry as a HTML string.
-     */
-    public OutputInterface toResult() {
-        return this;
-    }
-    
-    /**
      * returns a string representation of this object
      * @return a string representation of this object
      */

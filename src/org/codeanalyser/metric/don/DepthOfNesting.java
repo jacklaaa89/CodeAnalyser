@@ -39,7 +39,7 @@ public class DepthOfNesting implements MetricInterface {
         }
         
         return Result.newInstance(this.getClass().getSimpleName(),
-                e.toResult(), e.getDeepestNestingOccuranceAmount() <= e.getNestingThreshold());
+                e, e.getDeepestNestingOccuranceAmount() <= e.getNestingThreshold());
     }
 
     @Override

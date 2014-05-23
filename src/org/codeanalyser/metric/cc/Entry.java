@@ -124,14 +124,6 @@ public class Entry implements Comparable<Entry>, OutputInterface {
     }
     
     /**
-     * returns the Output Interface for this metric.
-     * @return a HTML representation of this object.
-     */
-    public OutputInterface toResult() {
-        return this;
-    }
-    
-    /**
      * returns a string representation of this object.
      * @return a string representation of this object.
      */
