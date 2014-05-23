@@ -17,7 +17,12 @@ import org.codeanalyser.core.analyser.FileAnalyser;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.ParserInfo;
+import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.language.ParserInterface;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.codeanalyser.language.SyntaxErrorException;
 
 /**
  * This class is auto generated when the parser is generated so that 
@@ -47,13 +52,15 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
-                    System.out.println("Failed to Initialise Metric: \"" + metric + "\", Error: " + e.getMessage());
-                    continue;
+                    try {
+                        ((MetricErrorAdapter)m).onInitialisationError(e, Application.getLogger(), info);
+                    } catch (ClassCastException ex) {}
+                    Application.getLogger().log(e);
                 }
                 metrics.add(m);
             }
         } catch (Exception e) {
-            throw new MetricException("An error occured initialising all of the metrics.");
+            throw new MetricException(e.getMessage());
         }
     }
     
@@ -76,10 +83,17 @@ public class BaseListener extends <property.listenerName> implements ListenerInt
             try {
                 Result r = mi.getResults();
                 if(r != null) {
+                    //set system values.
+                    r.setFileName(file.getName());
+                    r.setSourceLanguage(file.getSourceLanguage());
                     results.add(r);
                 }
             } catch (InvalidResultException e) {
-                System.out.println(e.getMessage());
+                try {
+                    ((MetricErrorAdapter)mi).onInvalidResultException(e, r, Application.getLogger(), new ParserInfo(file));
+                } catch (ClassCastException ex) {
+                } catch (Exception ex) {}
+                Application.getLogger().log(e);
             }
         }
         return results;
