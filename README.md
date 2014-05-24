@@ -66,7 +66,7 @@ Since version 1.1, the analyser now outputs in raw HTML files and also in a JSON
 ```java
 @Override
 public Result getResults() throws InvalidResultException {
-     Object result = /* calculate result however here. */null;
+     final Object result = /* calculate result however here. */null;
      
      //params are -> the metric name, the OutputInterface result, boolean if the source code passed this metric,
      //optional ArrayList<MetricError> of errors that were recorded by this metric.
