@@ -62,7 +62,29 @@ The most important method ```onParserEvent()``` is called when the system matche
 The Result object that is returned can only be initialised using the static method ```Result.newInstance()``` This methods parameters take in all of the required information that is needed to generate output based on a ```Result``` object.
 
 ######Handling Multiple Output Types
-Since version 1.1, the analyser now outputs in raw HTML files and also in a JSON format (dependant on the ```-i``` argument passed to the cmdline arguments) And the metric has to be able to output in each of these formats (and possibly more in the future). The second argument in the ```Result.newInstance()``` method is an instance of a ```OutputInterface``` object. This is the interface that is used to determine what output to use in the output generation stage. This class can be either implemented by any class or passed as an anonymous implementation of the interface. If you dont care about the produced output then ```null``` can be passed and the default ```OutputInterface``` will be used.
+Since version 1.1, the analyser now outputs in raw HTML files and also in a JSON format (dependant on the ```-i``` argument passed to the cmdline arguments) And the metric has to be able to output in each of these formats (and possibly more in the future). The second argument in the ```Result.newInstance()``` method is an instance of a ```OutputInterface``` object. This is the interface that is used to determine what output to use in the output generation stage. This class can be either implemented by any class or passed as an anonymous implementation of the interface. If you dont care about the produced output then ```null``` can be passed and the default ```OutputInterface``` will be used. An example of the use of ```Result.newInstance()``` is shown below:
+```java
+@Override
+public Result getResults() throws InvalidResultException {
+     Object result = /* calculate result however here. */null;
+     
+     //params are -> the metric name, the OutputInterface result, boolean if the source code passed this metric,
+     //optional ArrayList<MetricError> of errors that were recorded by this metric.
+     return Result.newInstance(this.getClass().getSimpleName(), new OutputInterface(){
+          @Override
+          public String toHTML() {
+              return result.toString();
+          }
+          
+          @Override
+          public JSONObject toJSON(){
+              JSONObject root = new JSONObject();
+              root.put("object", result);
+              return root;
+          }
+     }, true);
+}
+```
 
 ###Handling Error
 Again, Since 1.1, A new error handling mechanism has been introduced. This is there custom error messages can be defined and attached to the output template when any of the metric exceptions occur. If the class that implements ```MetricInterface``` also implements the ```MetricErrorAdapter``` interface then when errors occur this gives us a chance to build up ```MetricError``` instances to pass to the ```Result``` in ```Result.newInstance()```. This is shown below:
