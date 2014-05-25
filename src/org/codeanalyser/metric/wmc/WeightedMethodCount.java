@@ -6,7 +6,7 @@ import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -17,7 +17,7 @@ import org.json.simple.JSONObject;
  *
  * @author Jack Timblin - U1051575
  */
-public class WeightedMethodCount implements MetricInterface, OutputInterface {
+public class WeightedMethodCount extends MetricAbstract implements OutputInterface {
 
     private int totalClassComplexity = 0;
     private final int complexityThreshold = 50;

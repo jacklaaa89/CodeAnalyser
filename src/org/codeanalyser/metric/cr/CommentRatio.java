@@ -19,7 +19,7 @@ import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -30,21 +30,18 @@ import org.yaml.snakeyaml.Yaml;
  *
  * @author Jack Timblin - U1051575
  */
-public class CommentRatio implements MetricInterface, MetricErrorAdapter, OutputInterface {
+public class CommentRatio extends MetricAbstract implements OutputInterface {
 
     private double commentCount, blankCount, codeCount;
     private String fileLocation;
     private final int[] thresholdRatio = {20, 40};
-    private final ArrayList<MetricError> errors = new ArrayList<MetricError>();
 
     @Override
     public Result getResults() throws InvalidResultException {
-
         
-
         //return the result object for the application to use.
         return Result.newInstance(this.getClass().getSimpleName(),
-                this, this.isWithinThreshold(), errors);
+                this, this.isWithinThreshold());
     }
 
     @Override
@@ -238,14 +235,6 @@ public class CommentRatio implements MetricInterface, MetricErrorAdapter, Output
         this.commentCount = cmc;
         this.codeCount = to-(bc+cmc);
     }
-
-    @Override
-    public void onInitialisationError(MetricInitialisationException e, Logger logger, ParserInfo info) {
-        errors.add(new InitialisationError(e, info));
-    }
-
-    @Override
-    public void onInvalidResultException(InvalidResultException e, Result result, Logger logger, ParserInfo info) {}
 
     @Override
     public String toHTML() {

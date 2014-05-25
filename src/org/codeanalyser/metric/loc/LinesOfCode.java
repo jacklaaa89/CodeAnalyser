@@ -9,7 +9,7 @@ import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
  * and checks to see if this is within a given threshold.
  * @author Jack Timblin - U1051575
  */
-public class LinesOfCode implements MetricInterface, OutputInterface {
+public class LinesOfCode extends MetricAbstract implements OutputInterface {
     
     private int loc = 0;
     private final int locThreashold = 100;

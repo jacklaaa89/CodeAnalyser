@@ -7,7 +7,7 @@ import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
@@ -19,15 +19,14 @@ import org.codeanalyser.metric.Result;
  * demonstrate that metrics can how handle their own errors.
  * @author Jack Timblin - U1051575
  */
-public class TesterMetric implements MetricInterface, MetricErrorAdapter {
+public class TesterMetric extends MetricAbstract implements MetricErrorAdapter {
     
     @Override
     public Result getResults() throws InvalidResultException {
         TesterMetricError tme = new TesterMetricError();
-        ArrayList<MetricError> me = new ArrayList<MetricError>();
-        me.add(tme);
+        this.getErrors().add(tme);
         //use the default outputadapter.
-        return Result.newInstance(this.getClass().getSimpleName(), null, true, me);
+        return Result.newInstance(this.getClass().getSimpleName(), null, true);
     }
     
     @Override
@@ -36,7 +35,7 @@ public class TesterMetric implements MetricInterface, MetricErrorAdapter {
 
     @Override
     public void init(ParserInfo initialInformation) throws MetricInitialisationException {
-        //throw new MetricInitialisationException("Helllpppp-Again");
+        this.setErrorAdapter(this);
     }
 
     @Override

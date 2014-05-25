@@ -7,7 +7,7 @@ import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -25,7 +25,7 @@ import org.json.simple.JSONObject;
  * confidence in this detection, giving us a more accurate result.
  * @author Jack Timblin - U1051575
  */
-public class VariableNamingConventions implements MetricInterface {
+public class VariableNamingConventions extends MetricAbstract {
     
     private ArrayList<String> variableNames;
     private LanguageDetect detector;

@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
@@ -17,7 +17,7 @@ import org.codeanalyser.metric.Result;
  * they exceeded the threshold.
  * @author Jack Timblin - U1051575
  */
-public class CyclomaticComplexity implements MetricInterface {
+public class CyclomaticComplexity extends MetricAbstract {
     
     private ArrayList<Entry> entries;
     private final int complexityThreshold = 10;

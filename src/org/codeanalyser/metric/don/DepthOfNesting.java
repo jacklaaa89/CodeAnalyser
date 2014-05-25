@@ -6,7 +6,7 @@ import java.util.Collections;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
@@ -14,7 +14,7 @@ import org.codeanalyser.metric.Result;
  * This metric determines the where the deepest level occurs in a method or constructor.
  * @author Jack Timblin - U1051575
  */
-public class DepthOfNesting implements MetricInterface {
+public class DepthOfNesting extends MetricAbstract {
     
     private ArrayList<Entry> entries;
     private final String[] methodEvents = {"ENTER_CONSTRUCTOR_DECLARATION", "ENTER_METHOD_DECLARATION"};

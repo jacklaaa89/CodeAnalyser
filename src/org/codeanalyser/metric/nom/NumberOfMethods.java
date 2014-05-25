@@ -4,7 +4,7 @@ import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
  * Simple implementation of the metric that gauges how many methods are in a class.
  * @author Jack Timblin - U1051575
  */
-public class NumberOfMethods implements MetricInterface, OutputInterface {
+public class NumberOfMethods extends MetricAbstract implements OutputInterface {
 
     private int noOfMethods = 0;
     private final int methodThreshold = 10;

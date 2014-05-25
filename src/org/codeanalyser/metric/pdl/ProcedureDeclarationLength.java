@@ -7,7 +7,7 @@ import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -16,7 +16,7 @@ import org.json.simple.JSONObject;
  *
  * @author jonathan
  */
-public class ProcedureDeclarationLength implements MetricInterface, OutputInterface {
+public class ProcedureDeclarationLength extends MetricAbstract implements OutputInterface {
 
     private ArrayList<Entry> entries;
     private int i = 0;
