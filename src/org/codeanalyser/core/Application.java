@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import org.codeanalyser.core.utils.Logger;
+import org.codeanalyser.metric.MetricAbstract;
 
 /**
  * This class will be initialised on startup and contain global properties that
@@ -122,12 +123,12 @@ public class Application {
         ArrayList<String> classes = new ArrayList<String>();
         ArrayList<Class<?>> cs = ReflectionHelper.getClassesForPackage("org.codeanalyser.metric");
         for (Class c : cs) {
-            Class<?>[] in = c.getInterfaces();
-            if (in.length != 0) {
-                if (in[0].getSimpleName().equals("MetricInterface") && !c.getSimpleName().equals("TesterMetric")) {
-                    classes.add(c.getName());
+            try {
+                Class<?> cc = c.asSubclass(MetricAbstract.class);
+                if(!cc.getSimpleName().equals("MetricInterface") && !cc.getSimpleName().equals("TesterMetric")) {
+                    classes.add(cc.getName());
                 }
-            }
+            } catch (ClassCastException e) {}
         }
         return classes;
     }
