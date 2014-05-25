@@ -17,12 +17,12 @@ import org.codeanalyser.language.hello.HelloParser;
 public class TesterHelloListener extends HelloBaseListener implements ListenerInterface {
 
     private String fullyQualifiedName = "org.codeanalyser.metric.tester.TesterMetric";
-    private ArrayList<MetricInterface> metrics;
+    private ArrayList<MetricAbstract> metrics;
     
     @Override
     public ArrayList<Result> getResults() throws InvalidResultException {
         ArrayList<Result> results = new ArrayList<Result>();
-        for(MetricInterface m : this.metrics) {
+        for(MetricAbstract m : this.metrics) {
             Result r = m.getResults();
             if(r != null) {
                 results.add(r);
@@ -33,12 +33,12 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
 
     @Override
     public void init(FileAnalyser file) throws MetricException {
-        this.metrics = new ArrayList<MetricInterface>();
+        this.metrics = new ArrayList<MetricAbstract>();
         try {
             //we shall initialise the metric the same way the tool does
             //by using Java's reflection API.
             ParserInfo info = new ParserInfo(file);
-            MetricInterface m = (MetricInterface) Class.forName(fullyQualifiedName).newInstance();
+            MetricAbstract m = (MetricAbstract) Class.forName(fullyQualifiedName).newInstance();
             
             //call init on the metric.
             m.init(info);
@@ -59,7 +59,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_BLOCK_STATEMENT_GROUP").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -75,7 +75,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_BODY").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -87,7 +87,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
          //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_VARIABLE_DECLARATOR_ID").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -102,7 +102,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_STATEMENT").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -117,7 +117,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_DECLARATION").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -132,7 +132,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_CLASS_DECLARATION").build();
-        for(MetricInterface metric : metrics) {
+        for(MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -141,7 +141,7 @@ public class TesterHelloListener extends HelloBaseListener implements ListenerIn
     @Override
     public void destroy() {
         //call destroy on all the metrics
-        for(MetricInterface m : this.metrics) {
+        for(MetricAbstract m : this.metrics) {
             m.destroy();
         }
     }

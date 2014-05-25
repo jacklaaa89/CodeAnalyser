@@ -14,7 +14,7 @@ import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricInterface;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
@@ -32,24 +32,22 @@ import org.codeanalyser.metric.Result;
  */
 public class BaseListener extends HelloBaseListener implements ListenerInterface {
 
-    private ArrayList<MetricInterface> metrics;
+    private ArrayList<MetricAbstract> metrics;
     private FileAnalyser file;
 
     @Override
     public void init(FileAnalyser file) throws MetricException {
         this.file = file;
-        metrics = new ArrayList<MetricInterface>();
+        metrics = new ArrayList<MetricAbstract>();
         //initialise the metrics.
         try {
             ParserInfo info = new ParserInfo(file);
             for (String metric : Application.getMetricsList()) {
-                MetricInterface m = (MetricInterface) Class.forName(metric).newInstance();
+                MetricAbstract m = (MetricAbstract) Class.forName(metric).newInstance();
                 try {
                     m.init(info);
                 } catch (MetricInitialisationException e) {
-                    try {
-                        ((MetricErrorAdapter) m).onInitialisationError(e, Application.getLogger(), info);
-                    } catch (ClassCastException ex) {}
+                    m.getErrorAdapter().onInitialisationError(e, Application.getLogger(), info);
                     Application.getLogger().log(e);
                 }
                 metrics.add(m);
@@ -61,7 +59,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
 
     @Override
     public void destroy() {
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             metric.destroy();
         }
     }
@@ -75,10 +73,10 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
     public ArrayList<Result> getResults() {
         ArrayList<Result> results = new ArrayList<Result>();
         for (int i = 0; i < metrics.size(); i++) {
-            MetricInterface mi = metrics.get(i);
+            MetricAbstract mi = metrics.get(i);
             Result r = null;
             try {
-                r = mi.getResults();
+                r = mi.getAbsoluteResult();
                 if (r != null) {
                     //set system values.
                     r.setFileName(file.getName());
@@ -87,8 +85,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
                 }
             } catch (InvalidResultException e) {
                 try {
-                    ((MetricErrorAdapter) mi).onInvalidResultException(e, r, Application.getLogger(), new ParserInfo(file));
-                } catch (ClassCastException ex) {
+                    mi.getErrorAdapter().onInvalidResultException(e, r, Application.getLogger(), new ParserInfo(file));
                 } catch (Exception ex) {}
                 Application.getLogger().log(e);
             }
@@ -109,7 +106,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_COMPILATION_UNIT").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -127,7 +124,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_CATCH_CLAUSE").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -146,7 +143,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_CLASS_DECLARATION").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -164,7 +161,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_CLASS_BODY").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -183,7 +180,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_DECLARATION").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -201,7 +198,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_BODY").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -219,7 +216,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_STATEMENT").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -237,7 +234,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_METHOD_CALL").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -256,7 +253,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_INFORMAL_PARAMETER_LIST").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -275,7 +272,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_INFORMAL_PARAMETERS").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -293,7 +290,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_EXPRESSION").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -312,7 +309,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_BLOCK_STATEMENT_GROUP").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -330,7 +327,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_SWITCH_LABEL").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -348,7 +345,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_STRING_LITERAL").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -367,7 +364,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_CLASS_IDENTIFIER").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -385,7 +382,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_PAR_EXPRESSION").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -403,7 +400,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_OPERATOR").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -421,7 +418,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_BLOCK").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -439,7 +436,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("EXIT_BLOCK").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -458,7 +455,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_FORMAL_PARAMETER_LIST").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -477,7 +474,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_FORMAL_PARAMETERS").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -496,7 +493,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_VARIABLE_DECLARATOR_ID").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -514,7 +511,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_IDENTIFIER").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
@@ -532,7 +529,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
         //build state object.
         EventState.EventStateBuilder builder = new EventState.EventStateBuilder();
         EventState state = builder.setContext(context).setEventType("ENTER_NUMBER").build();
-        for (MetricInterface metric : metrics) {
+        for (MetricAbstract metric : metrics) {
             //start the metrics evaluation at this event.
             metric.onParserEvent(state);
         }
