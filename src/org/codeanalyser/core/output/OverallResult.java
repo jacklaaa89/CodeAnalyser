@@ -110,7 +110,7 @@ public class OverallResult {
                 builder.append("<tr><td><span>Errors: </span></td></tr>");
                 for(MetricError e : r.getMetricDefinedErrors()) {
                     builder.append("<tr><td>");
-                    builder.append(e.toHTML());
+                    builder.append(e.cleanHTML());
                     builder.append("</td></tr>");
                 }
             }
