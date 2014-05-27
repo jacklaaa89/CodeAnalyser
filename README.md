@@ -22,15 +22,16 @@ in the 'metrics' package will be initialised and used if it implements the Metri
 * **1.1 -** This version has been highly modified in order to be used to deliver output in the JSON format so it can be used             on a webserver. Obivously the default output is still available and this feature can be toggled by using the                ```--interface``` argument when run on the command line. Example use on a PHP server could be 
             ```$json = json_decode(shell_exec('java -jar CodeAnalyser.jar analyser --interface web --source <SOURCE>'));```
             Also this version introduced the ```MetricErrorAdapter``` class which can be used so that metrics can be                    notified when an error occurs using that metric.
+* **1.1.1 -** This verion streamlines some of the features that were implemented in version 1.1. The ```MetricInterface``` interface has been removed and replaced with the abstract class ```MetricAbstract``` it has the same methods that need implementing, but it also provides an easier way of reporting custom errors.
 
 ###Metric Implementation
 
 A Metric is essentially a unit of measure against the quality of written source code. This analyser has 8 defined metrics which each give a measure based on a specific feature of the source code. 
 
-The metrics are loaded using Java's reflection API. It loads all of the classes that reside in the ```org.codeanalyser.metric``` package and then declares a metric any class that implements the ```MetricInterface``` interface. 
+The metrics are loaded using Java's reflection API. It loads all of the classes that reside in the ```org.codeanalyser.metric``` package and then declares a metric any class that extends the ```MetricAbstract``` class.
 
 ######Example Implementation.
-Below is an example implementation of a metric class which implements the ```MetricInterface``` interface.
+Below is an example implementation of a metric class which implements the ```MetricAbstract``` interface.
 ```java
 package org.codeanalyser.metric.example;
 
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
 
-public class ExampleMetric implements MetricInterface {
+public class ExampleMetric extends MetricAbstract {
      @Override
      public Result getResults() throws InvalidResultException {
      }
@@ -54,7 +55,7 @@ public class ExampleMetric implements MetricInterface {
      }
 }
 ```
-As you can see above there are four methods that have to be defined in the ```MetricInterface``` interface. ```getResults()``` is the method that is called to gather the result from the analyis. ```init()``` is called when the metric class is first initialised and passes all of the imformation regarding the file we are about to analyse, including the Parser and Lexer instances that were used to parse the source file. ```destroy()``` is called when all of the metrics have completed their analusis on a particular file.
+As you can see above there are four abstract methods that have to be defined in the ```MetricAbstract``` class. ```getResults()``` is the method that is called to gather the result from the analyis. ```init()``` is called when the metric class is first initialised and passes all of the imformation regarding the file we are about to analyse, including the Parser and Lexer instances that were used to parse the source file. ```destroy()``` is called when all of the metrics have completed their analusis on a particular file.
 
 The most important method ```onParserEvent()``` is called when the system matches rules defined in the grammar. So for instance if the system walks the tree and matches a method declaration (as defined in the grammar) this event will be fired in each of the different metrics with an ```EventState``` object which passes the event that was triggered and the segment of the source parse tree that matched the rule.
 
@@ -87,7 +88,7 @@ public Result getResults() throws InvalidResultException {
 ```
 
 ###Handling Error
-Again, Since 1.1, A new error handling mechanism has been introduced. This is there custom error messages can be defined and attached to the output template when any of the metric exceptions occur. If the class that implements ```MetricInterface``` also implements the ```MetricErrorAdapter``` interface then when errors occur this gives us a chance to build up ```MetricError``` instances to pass to the ```Result``` in ```Result.newInstance()```. This is shown below:
+Since 1.1.1, The error handling mechanism has been improved. We can now attach an ```MetricErrorAdapter``` to the metric and we can use the ```reportError()``` method to report an error to be attached to the output. The ```reportMetric()``` method takes any implementation of a ```MetricError``` class and uses it to report the error. The HTML output from the method ```toHTML()``` is first cleaned by the system. This is shown below:
 ```java
 package org.codeanalyser.metric.example;
 
@@ -96,7 +97,14 @@ import java.util.ArrayList;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
 
-public class ExampleMetric implements MetricInterface, MetricErrorAdapter {
+public class ExampleMetric extends MetricAbstract implements MetricErrorAdapter {
+    
+     ...//other class source code here.
+     
+     public ExampleMetric() {
+         this.setErrorAdapter(this);
+     }
+     
      @Override
      public Result getResults() throws InvalidResultException {
      }
@@ -111,11 +119,26 @@ public class ExampleMetric implements MetricInterface, MetricErrorAdapter {
      }
      @Override
      public void onInitialisationError(MetricInitialisationException e, Logger logger, ParserInfo info) {
+          reportError(new MetricError() {
+             @Override
+             public String toHTML() {
+                return "<div>error occured.</div>";
+             }
+             
+             @Override
+             public JSONObject toJSON() {
+                JSONObject ob = new JSONObject();
+                ob.put("error", "An error occured");
+                return ob;
+             }
+          });
      }
      @Override
      public void onInvalidResultException(InvalidResultException e, Result result,
             Logger logger, ParserInfo info) {
      }
+     
+     ...//any other class source code here.
 }
 ```
 As you can see the class is exactly the same, but now it gets notified when any of the exceptions occur.
