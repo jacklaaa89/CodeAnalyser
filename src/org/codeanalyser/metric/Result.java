@@ -203,7 +203,7 @@ public class Result {
      * @param errors a list of errors to attach to this result if the metric was listening to errors.
      * @return a new Result object.
      */
-    public static Result newInstance(String metricName, OutputInterface result, boolean wasSuccessful,
+    protected static Result newInstance(String metricName, OutputInterface result, boolean wasSuccessful,
             ArrayList<MetricError> errors) {
         return Result.newInstance(metricName, result, wasSuccessful)
                 .setMetricDefinedErrors(errors);
