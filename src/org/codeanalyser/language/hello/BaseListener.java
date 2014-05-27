@@ -76,7 +76,7 @@ public class BaseListener extends HelloBaseListener implements ListenerInterface
             MetricAbstract mi = metrics.get(i);
             Result r = null;
             try {
-                r = mi.getAbsoluteResult();
+                r = mi.attachErrors();
                 if (r != null) {
                     //set system values.
                     r.setFileName(file.getName());

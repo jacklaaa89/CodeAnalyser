@@ -67,7 +67,7 @@ public class BaseListener extends JavaBaseListener implements ListenerInterface 
         for(MetricAbstract mi : metrics) {
             Result r = null;
             try {
-                r = mi.getAbsoluteResult();
+                r = mi.attachErrors();
                 if(r != null) {
                     //set system values.
                     r.setFileName(file.getName());
