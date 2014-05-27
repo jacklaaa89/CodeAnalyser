@@ -16,10 +16,10 @@ import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.core.utils.OutputInterface;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
-import org.codeanalyser.metric.MetricAbstract;
 import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONObject;
@@ -35,6 +35,24 @@ public class CommentRatio extends MetricAbstract implements OutputInterface {
     private double commentCount, blankCount, codeCount;
     private String fileLocation;
     private final int[] thresholdRatio = {20, 40};
+    private final MetricErrorAdapter errors = new MetricErrorAdapter() {
+
+        @Override
+        public void onInitialisationError(MetricInitialisationException e,
+                Logger logger, ParserInfo info) {
+            reportError(new InitialisationError(e, info));
+        }
+
+        @Override
+        public void onInvalidResultException(InvalidResultException e, Result result,
+                Logger logger, ParserInfo info) {
+            reportError(new InvalidResultError());
+        }
+    };
+    
+    public CommentRatio() {
+        this.setErrorAdapter(errors);
+    }
 
     @Override
     public Result getResults() throws InvalidResultException {

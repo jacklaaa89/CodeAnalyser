@@ -1,10 +1,8 @@
 package org.codeanalyser.metric.tester;
 
-import java.util.ArrayList;
 import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.language.EventState;
 import org.codeanalyser.metric.InvalidResultException;
-import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.MetricErrorAdapter;
 import org.codeanalyser.metric.MetricInitialisationException;
 import org.codeanalyser.metric.MetricAbstract;
@@ -24,7 +22,7 @@ public class TesterMetric extends MetricAbstract implements MetricErrorAdapter {
     @Override
     public Result getResults() throws InvalidResultException {
         TesterMetricError tme = new TesterMetricError();
-        this.getErrors().add(tme);
+        reportError(tme);
         //use the default outputadapter.
         return Result.newInstance(this.getClass().getSimpleName(), null, true);
     }
