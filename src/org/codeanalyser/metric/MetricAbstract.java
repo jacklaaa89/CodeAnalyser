@@ -18,13 +18,13 @@ public abstract class MetricAbstract  {
         @Override
         public void onInitialisationError(MetricInitialisationException e, Logger logger,
                 ParserInfo info) {
-            errorContainer.add(new DefaultMetricError(e));
+            reportError(new DefaultMetricError(e));
         }
 
         @Override
         public void onInvalidResultException(InvalidResultException e, Result result,
                 Logger logger, ParserInfo info) {
-            errorContainer.add(new DefaultMetricError(e));
+            reportError(new DefaultMetricError(e));
         }
     };
 
@@ -75,19 +75,19 @@ public abstract class MetricAbstract  {
     }
     
     /**
-     * gets the list of errors that were recorded.
-     * @return the list of errors that were recorded.
+     * report an error to be printed into the output.
+     * @param error the error to be printed into the output.
      */
-    public ArrayList<MetricError> getErrors() {
-        return this.errorContainer;
+    public void reportError(MetricError error) {
+        this.errorContainer.add(error);
     }
     
     /**
-     * gets the absolute result for the metric.
-     * @return the absolute result.
+     * returns the metric result with the attached errors.
+     * @return result with the errors that occurred.
      * @throws InvalidResultException if the result is invalid. 
      */
-    public Result getAbsoluteResult() throws InvalidResultException {
+    public Result attachErrors() throws InvalidResultException {
         Result r = this.getResults();
         return Result.newInstance(r.getMetricName(), r.getResult(), r.isSuccessful(), errorContainer);
     }
@@ -98,8 +98,15 @@ public abstract class MetricAbstract  {
      */
     private class DefaultMetricError extends MetricError {
         
+        /**
+         * the exception that occurred.
+         */
         private final Exception e;
         
+        /**
+         * sets the exception that occurred.
+         * @param e the exception.
+         */
         public DefaultMetricError(Exception e) {
             this.e = e;
         }
