@@ -22,7 +22,7 @@ in the 'metrics' package will be initialised and used if it implements the Metri
 * **1.1 -** This version has been highly modified in order to be used to deliver output in the JSON format so it can be used             on a webserver. Obivously the default output is still available and this feature can be toggled by using the                ```--interface``` argument when run on the command line. Example use on a PHP server could be 
             ```$json = json_decode(shell_exec('java -jar CodeAnalyser.jar analyser --interface web --source <SOURCE>'));```
             Also this version introduced the ```MetricErrorAdapter``` class which can be used so that metrics can be                    notified when an error occurs using that metric.
-* **1.1.1 -** This verion streamlines some of the features that were implemented in version 1.1. The ```MetricInterface``` interface has been removed and replaced with the abstract class ```MetricAbstract``` it has the same methods that need implementing, but it also provides an easier way of reporting custom errors.
+* **1.1.1 -** This verion streamlines some of the features that were implemented in version 1.1. The ```MetricInterface``` interface has been removed and replaced with the abstract class ```MetricAbstract``` it has the same methods that need implementing, but it also provides an easier way of reporting custom errors. This version also introduces the ```AnalyserListener``` class where we can now listen to events that are triggered during the anaylsis process. This was introduced with the idea of it being used for a graphical user interface in a later build.
 
 ###Metric Implementation
 
