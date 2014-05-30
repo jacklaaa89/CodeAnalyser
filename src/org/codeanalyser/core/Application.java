@@ -125,7 +125,7 @@ public class Application {
         for (Class c : cs) {
             try {
                 Class<?> cc = c.asSubclass(MetricAbstract.class);
-                if(!cc.getSimpleName().equals("MetricInterface") && !cc.getSimpleName().equals("TesterMetric")) {
+                if(!cc.getSimpleName().equals("MetricAbstract") && !cc.getSimpleName().equals("TesterMetric")) {
                     classes.add(cc.getName());
                 }
             } catch (ClassCastException e) {}
