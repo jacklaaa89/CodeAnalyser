@@ -24,6 +24,33 @@ in the 'metrics' package will be initialised and used if it implements the Metri
             Also this version introduced the ```MetricErrorAdapter``` class which can be used so that metrics can be                    notified when an error occurs using that metric.
 * **1.1.1 -** This verion streamlines some of the features that were implemented in version 1.1. The ```MetricInterface``` interface has been removed and replaced with the abstract class ```MetricAbstract``` it has the same methods that need implementing, but it also provides an easier way of reporting custom errors. This version also introduces the ```AnalyserListener``` class where we can now listen to events that are triggered during the anaylsis process. This was introduced with the idea of it being used for a graphical user interface in a later build.
 
+###Basic Usage
+Basic usage of the code analyser would be to initialise an Analyser instance and provide it with a source location and an output location. This is shown as follows:
+```java
+
+...//package and import statements here.
+
+import org.codeanalyser.core.analyser.Analyser;
+import org.codeanalyser.core.analyser.AnalyserException;
+
+...//more code here.
+try {
+    Analyser analyser = new Analyser("<SOURCE_LOCATION>", "<OUTPUT_LOCATION>");
+    analyser.analyse();
+} catch (AnalyserException e) {
+    e.printStackTrace();
+}
+
+...//more code here.
+```
+
+You can also use the runnable jar (located at dist/CodeAnalyser.jar) on the command line, but it does require to be in the same directory as the antlr and config directories (also located in dist). Example use would be:
+```
+java -jar /path/to/CodeAnalyser.jar analyser --source /path/to/source/code --output /path/to/push/output
+```
+
+You can use the ```--help``` argument to display all of the available input arguments.
+
 ###Metric Implementation
 
 A Metric is essentially a unit of measure against the quality of written source code. This analyser has 8 defined metrics which each give a measure based on a specific feature of the source code. 
