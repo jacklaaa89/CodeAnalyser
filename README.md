@@ -142,3 +142,44 @@ public class ExampleMetric extends MetricAbstract implements MetricErrorAdapter 
 }
 ```
 As you can see the class is exactly the same, but now it gets notified when any of the exceptions occur.
+
+###Listening for Events in the Analysis Process.
+Since 1.1.1, the analyser now has the ability to attach a ```AnalyserListener``` interface instance which is triggered at certain points in the analysis. There is also an adapter class called ```AnalyserAdapter``` which gives the ability to be able to override only the events that you want to be notified for instead of implementing all of the event triggers. We can use this mechanism as follows:
+```java
+package org.codeanalyser.example;
+
+import java.util.ArrayList;
+import org.codeanalyser.core.output.OverallResult;
+import org.codeanalyser.language.SyntaxErrorException;
+import org.codeanalyser.metric.ParserInfo;
+import org.codeanalyser.core.analyser.AnalyserResult;
+import org.codeanalyser.core.analyser.UnsupportedLanguageException;
+import org.codeanalyser.core.analyser.AnalyserAdapter;
+
+public class ExampleAnalyserAdapter extends AnalyserAdapter {
+
+    @Override
+    public void onStartAnalysis() {
+        System.out.println("onStartAnalysis() called");
+    }
+    
+    ...//more event overrides here.
+    
+    @Override
+    public void onCompleteAnalysis() {
+        System.out.println("onCompleteAnalysis() called");
+    }
+
+}
+
+```
+
+Then we'd obviously just attach an instance of this class to the ```Analyser``` instance as follows:
+```java
+
+...//more code here.
+
+Analyser analyser = new Analyser("sourceLocation", "outputLocation");
+analyser.setAnalyserListener(new ExampleAnalyserAdapter());
+
+```
