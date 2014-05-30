@@ -38,7 +38,8 @@ import org.codeanalyser.core.analyser.AnalyserResult;
 try {
     Analyser analyser = new Analyser("<SOURCE_LOCATION>", "<OUTPUT_LOCATION>");
     
-    //boolean flag to generate output or not. if there is a listener attached, this value is ignored.
+    //boolean flag to generate output or not. if there is a listener attached, this value is ignored
+    //and the value from onGenerateOutput() is used.
     AnalyserResult result = analyser.analyse(true); 
 } catch (AnalyserException e) {
     e.printStackTrace();
