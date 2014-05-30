@@ -90,17 +90,36 @@ public class Analyser {
             this.filesToAnalyse.add(new FileAnalyser(file.getAbsolutePath()));
         }
     }
+    
+    /**
+     * analyses the files and generates output.
+     */
+    public void analyse() {
+        this.analyse(true);
+    }
+    
+    /**
+     * analyses the files using a strict source language 
+     * and output is generated.
+     *
+     * @param forcedLanguage the language to force files to be.
+     */
+    public void analyse(String forcedLanguage) {
+        this.analyse(forcedLanguage, true);
+    }
 
     /**
      * analyses the files using a strict source language.
      *
      * @param forcedLanguage the language to force files to be.
+     * @param generateOutput whether to generate the output or not.
+     * @return the result from the analysis.
      */
-    public void analyse(String forcedLanguage) {
+    public AnalyserResult analyse(String forcedLanguage, boolean generateOutput) {
         for (FileAnalyser file : this.filesToAnalyse) {
             file.setForcedLanguage(forcedLanguage);
         }
-        this.analyse();
+        return this.analyse(generateOutput);
     }
     
     /**
@@ -115,8 +134,10 @@ public class Analyser {
 
     /**
      * Analyses the source location provided in the constructor.
+     * @param generateOutput whether to generate the output or not.
+     * @return the result from the analysis
      */
-    public void analyse() {
+    public AnalyserResult analyse(boolean generateOutput) {
         if(this.aListener != null) {
             aListener.onStartAnalysis();
         }
@@ -209,9 +230,12 @@ public class Analyser {
             Application.getLogger().log("Generating Output");
             //render the output for this analysis.
             
+            //the boolean from the listener takes presidance.
+            //if there is a listener that value will be used, else
+            //the value passed to the method will be used.
             boolean generate = (this.aListener != null)
                     ? this.aListener.onGenerateOutput(this.result)
-                    : true;
+                    : generateOutput;
             
             if(generate) {
                 this.output.generateOutput(this.result);
@@ -223,6 +247,8 @@ public class Analyser {
         if(this.aListener != null) {
             aListener.onCompleteAnalysis();
         }
+        
+        return this.result;
         
     }
 

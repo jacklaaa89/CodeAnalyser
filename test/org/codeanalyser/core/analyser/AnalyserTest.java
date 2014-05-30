@@ -44,7 +44,7 @@ public class AnalyserTest {
     @Test
     public void testAnalyseForced() {
         System.out.println("analyseForced");
-        analyser.analyse(FORCED);
+        analyser.analyse(FORCED, true);
         File f = new File(OUTPUT+"/output.html");
         assertTrue(f.exists());
         
@@ -62,7 +62,7 @@ public class AnalyserTest {
     @Test
     public void testAnalyse() {
         System.out.println("analyse");
-        analyser.analyse();
+        analyser.analyse(true);
         
         //test output was successfully generated.
         File f = new File(OUTPUT+"/output.html");

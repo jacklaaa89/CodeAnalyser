@@ -115,9 +115,9 @@ public class Main {
                                 return;
                             }
                             
-                            analyser.analyse(line.getOptionValue("fl"));
+                            analyser.analyse(line.getOptionValue("fl"), true);
                         } else {
-                            analyser.analyse();
+                            analyser.analyse(true);
                         }
                     } else {
                         HelpFormatter formatter = new HelpFormatter();
