@@ -16,6 +16,7 @@ import org.codeanalyser.language.ParserInterface;
 import org.codeanalyser.language.SyntaxErrorAdapter;
 import org.codeanalyser.language.SyntaxErrorException;
 import org.codeanalyser.metric.InvalidResultException;
+import org.codeanalyser.metric.ParserInfo;
 import org.codeanalyser.metric.Result;
 
 /**
@@ -33,6 +34,7 @@ public class Analyser {
     private final ArrayList<FileAnalyser> filesToAnalyse;
     private OutputGenerator output;
     private AnalyserResult result;
+    private AnalyserListener aListener = null;
 
     /**
      * initialises the analyser object with a file/directory location.
@@ -50,8 +52,23 @@ public class Analyser {
         }
         this.output = new OutputGenerator(outputLocation);
         determineFiles(this.sourceCodeLocation);
+        if(this.aListener != null) {
+            ArrayList<String> f = new ArrayList<String>();
+            for(FileAnalyser a : this.filesToAnalyse) {
+                f.add(a.getAbsolutePath());
+            }
+            this.aListener.onDeterminedFiles(f, this.filesToAnalyse.size());
+        }
         Application.getLogger().log("Found " + this.filesToAnalyse.size() + " Files To Analyse in: " + this.sourceCodeLocation.getAbsolutePath());
         this.result = new AnalyserResult(this.filesToAnalyse);
+    }
+    
+    /**
+     * sets a listener to be used to be notified in events from the analysis process.
+     * @param listener the listener to attach.
+     */
+    public void setAnalyserListener(AnalyserListener listener) {
+        this.aListener = listener;
     }
 
     /**
@@ -100,12 +117,12 @@ public class Analyser {
      * Analyses the source location provided in the constructor.
      */
     public void analyse() {
+        if(this.aListener != null) {
+            aListener.onStartAnalysis();
+        }
         for (FileAnalyser file : this.filesToAnalyse) {
-            ParseTreeListener listener = null;
-            try {
-                listener = file.getSupportedListener();
-            } catch (UnsupportedLanguageException e) {
-                Application.getLogger().log(e);
+            if(this.aListener != null) {
+                aListener.onStartAnalysingFile(file.getAbsolutePath());
             }
             try {
                 Application.getLogger().log("Started Analysing File: " + file.getAbsolutePath());
@@ -124,6 +141,14 @@ public class Analyser {
                 parser.removeErrorListeners();
                 parser.addErrorListener(ea);
                 ParserRuleContext tree = parser.compilationUnit();
+                
+                if(this.aListener != null) {
+                    try {
+                        this.aListener.onCompleteParsingFile(file.getAbsolutePath(), new ParserInfo(file));
+                    } catch (Exception e) {
+                        Application.getLogger().log(e);
+                    }
+                }
 
                 //check to see if any syntaxical errors occured.
                 if (!ea.getSyntaxErrors().isEmpty()) {
@@ -135,42 +160,70 @@ public class Analyser {
                 }
 
                 ParseTreeWalker walker = new ParseTreeWalker();
-
-                //walk the parse tree calling methods in the metrics.
-                walker.walk(listener, tree);
                 
-                ArrayList<Result> re = ((ListenerInterface) listener).getResults();
+                ParseTreeListener l = file.getSupportedListener();
+                
+                //walk the parse tree calling methods in the metrics.
+                walker.walk(l, tree);
+                
+                ArrayList<Result> re = ((ListenerInterface) l).getResults();
                 //gather the results from the analysis.
                 OverallResult res = new OverallResult(
                         re,
                         file.getAbsolutePath()
                 );
+                
+                if(this.aListener != null) {
+                    this.aListener.onDeterminedResults(file.getAbsolutePath(), res);
+                }
 
                 //add this to result array.
                 this.result.addResult(res);
 
                 //call destroy on metrics.
-                ((ListenerInterface) listener).destroy();
+                ((ListenerInterface) l).destroy();
 
             } catch (UnsupportedLanguageException e) {
                 this.result.addUnsupportedFile(file.getName());
+                if(this.aListener != null) {
+                    this.aListener.onUnsupportedLanguageFound(e, file.getAbsolutePath(), this.result.getUnsupportedFiles());
+                }
                 Application.getLogger().log(e);
             } catch (NoResultsDefinedException e) {
                 Application.getLogger().log(e);
             } catch (SyntaxErrorException e) {
                 Application.getLogger().log(e);
+                if(this.aListener != null) {
+                    this.aListener.onSyntaxErrorOccurred(e, file.getAbsolutePath(),
+                            this.result.getNoOfSyntaxErrorFiles(), this.result.getSyntaxErrors());
+                }
             } catch (InvalidResultException e) {
                 Application.getLogger().log(e);
+            }
+            if(this.aListener != null) {
+                this.aListener.onFinishAnalysingFile(file.getAbsolutePath());
             }
         }
 
         try {
             Application.getLogger().log("Generating Output");
             //render the output for this analysis.
-            this.output.generateOutput(this.result);
+            
+            boolean generate = (this.aListener != null)
+                    ? this.aListener.onGenerateOutput(this.result)
+                    : true;
+            
+            if(generate) {
+                this.output.generateOutput(this.result);
+            }
         } catch (Exception e) {
             Application.getLogger().log(e);
         }
+        
+        if(this.aListener != null) {
+            aListener.onCompleteAnalysis();
+        }
+        
     }
 
 }
