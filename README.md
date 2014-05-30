@@ -32,11 +32,14 @@ Basic usage of the code analyser would be to initialise an Analyser instance and
 
 import org.codeanalyser.core.analyser.Analyser;
 import org.codeanalyser.core.analyser.AnalyserException;
+import org.codeanalyser.core.analyser.AnalyserResult;
 
 ...//more code here.
 try {
     Analyser analyser = new Analyser("<SOURCE_LOCATION>", "<OUTPUT_LOCATION>");
-    analyser.analyse();
+    
+    //boolean flag to generate output or not. if there is a listener attached, this value is ignored.
+    AnalyserResult result = analyser.analyse(true); 
 } catch (AnalyserException e) {
     e.printStackTrace();
 }
