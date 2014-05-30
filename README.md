@@ -182,4 +182,6 @@ Then we'd obviously just attach an instance of this class to the ```Analyser``` 
 Analyser analyser = new Analyser("sourceLocation", "outputLocation");
 analyser.setAnalyserListener(new ExampleAnalyserAdapter());
 
+...//more code here.
+
 ```
