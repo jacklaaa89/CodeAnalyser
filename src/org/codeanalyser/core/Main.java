@@ -46,23 +46,17 @@ public class Main {
                 .hasArg()
                 .create("s"));
         options.addOption(OptionBuilder.withLongOpt("output")
-                .withDescription("output file location")
+                .withDescription("output file location, if the format is default")
                 .hasArg()
                 .create("o"));
         options.addOption(OptionBuilder.withLongOpt("force-language")
                 .withDescription("force language, no auto-language detection will take place.")
                 .hasArg()
                 .create("fl"));
-        options.addOption(OptionBuilder.withLongOpt("interface")
-                .withDescription("The interface to use, i.e whats outputted etc.This can be 'web' or 'default'. If the interface is default"
-                        + ", all exceptions are displayed in the console with other messages and the output is in the standard form. If the interface is"
-                        + "web, no log messages are displayed and the output is a JSON array of the analyser result. Obviously 'default' is the default.")
+        options.addOption(OptionBuilder.withLongOpt("format")
+                .withDescription("The format to output the result, 'default' is where logging takes place and the output is generated to HTML files, 'JSON' pushes the output as JSON with no logging.")
                 .hasArg()
-                .create("i"));
-        options.addOption(OptionBuilder.withLongOpt("hash")
-                .withDescription("The hash to generate templates for. If the interface is 'web' this is required.")
-                .hasArg()
-                .create("ha"));
+                .create("f"));
         options.addOption("h", "help", false, "Displays this help message");
 
         try {
@@ -74,8 +68,8 @@ public class Main {
                 return;
             }
             
-            if(line.hasOption("i")) {
-                Application.initInterface(line.getOptionValue("i"));
+            if(line.hasOption("f")) {
+                Application.initInterface(line.getOptionValue("f"));
             }
 
             //determines the output source location.

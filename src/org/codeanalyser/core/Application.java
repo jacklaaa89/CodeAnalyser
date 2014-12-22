@@ -70,7 +70,7 @@ public class Application {
      * @param mInterface the interface to use.
      */
     protected static void initInterface(String mInterface) {
-        if(mInterface.equalsIgnoreCase("default") || mInterface.equalsIgnoreCase("web")) {
+        if(mInterface.equalsIgnoreCase("default") || mInterface.equalsIgnoreCase("json")) {
             Application.mInterface = mInterface.toLowerCase();
         }
     }
