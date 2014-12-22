@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import org.codeanalyser.core.Application;
 import org.codeanalyser.core.analyser.FileAnalyser;
+import org.codeanalyser.core.utils.Logger;
 import org.codeanalyser.metric.MetricError;
 import org.codeanalyser.metric.Result;
 import org.json.simple.JSONArray;
@@ -167,11 +168,17 @@ public class OverallResult {
      * @throws TemplateNotFoundException if we could not generate a sub page.
      */
     public ResultProperty toResultProperty(File outputDestination) throws TemplateNotFoundException {
-        this.generateSubPage(outputDestination);           
-        return new ResultProperty(this.getResultLink(),
-                this.isOverallSuccessful(), 
-                this.getFileName(), 
-                this.getSourceLanguage());
+        
+        if(Application.getInterface().equalsIgnoreCase(Logger.DEFAULT)) {
+            this.generateSubPage(outputDestination);           
+            return new ResultProperty(this.getResultLink(),
+                    this.isOverallSuccessful(), 
+                    this.getFileName(), 
+                    this.getSourceLanguage());
+
+        }
+        
+        return null;
     }
     
     /**

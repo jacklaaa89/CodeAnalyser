@@ -71,9 +71,10 @@ public class Main {
             if(line.hasOption("f")) {
                 Application.initInterface(line.getOptionValue("f"));
             }
-
+            
             //determines the output source location.
             File file = new File("output");
+            
             if (line.hasOption("o")) {
                 file = new File(line.getOptionValue("o"));
                 if (!file.exists()) {

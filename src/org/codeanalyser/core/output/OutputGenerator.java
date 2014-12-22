@@ -43,8 +43,8 @@ public class OutputGenerator {
             TemplateNotFoundException,
             HtmlParserException {
 
-        //check that the output directory exists.
-        if (!this.outputDestination.exists() || !this.outputDestination.isDirectory()) {
+        //check that the output directory exists, if we need to output results.
+        if (Application.getInterface().equalsIgnoreCase(Logger.DEFAULT) && (!this.outputDestination.exists() || !this.outputDestination.isDirectory())) {
             throw new TemplateNotFoundException("Output Location does not exist or is not a directory");
         }
 
@@ -57,11 +57,16 @@ public class OutputGenerator {
         //make a single ResultProperty entry to pass to ST.
         ArrayList<ResultProperty> res = new ArrayList<ResultProperty>();
         for (OverallResult re : result.getResults()) {
-            res.add(re.toResultProperty(outputDestination));
+            ResultProperty p = re.toResultProperty(outputDestination);
+            if(p != null) {
+                res.add(p);
+            }
         }
         //generate the HTML file using the template.
         
         if(Application.getInterface().equals(Logger.DEFAULT)) {
+            
+            
 
             STGroupFile group = new STGroupFile(Application.getSystemPath()+"antlr/templates/OutputTemplate.stg");
             ST main = group.getInstanceOf("main");
